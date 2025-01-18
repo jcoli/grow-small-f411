@@ -15,6 +15,7 @@ STM32F407VET6 - Grown
 
 void schedule_begin();
 void schedule_save();
+void schedule_check();
 void schedule_run();
 
 extern byte minutes;
@@ -145,10 +146,11 @@ extern var_grow var_grow_6[30];
 extern var_grow var_grow_7[30];
  
 void schedule_begin(){
+    Serial.println("Schedule begin");
     uint32_t addr;
     uint8_t data = 0;
     uint32_t data_int = 0;
-    for (int i = 0; i <= 31; i++){
+    for (int i = 0; i <= 27; i++){
         addr = var_grow_1[i].eprom_address;
         data_int = read_long(addr);
         *var_grow_1[i].var_int = data_int;
@@ -160,9 +162,14 @@ void schedule_begin(){
         Serial.println(data_int);
         delay(100);
     }
-    for (int i = 0; i <= 11; i++){
+    Serial.println("Schedule 1");
+
+    for (int i = 0; i <= 2; i++){
+        Serial.println("Schedule 1a");
         addr = var_grow_7[i].eprom_address;
+        Serial.println("Schedule 1b");
         String data = read_String(addr);
+        Serial.println("Schedule 1c");
         *var_grow_7[i].var_string = data;
         Serial.print(i);
         Serial.print(" Data: ");
@@ -173,10 +180,12 @@ void schedule_begin(){
         Serial.println(data);
         delay(100);
     }  
+    Serial.print("Schedule 2");
       
 }
 
 void schedule_save(){
+    Serial.println("Schedule Save");
     uint32_t addr;
     uint32_t data = 0;
     eraseSector(16384);
@@ -201,6 +210,7 @@ void schedule_save(){
 }
 
 void schedule_check(){
+    Serial.println("Schedule Check");
     if (lastHours<=hours){
         if ((light_hr_on_stp<=hours) && (light_min_on_stp<minutes)){
             Serial.println("Light ON 1");
@@ -251,7 +261,7 @@ void schedule_check(){
 }
 
 void schedule_run(){
-    Serial.println("Schedule");
+    Serial.println("Schedule Run");
     if ((lastMinutes != minutes)){
         lastHours = hours;
         lastMinutes = minutes;

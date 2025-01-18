@@ -162,7 +162,7 @@ void service_05_ser(String line_in){
         // Serial.print(",");
     }
     // Serial.println("");
-    int i = rec_data[2];
+    int i = rec_data[2]; 
     switch (i) {
         case 0x00:
             // Serial.println("pwm 0x05 0x00 Fan Desum");
@@ -190,29 +190,29 @@ void service_05_ser(String line_in){
 
 void save_on_flash_serv5(){
     Serial.print("Save Flash");
-    // uint32_t addr;
-    // uint32_t data = 0;
-    // eraseSector(20480);
-    // for (int i = 0; i < 6; i++){
-    //     addr = var_grow_5[i].eprom_address;
-    //         data = *var_grow_5[i].var_int; 
-    //         if(writeLong(addr, data)){
-    //             Serial.print("Write 1 OK ");
-    //             Serial.print("save flash: ");
-    //             Serial.print(i);
-    //             Serial.print("Eprom 1 ");
-    //             var_grow_5[i].descr;
-    //             Serial.print(" - ");
-    //             Serial.print(data);
-    //             Serial.print(" - ");
-    //             Serial.print(addr);
-    //             uint8_t ret = read_Byte(addr);
-    //             Serial.print(" - ");
-    //             Serial.println(ret);
-    //         }else{
-    //             Serial.println("Write 1 not OK");
-    //         }
-    // }
+    uint32_t addr;
+    uint32_t data = 0;
+    eraseSector(20480);
+    for (int i = 0; i <= 2; i++){
+        addr = var_grow_5[i].eprom_address;
+            data = *var_grow_5[i].var_int; 
+            if(writeLong(addr, data)){
+                Serial.print("Write 1 OK ");
+                Serial.print("save flash: ");
+                Serial.print(i);
+                Serial.print("Eprom 1 ");
+                var_grow_5[i].descr;
+                Serial.print(" - ");
+                Serial.print(data);
+                Serial.print(" - ");
+                Serial.print(addr);
+                uint8_t ret = read_Byte(addr);
+                Serial.print(" - ");
+                Serial.println(ret);
+            }else{
+                Serial.println("Write 1 not OK");
+            }
+    }
 }
 
 void com_ser05_0x00(float com_pwm){

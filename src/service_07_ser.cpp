@@ -161,33 +161,33 @@ void on_service_07_ser(String line_in){
     split_msg_5(line1);
     int i = toHexc(retMsg5[2]);
     switch (i) {
-        case 0x00:
-            com_ser7_0x00(retMsg5[3]);      
-            break;
-         case 0x01:
-            com_ser7_0x01(retMsg5[3]);      
-            break;   
-         case 0x02:
-            com_ser7_0x02(retMsg5[3]);      
-            break;      
-         case 0x03:
-            com_ser7_0x03(retMsg5[3]);      
-            break;
-         case 0x04:
-            com_ser7_0x04(retMsg5[3]);      
-            break;
-         case 0x05:
-            com_ser7_0x05(retMsg5[3]);      
-            break;
-         case 0x06:
-            com_ser7_0x06(retMsg5[3]);      
-            break;
-         case 0x07:
-            com_ser7_0x07(retMsg5[3]);      
-            break;
-         case 0x08:
-            com_ser7_0x08(retMsg5[3]);      
-            break;
+      //   case 0x00:
+      //       com_ser7_0x00(retMsg5[3]);      
+      //       break;
+      //    case 0x01:
+      //       com_ser7_0x01(retMsg5[3]);      
+      //       break;   
+      //    case 0x02:
+      //       com_ser7_0x02(retMsg5[3]);      
+      //       break;      
+      //    case 0x03:
+      //       com_ser7_0x03(retMsg5[3]);      
+      //       break;
+      //    case 0x04:
+      //       com_ser7_0x04(retMsg5[3]);      
+      //       break;
+      //    case 0x05:
+      //       com_ser7_0x05(retMsg5[3]);      
+      //       break;
+      //    case 0x06:
+      //       com_ser7_0x06(retMsg5[3]);      
+      //       break;
+      //    case 0x07:
+      //       com_ser7_0x07(retMsg5[3]);      
+      //       break;
+      //    case 0x08:
+      //       com_ser7_0x08(retMsg5[3]);      
+      //       break;
          case 0x09:
             com_ser7_0x09(retMsg5[3]);      
             break;

@@ -66,7 +66,7 @@ void setup() {
           Serial.println("flash not ok");
           flash_ok = false;
       }
-
+    // eraseFlash();
     delay(1000);
     display_begin();
     Serial.println("setup b");
@@ -85,11 +85,11 @@ void setup() {
     IWatchdog.begin(10000000);
     loopDelay_watchdog = millis();
     // if(!rtc.isConfigured()){
-      // rtc.setHours(10);
-      // rtc.setMinutes(21);
+      // rtc.setHours(16);
+      // rtc.setMinutes(00);
       // rtc.setSeconds(0);
-      // rtc.setWeekDay(1);
-      // rtc.setDay(13);
+      // rtc.setWeekDay(3);
+      // rtc.setDay(15);
       // rtc.setMonth(1);
       // rtc.setYear(25); 
     // }  
@@ -98,6 +98,8 @@ void setup() {
     rtc.getTime(&hours, &minutes, &seconds, &subSec);
     lastMinutes = minutes;
     Serial.println("setup 1");
+    delay(300);
+    schedule_begin();
 
 }
 
@@ -138,6 +140,14 @@ void loop() {
           // }
           sendMsgBT();
     }
+
+    if ((millis() - loopDelay_first > TIMER_FIRST) && first_run){
+          loopDelay_first = millis();
+          program_begin();
+          delay(500);
+          schedule_check();
+          first_run = false;
+      }
 
 }
 

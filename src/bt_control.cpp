@@ -27,6 +27,7 @@ void on_receive_bt(String line1);
 void setup_rtc(String msg);
 void BTconnectionCheck();
 void sendMsgBT();
+void service_0x0A_ser(String line_in);
 
 extern STM32RTC& rtc;
 
@@ -252,7 +253,11 @@ void on_receive_bt(String line_in){
         case 9:
           Serial.println("esp - case 9");
         //   setup_rtc(line1);
-          break;      
+          break; 
+         case 10:
+          Serial.println("esp - case 10");
+          service_0x0A_ser(line_in);
+          break;          
     }    
 }
 
@@ -291,6 +296,44 @@ void BTconnectionCheck(){
   //   bt_connected = false;
   // } 
   
+}
+
+void service_0x0A_ser(String line_in){
+    Serial.print("Receive Service 0A SER: ");
+    Serial.println(line_in);
+    split_msg_5(line_in);
+    int i = toHexc(retMsg5[2]);
+    if (i == 0){
+        Serial.print("User: ");
+        Serial.println(retMsg5[3]);
+        if (!(var_grow_7[11].var_string->equals("0"))){
+          if (var_grow_7[10].var_string->equals(retMsg5[3])){
+              Serial.println("User OK ");
+          }else{
+              Serial.println("User NOT OK ");
+              char COMM_CHK[] = "AT+DISC"; 
+              BT_SERIAL.write(COMM_CHK);
+              // BT_SERIAL
+              
+          }
+        }
+    }else if(i == 1){
+        Serial.print("Password: ");
+        Serial.println(retMsg5[3]);
+        if (!(var_grow_7[11].var_string->equals("0"))){
+          if (var_grow_7[11].var_string->equals(retMsg5[3])){
+            Serial.println("Password OK ");
+          }else{
+            Serial.println("PWD NOT OK ");
+            char COMM_CHK[] = "AT+DISC"; 
+            BT_SERIAL.write(COMM_CHK); 
+            //  bt_begin();       
+          }
+        }
+        
+    }
+    // on_service_0A_ser(line_in);
+
 }
 
 void sendMsgBT(){

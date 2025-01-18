@@ -10,6 +10,7 @@ STM32F407VET6 - Grown
 
 void schedule_begin();
 void schedule_save();
+void schedule_check();
 void schedule_run();
 
 #endif

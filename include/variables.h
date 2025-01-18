@@ -63,6 +63,13 @@ String owner_pass;
 String user_name = "";
 String user_pwd = "";
 
+//System
+bool is_watchdog = false;
+bool led_out = false;
+bool first_run = true;
+bool flash_ok = false;
+bool scheduleRun = false; 
+
 bool bt_enabled = false;
 bool bt_connected = false;
 bool bt_alive = false;
@@ -96,6 +103,8 @@ bool pump_irr_on = false;
 
 bool relay_1_on = false;
 bool relay_2_on = false;
+bool relay_3_on = false;
+bool relay_4_on = false;
 
 bool fan1_inf_on = false;
 bool fan2_inf_on = false;
@@ -109,7 +118,7 @@ int light_pwm = 0;
 bool zeroChangeDetect = false;
 bool lastZeroState = false;
 bool run_on = false;
-bool flash_ok = false;
+
 
 bool pwm_bool = false;
 int pwm1 = 0;

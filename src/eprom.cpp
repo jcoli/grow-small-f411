@@ -196,7 +196,7 @@ String read_String(uint32_t addr) {
   uint32_t char_test;
   char_test = flash.readChar(addr); 
   String data_read = "0";
-  Serial.println(char_test, HEX);
+  // Serial.println(char_test, HEX);
   if ((char_test == 0xFF) || (char_test == NULL) || (char_test == 0xFFFFFFFF) ){
     return data_read;  
     // Serial.println("NULL");

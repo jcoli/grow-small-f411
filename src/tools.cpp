@@ -100,6 +100,8 @@ void split_msg_4(String msg){
 }
 
 void split_msg_5(String msg){
+    Serial.println("split");
+    Serial.println(msg);
     retMsg5[0] = "";
     retMsg5[1] = "";
     retMsg5[2] = "";
@@ -108,11 +110,14 @@ void split_msg_5(String msg){
     int j = 0;
     int p = 0;
     for(int i =0; i < msg.length(); i++){
+        Serial.println(msg.charAt(i));
        if(msg.charAt(i) == ','){
            retMsg5[p] = msg.substring(j, i);
            j = i +1;
            p++;
+           Serial.println(retMsg5[p]);
        }
+       
     }  
 }
 

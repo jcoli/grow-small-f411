@@ -100,10 +100,9 @@ extern bool fan1_inf_on;
 extern bool fan2_inf_on;
 extern bool light_on;
 extern bool pump_irr_on;
+extern bool hum_1_on;
 extern bool relay_1_on;
 extern bool relay_2_on;
-
-extern bool hum_1_on;
 
 //Service 05
 extern int fan1_inf_pwm;
@@ -163,10 +162,6 @@ void service_04_ser(String line_in){
             // Serial.println("on/off 0x04 0x02 Fan2 Insu");
             com_ser04_0x02(retMsg5[3]);
             break;
-        case 0x03:
-            // Serial.println("on/off 0x04 0x03 Fan1 Exaust");
-            com_ser04_0x03(retMsg5[3]);
-            break;         
         case 0x06:
             // Serial.println("on/off 0x04 0x06 Lights");
             com_ser04_0x06(retMsg5[3]);
@@ -207,22 +202,7 @@ void service_04_ser(String line_in){
             // Serial.println("on/off 0x04 0x0F");   
             com_ser04_0x13(retMsg5[3]);
             break;
-        case 0x14:
-            // Serial.println("on/off 0x04 0x0F");   
-            com_ser04_0x14(retMsg5[3]);
-            break;
-        case 0x15:
-            // Serial.println("on/off 0x04 0x0F");   
-            com_ser04_0x15(retMsg5[3]);
-            break;
-        case 0x16:
-            // Serial.println("on/off 0x04 0x0F");   
-            com_ser04_0x16(retMsg5[3]);
-            break;
-        case 0x17:
-            // Serial.println("on/off 0x04 0x0F");   
-            com_ser04_0x17(retMsg5[3]);
-            break;                                                                             
+                                                                           
 
 
      }
@@ -232,46 +212,46 @@ void service_04_ser(String line_in){
 
 void save_on_flash_serv4(){
     Serial.print("Save Flash");
-    // uint32_t addr;
-    // uint8_t data = 0;
-    // eraseSector(12288);
-    // for (int i = 0; i < 14; i++){
-    //     addr = var_grow_4[i].eprom_address;
-    //     if (*var_grow_4[i].var_bool){
-    //         data = 255; 
-    //         if(writeByte(addr, data)){
-    //                 Serial.print("Write 1 OK ");
-    //                 // Serial.print("save flash: ");
-    //                 // Serial.println(i);
-    //                 // Serial.print("Eprom 1 ");
-    //                 Serial.print(data, BIN);
-    //                 Serial.print(", ");
-    //                 // Serial.println(addr);
-    //                 uint8_t ret = read_Byte(addr);
-    //                 // Serial.print("Eprom 1 ");
-    //                 Serial.println(ret, BIN);
-    //         }else{
-    //                 Serial.println("Write 1 not OK");
-    //         }
-    //     }else{
-    //         data = 0;
-    //         if(writeByte(addr, data)){
+    uint32_t addr;
+    uint8_t data = 0;
+    eraseSector(12288);
+    for (int i = 0; i <= 6; i++){
+        addr = var_grow_4[i].eprom_address;
+        if (*var_grow_4[i].var_bool){
+            data = 255; 
+            if(writeByte(addr, data)){
+                    Serial.print("Write 1 OK ");
+                    // Serial.print("save flash: ");
+                    // Serial.println(i);
+                    // Serial.print("Eprom 1 ");
+                    Serial.print(data, BIN);
+                    Serial.print(", ");
+                    // Serial.println(addr);
+                    uint8_t ret = read_Byte(addr);
+                    // Serial.print("Eprom 1 ");
+                    Serial.println(ret, BIN);
+            }else{
+                    Serial.println("Write 1 not OK");
+            }
+        }else{
+            data = 0;
+            if(writeByte(addr, data)){
                 
-    //             Serial.println("Write 0 OK ");
-    //             // Serial.print("save flash: ");
-    //             // Serial.println(i);
-    //             // Serial.print("Eprom 1 ");
-    //             Serial.print(data, BIN);
-    //             Serial.print(", ");
-    //             // Serial.println(addr);
-    //             uint8_t ret = read_Byte(addr);
-    //             // Serial.print("Eprom 1 ");
-    //             Serial.println(ret, BIN);
-    //         }else{
-    //             Serial.println("Write 0 Not OK");
-    //         }
-    //     }
-    // }
+                Serial.println("Write 0 OK ");
+                // Serial.print("save flash: ");
+                // Serial.println(i);
+                // Serial.print("Eprom 1 ");
+                Serial.print(data, BIN);
+                Serial.print(", ");
+                // Serial.println(addr);
+                uint8_t ret = read_Byte(addr);
+                // Serial.print("Eprom 1 ");
+                Serial.println(ret, BIN);
+            }else{
+                Serial.println("Write 0 Not OK");
+            }
+        }
+    }
     
 }
 
@@ -309,17 +289,6 @@ void com_ser04_0x02(String command){
     save_on_flash_serv4();
 }
 
-void com_ser04_0x03(String command){
-    Serial.println("Fan3");
-    // if (command.equals("1")){
-    //     fan3_inf_on = true;
-    // }else{
-    //     fan3_inf_on = false;
-    // }    
-    // sendValuesBoolean(CANID_OUTPUT , 0x04, 0x03, *var_grow_4[3].var_bool );
-    save_on_flash_serv4();
-}
-
 void com_ser04_0x06(String command){
     Serial.println("Light");
     if (command.equals("1")){
@@ -338,18 +307,16 @@ void com_ser04_0x0B(String command){
     }else{
         pump_irr_on = false;
     }    
-    // sendValuesBoolean(CANID_OUTPUT , 0x04, 0x0B,*var_grow_4[5].var_bool );
     save_on_flash_serv4();
 }
 
 void com_ser04_0x0C(String command){
     Serial.println("Hum");
-    // if (command.equals("1")){
-    //     hum_on = true;
-    // }else{
-    //     hum_on = false;
-    // }    
-    // sendValuesBoolean(CANID_OUTPUT , 0x04, 0x0C, *var_grow_4[6].var_bool );
+    if (command.equals("1")){
+        hum_1_on = true;
+    }else{
+        hum_1_on = false;
+    }    
     save_on_flash_serv4();
 
 }
@@ -361,8 +328,7 @@ void com_ser04_0x0D(String command){
     // }else{
     //     dehum_1_on = false;
     // }    
-    // sendValuesBoolean(CANID_OUTPUT , 0x04, 0x0D, *var_grow_4[7].var_bool );
-    save_on_flash_serv4();
+    // save_on_flash_serv4();
 }
 
 void com_ser04_0x0E(String command){
@@ -372,7 +338,6 @@ void com_ser04_0x0E(String command){
     }else{
         relay_1_on = false;
     }    
-    // sendValuesBoolean(CANID_OUTPUT , 0x04, 0x0E, *var_grow_4[8].var_bool );
     save_on_flash_serv4();
 }
 
@@ -383,7 +348,6 @@ void com_ser04_0x0F(String command){
     }else{
         relay_2_on = false;
     }    
-    // sendValuesBoolean(CANID_OUTPUT , 0x04, 0x0F, *var_grow_4[9].var_bool );
     save_on_flash_serv4();
 }
 
@@ -394,8 +358,7 @@ void com_ser04_0x10(String command){
     // }else{
     //     relay_3_on = false;
     // }    
-    // sendValuesBoolean(CANID_OUTPUT , 0x04, 0x10, *var_grow_4[10].var_bool );
-    save_on_flash_serv4();
+    // save_on_flash_serv4();
 }
 
 void com_ser04_0x11(String command){
@@ -406,7 +369,7 @@ void com_ser04_0x11(String command){
     //     relay_4_on = false;
     // }    
     // sendValuesBoolean(CANID_OUTPUT , 0x04, 0x11, *var_grow_4[11].var_bool );
-    save_on_flash_serv4();
+    // save_on_flash_serv4();
 }
 
 void com_ser04_0x12(String command){
@@ -429,44 +392,6 @@ void com_ser04_0x13(String command){
     save_on_flash_serv4();
 }
 
-void com_ser04_0x14(String command){
-    if (command.equals("1")){
-        hum_1_on = true;
-    }else{
-        hum_1_on = false;
-    }    
-    // sendValuesBoolean(CANID_OUTPUT , 0x04, 0x14, hum_1_on);
-    save_on_flash_serv4();
-}
 
-void com_ser04_0x15(String command){
-    // if (command.equals("1")){
-    //     hum_2_on = true;
-    // }else{
-    //     hum_2_on = false;
-    // }    
-    // sendValuesBoolean(CANID_OUTPUT , 0x04, 0x15, hum_2_on);
-    save_on_flash_serv4();
-}
-
-void com_ser04_0x16(String command){
-    // if (command.equals("1")){
-    //     hum_3_on = true;
-    // }else{
-    //     hum_3_on = false;
-    // }    
-    // sendValuesBoolean(CANID_OUTPUT , 0x04, 0x16, hum_3_on);
-    save_on_flash_serv4();
-}
-
-void com_ser04_0x17(String command){
-    // if (command.equals("1")){
-    //     hum_4_on = true;
-    // }else{
-    //     hum_4_on = false;
-    // }    
-    // sendValuesBoolean(CANID_OUTPUT , 0x04, 0x17, hum_4_on);
-    save_on_flash_serv4();
-}
 
 

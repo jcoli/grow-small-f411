@@ -387,21 +387,21 @@ void struc_mount_begin(){
     // var_grow_1[26].eprom_size = 16;
     // var_grow_1[26].var_int = &fan3_inf_pwm_light_stp;
 
-    var_grow_1[27].pid = 0x1D;
+    var_grow_1[26].pid = 0x1D;
+    var_grow_1[26].service = 0x01;
+    var_grow_1[26].device = 0x0F;
+    var_grow_1[26].descr = "Rega Intervalo ON";
+    var_grow_1[26].eprom_address = 16848;
+    var_grow_1[26].eprom_size = 16;
+    var_grow_1[26].var_int = &irr_interval_on_stp;
+
+    var_grow_1[27].pid = 0x1E;
     var_grow_1[27].service = 0x01;
     var_grow_1[27].device = 0x0F;
-    var_grow_1[27].descr = "Rega Intervalo ON";
-    var_grow_1[27].eprom_address = 16848;
+    var_grow_1[27].descr = "Umidificador ON";
+    var_grow_1[27].eprom_address = 16864;
     var_grow_1[27].eprom_size = 16;
     var_grow_1[27].var_int = &irr_interval_on_stp;
-
-    var_grow_1[28].pid = 0x1E;
-    var_grow_1[28].service = 0x01;
-    var_grow_1[28].device = 0x0F;
-    var_grow_1[28].descr = "Umidificador ON";
-    var_grow_1[28].eprom_address = 16864;
-    var_grow_1[28].eprom_size = 16;
-    var_grow_1[28].var_int = &irr_interval_on_stp;
 
     // var_grow_1[29].pid = 0x1F;
     // var_grow_1[29].service = 0x01;
@@ -658,149 +658,83 @@ void struc_mount_begin(){
     // var_grow_4[0].var_name = "fan_dehum_on";
     // var_grow_4[0].var_bool = &fan_dehum_on;
 
-    var_grow_4[1].pid = 0x01;
+    var_grow_4[0].pid = 0x01;
+    var_grow_4[0].service = 0x04;
+    var_grow_4[0].device = 0x0F;
+    var_grow_4[0].descr = "Ventilador 1 Insuflamento";
+    var_grow_4[0].oldValue = false;
+    var_grow_4[0].unity = "B";
+    var_grow_4[0].eprom_address = 12304;
+    var_grow_4[0].eprom_size = 8;
+    var_grow_4[0].var_name = "fan1_inf_on";
+    var_grow_4[0].var_bool = &fan1_inf_on;
+
+    var_grow_4[1].pid = 0x02;
     var_grow_4[1].service = 0x04;
     var_grow_4[1].device = 0x0F;
-    var_grow_4[1].descr = "Ventilador 1 Insuflamento";
+    var_grow_4[1].descr = "Ventilador 2 Insuflamento";
     var_grow_4[1].oldValue = false;
     var_grow_4[1].unity = "B";
-    var_grow_4[1].eprom_address = 12304;
+    var_grow_4[1].eprom_address = 12320;
     var_grow_4[1].eprom_size = 8;
-    var_grow_4[1].var_name = "fan1_inf_on";
-    var_grow_4[1].var_bool = &fan1_inf_on;
+    var_grow_4[1].var_name = "fan2_inf_on";
+    var_grow_4[1].var_bool = &fan2_inf_on;
 
-    var_grow_4[2].pid = 0x02;
+    var_grow_4[2].pid = 0x06;
     var_grow_4[2].service = 0x04;
     var_grow_4[2].device = 0x0F;
-    var_grow_4[2].descr = "Ventilador 2 Insuflamento";
+    var_grow_4[2].descr = "Iluminação";
     var_grow_4[2].oldValue = false;
     var_grow_4[2].unity = "B";
-    var_grow_4[2].eprom_address = 12320;
+    var_grow_4[2].eprom_address = 12384;
     var_grow_4[2].eprom_size = 8;
-    var_grow_4[2].var_name = "fan2_inf_on";
-    var_grow_4[2].var_bool = &fan2_inf_on;
+    var_grow_4[2].var_name = "light_on";
+    var_grow_4[2].var_bool = &light_on;
 
-    // var_grow_4[3].pid = 0x03;
-    // var_grow_4[3].service = 0x04;
-    // var_grow_4[3].device = 0x0F;
-    // var_grow_4[3].descr = "Ventilador 3 Insuflamento";
-    // var_grow_4[3].oldValue = false;
-    // var_grow_4[3].unity = "B";
-    // var_grow_4[3].eprom_address = 12336;
-    // var_grow_4[3].eprom_size = 8;
-    // var_grow_4[3].var_name = "fan3_inf_on";
-    // var_grow_4[3].var_bool = &fan3_inf_on;
+    var_grow_4[3].pid = 0x0B;
+    var_grow_4[3].service = 0x04;
+    var_grow_4[3].device = 0x0F;
+    var_grow_4[3].descr = "Bomba Rega";
+    var_grow_4[3].oldValue = false;
+    var_grow_4[3].unity = "B";
+    var_grow_4[3].eprom_address = 12480;
+    var_grow_4[3].eprom_size = 8;
+    var_grow_4[3].var_name = "pump_irr_on";
+    var_grow_4[3].var_bool = &pump_irr_on;
 
-    var_grow_4[4].pid = 0x06;
+    var_grow_4[4].pid = 0x0C;
     var_grow_4[4].service = 0x04;
     var_grow_4[4].device = 0x0F;
-    var_grow_4[4].descr = "Iluminação";
+    var_grow_4[4].descr = "Umidificador";
     var_grow_4[4].oldValue = false;
     var_grow_4[4].unity = "B";
-    var_grow_4[4].eprom_address = 12384;
+    var_grow_4[4].eprom_address = 12496;
     var_grow_4[4].eprom_size = 8;
-    var_grow_4[4].var_name = "light_on";
-    var_grow_4[4].var_bool = &light_on;
-
-    var_grow_4[5].pid = 0x0B;
+    var_grow_4[4].var_name = "hum_1_on";
+    var_grow_4[4].var_bool = &hum_1_on;
+    
+    var_grow_4[5].pid = 0x0E;
     var_grow_4[5].service = 0x04;
     var_grow_4[5].device = 0x0F;
-    var_grow_4[5].descr = "Bomba Rega";
+    var_grow_4[5].descr = "Relay 1";
     var_grow_4[5].oldValue = false;
     var_grow_4[5].unity = "B";
-    var_grow_4[5].eprom_address = 12480;
+    var_grow_4[5].eprom_address = 12512;
     var_grow_4[5].eprom_size = 8;
-    var_grow_4[5].var_name = "pump_irr_on";
-    var_grow_4[5].var_bool = &pump_irr_on;
+    var_grow_4[5].var_name = "relay_1_on";
+    var_grow_4[5].var_bool = &relay_1_on;
 
-    var_grow_4[6].pid = 0x0C;
+    var_grow_4[6].pid = 0x0F;
     var_grow_4[6].service = 0x04;
     var_grow_4[6].device = 0x0F;
-    var_grow_4[6].descr = "Umidificador";
+    var_grow_4[6].descr = "Relay 2";
     var_grow_4[6].oldValue = false;
     var_grow_4[6].unity = "B";
-    var_grow_4[6].eprom_address = 12496;
+    var_grow_4[6].eprom_address = 12528;
     var_grow_4[6].eprom_size = 8;
-    var_grow_4[6].var_name = "hum_1_on";
-    var_grow_4[6].var_bool = &hum_1_on;
-    
-    // var_grow_4[7].pid = 0x0D;
-    // var_grow_4[7].service = 0x04;
-    // var_grow_4[7].device = 0x0F;
-    // var_grow_4[7].descr = "Desumidificador";
-    // var_grow_4[7].oldValue = false;
-    // var_grow_4[7].unity = "B";
-    // var_grow_4[7].eprom_address = 12496;
-    // var_grow_4[7].eprom_size = 8;
-    // var_grow_4[7].var_name = "dehum_1_on";
-    // var_grow_4[7].var_bool = &dehum_1_on;
-    
+    var_grow_4[6].var_name = "relay_2_on";
+    var_grow_4[6].var_bool = &relay_2_on;
 
-    var_grow_4[8].pid = 0x0E;
-    var_grow_4[8].service = 0x04;
-    var_grow_4[8].device = 0x0F;
-    var_grow_4[8].descr = "Relay 1";
-    var_grow_4[8].oldValue = false;
-    var_grow_4[8].unity = "B";
-    var_grow_4[8].eprom_address = 12512;
-    var_grow_4[8].eprom_size = 8;
-    var_grow_4[8].var_name = "relay_1_on";
-    var_grow_4[8].var_bool = &relay_1_on;
-
-    var_grow_4[9].pid = 0x0F;
-    var_grow_4[9].service = 0x04;
-    var_grow_4[9].device = 0x0F;
-    var_grow_4[9].descr = "Relay 2";
-    var_grow_4[9].oldValue = false;
-    var_grow_4[9].unity = "B";
-    var_grow_4[9].eprom_address = 12528;
-    var_grow_4[9].eprom_size = 8;
-    var_grow_4[9].var_name = "relay_2_on";
-    var_grow_4[9].var_bool = &relay_2_on;
-
-    // var_grow_4[10].pid = 0x10;
-    // var_grow_4[10].service = 0x04;
-    // var_grow_4[10].device = 0x0F;
-    // var_grow_4[10].descr = "Relay 3";
-    // var_grow_4[10].oldValue = false;
-    // var_grow_4[10].unity = "B";
-    // var_grow_4[10].eprom_address = 12544;
-    // var_grow_4[10].eprom_size = 8;
-    // var_grow_4[10].var_name = "relay_3_on";
-    // var_grow_4[10].var_bool = &relay_3_on;
-
-    // var_grow_4[11].pid = 0x11;
-    // var_grow_4[11].service = 0x04;
-    // var_grow_4[11].device = 0x0F;
-    // var_grow_4[11].descr = "Relay 4";
-    // var_grow_4[11].oldValue = false;
-    // var_grow_4[11].unity = "B";
-    // var_grow_4[11].eprom_address = 12560;
-    // var_grow_4[11].eprom_size = 8;
-    // var_grow_4[11].var_name = "relay_4_on";
-    // var_grow_4[11].var_bool = &relay_4_on;
-
-    // var_grow_4[12].pid = 0x12;
-    // var_grow_4[12].service = 0x04;
-    // var_grow_4[12].device = 0x0F;
-    // var_grow_4[12].descr = "Saida 1";
-    // var_grow_4[12].oldValue = false;
-    // var_grow_4[12].unity = "B";
-    // var_grow_4[12].eprom_address = 12576;
-    // var_grow_4[12].eprom_size = 8;
-    // var_grow_4[12].var_name = "output_1_on";
-    // var_grow_4[12].var_bool = &output_1_on;
-
-    // var_grow_4[13].pid = 0x13;
-    // var_grow_4[13].service = 0x04;
-    // var_grow_4[13].device = 0x0F;
-    // var_grow_4[13].descr = "Saida 2";
-    // var_grow_4[13].oldValue = false;
-    // var_grow_4[13].unity = "B";
-    // var_grow_4[13].eprom_address = 12592;
-    // var_grow_4[13].eprom_size = 8; 
-    // var_grow_4[13].var_name = "output_2_on";
-    // var_grow_4[13].var_bool = &output_2_on;
 
     //===================================
     //===================================
@@ -809,72 +743,49 @@ void struc_mount_begin(){
     //===================================
     //===================================
 
+    var_grow_5[0].pid = 0x01;
+    var_grow_5[0].service = 0x05;                                   
+    var_grow_5[0].device = 0x0F; 
+    var_grow_5[0].descr = "Ventilador 1 Insuflamento";
+    var_grow_5[0].oldValue = 0.00F;
+    var_grow_5[0].unity = "%";
+    var_grow_5[0].eprom_address = 20496;
+    var_grow_5[0].eprom_size = 16;
+    var_grow_5[0].var_name = "fan1_inf_pwm";
+    var_grow_5[0].var_int = &fan1_inf_pwm;
 
-    // var_grow_5[0].pid = 0x00;
-    // var_grow_5[0].service = 0x05;
-    // var_grow_5[0].device = 0x0F;
-    // var_grow_5[0].descr = "Ventilador Desumidificador";
-    // var_grow_5[0].oldValue = 0.00F;
-    // var_grow_5[0].unity = "%";
-    // var_grow_5[0].eprom_address = 20480;
-    // var_grow_5[0].eprom_size = 16;
-    // var_grow_5[0].var_name = "fan_dehum_pwm";
-    // var_grow_5[0].var_int = &fan_dehum_pwm;
-
-    var_grow_5[1].pid = 0x01;
-    var_grow_5[1].service = 0x05;                                   
-    var_grow_5[1].device = 0x0F; 
-    var_grow_5[1].descr = "Ventilador 1 Insuflamento";
+    var_grow_5[1].pid = 0x02;
+    var_grow_5[1].service = 0x05;
+    var_grow_5[1].device = 0x0F;
+    var_grow_5[1].descr = "Ventilador 2 Insuflamento";
     var_grow_5[1].oldValue = 0.00F;
     var_grow_5[1].unity = "%";
-    var_grow_5[1].eprom_address = 20496;
+    var_grow_5[1].eprom_address = 20512;
     var_grow_5[1].eprom_size = 16;
-    var_grow_5[1].var_name = "fan1_inf_pwm";
-    var_grow_5[1].var_int = &fan1_inf_pwm;
+    var_grow_5[1].var_name = "fan2_inf_pwm";
+    var_grow_5[1].var_int = &fan2_inf_pwm;
 
-    var_grow_5[2].pid = 0x02;
+    var_grow_5[2].pid = 0x06;
     var_grow_5[2].service = 0x05;
     var_grow_5[2].device = 0x0F;
-    var_grow_5[2].descr = "Ventilador 2 Insuflamento";
+    var_grow_5[2].descr = "Iluminação";
     var_grow_5[2].oldValue = 0.00F;
     var_grow_5[2].unity = "%";
-    var_grow_5[2].eprom_address = 20512;
+    var_grow_5[2].eprom_address = 20544;
     var_grow_5[2].eprom_size = 16;
-    var_grow_5[2].var_name = "fan2_inf_pwm";
-    var_grow_5[2].var_int = &fan2_inf_pwm;
+    var_grow_5[2].var_name = "light_pwm";
+    var_grow_5[2].var_int = &light_pwm;
 
-    // var_grow_5[3].pid = 0x03;
+    // var_grow_5[3].pid = 0x0C;
     // var_grow_5[3].service = 0x05;
     // var_grow_5[3].device = 0x0F;
-    // var_grow_5[3].descr = "Ventilador 1 Exaustao";
+    // var_grow_5[3].descr = "Umidificador";
     // var_grow_5[3].oldValue = 0.00F;
     // var_grow_5[3].unity = "%";
-    // var_grow_5[3].eprom_address = 20528;
+    // var_grow_5[3].eprom_address = 20560;
     // var_grow_5[3].eprom_size = 16;
-    // var_grow_5[3].var_name = "fan3_inf_pwm";
-    // var_grow_5[3].var_int = &fan3_inf_pwm;
-
-    var_grow_5[4].pid = 0x06;
-    var_grow_5[4].service = 0x05;
-    var_grow_5[4].device = 0x0F;
-    var_grow_5[4].descr = "Iluminação";
-    var_grow_5[4].oldValue = 0.00F;
-    var_grow_5[4].unity = "%";
-    var_grow_5[4].eprom_address = 20544;
-    var_grow_5[4].eprom_size = 16;
-    var_grow_5[4].var_name = "light_pwm";
-    var_grow_5[4].var_int = &light_pwm;
-
-    // var_grow_5[5].pid = 0x0C;
-    // var_grow_5[5].service = 0x05;
-    // var_grow_5[5].device = 0x0F;
-    // var_grow_5[5].descr = "Umidificador";
-    // var_grow_5[5].oldValue = 0.00F;
-    // var_grow_5[5].unity = "%";
-    // var_grow_5[5].eprom_address = 20560;
-    // var_grow_5[5].eprom_size = 16;
-    // var_grow_5[5].var_name = "hum_1_pwm";
-    // var_grow_5[5].var_int = &hum_1_pwm;
+    // var_grow_5[3].var_name = "hum_1_pwm";
+    // var_grow_5[3].var_int = &hum_1_pwm;
 
 
     //===================================
@@ -1009,29 +920,29 @@ void struc_mount_begin(){
     // var_grow_7[8].var_name = "ha_device_name";
     // var_grow_7[8].var_string = &ha_device_name;
 
-    var_grow_7[9].pid = 0x09;
-    var_grow_7[9].service = 0x07;
-    var_grow_7[9].descr = "Owner Name";
-    var_grow_7[9].eprom_address = 2304;
-    var_grow_7[9].eprom_size = 255;
-    var_grow_7[9].var_name = "owner_name";
-    var_grow_7[9].var_string = &owner_name;
+    var_grow_7[0].pid = 0x09;
+    var_grow_7[0].service = 0x07;
+    var_grow_7[0].descr = "Owner Name";
+    var_grow_7[0].eprom_address = 2304;
+    var_grow_7[0].eprom_size = 255;
+    var_grow_7[0].var_name = "owner_name";
+    var_grow_7[0].var_string = &owner_name;
 
-    var_grow_7[10].pid = 0x0A;
-    var_grow_7[10].service = 0x07;
-    var_grow_7[10].descr = "UserName";
-    var_grow_7[10].eprom_address = 2560;
-    var_grow_7[10].eprom_size = 255;
-    var_grow_7[10].var_name = "user_name";
-    var_grow_7[10].var_string = &user_name;
+    var_grow_7[1].pid = 0x0A;
+    var_grow_7[1].service = 0x07;
+    var_grow_7[1].descr = "UserName";
+    var_grow_7[1].eprom_address = 2560;
+    var_grow_7[1].eprom_size = 255;
+    var_grow_7[1].var_name = "user_name";
+    var_grow_7[1].var_string = &user_name;
 
-    var_grow_7[11].pid = 0x0B;
-    var_grow_7[11].service = 0x07;
-    var_grow_7[11].descr = "UserName Password";
-    var_grow_7[11].eprom_address = 2816;
-    var_grow_7[11].eprom_size = 255;
-    var_grow_7[11].var_name = "user_pwd";
-    var_grow_7[11].var_string = &user_pwd;
+    var_grow_7[2].pid = 0x0B;
+    var_grow_7[2].service = 0x07;
+    var_grow_7[2].descr = "UserName Password";
+    var_grow_7[2].eprom_address = 2816;
+    var_grow_7[2].eprom_size = 255;
+    var_grow_7[2].var_name = "user_pwd";
+    var_grow_7[2].var_string = &user_pwd;
 
     //next address 2878
     
