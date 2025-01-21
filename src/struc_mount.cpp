@@ -202,22 +202,6 @@ void struc_mount_begin(){
     var_grow_1[5].eprom_address = 16464;
     var_grow_1[5].eprom_size = 16;
     var_grow_1[5].var_int = &soil_hum_min_stp;
-    
-    // var_grow_1[6].pid = 0x06;
-    // var_grow_1[6].service = 0x01;
-    // var_grow_1[6].device = 0x0F;
-    // var_grow_1[6].descr = "PH Água de Rega";
-    // var_grow_1[6].eprom_address = 16480;
-    // var_grow_1[6].eprom_size = 16;
-    // var_grow_1[6].var_int = &ph_irrig_stp;
-    
-    // var_grow_1[7].pid = 0x07;
-    // var_grow_1[7].service = 0x01;
-    // var_grow_1[7].device = 0x0F;
-    // var_grow_1[7].descr = "PH Água do Umidificador";
-    // var_grow_1[7].eprom_address = 16496;
-    // var_grow_1[7].eprom_size = 16;
-    // var_grow_1[7].var_int = &ph_hum_stp;
 
     var_grow_1[6].pid = 0x08;
     var_grow_1[6].service = 0x01;
@@ -355,14 +339,6 @@ void struc_mount_begin(){
     var_grow_1[22].eprom_size = 16;
     var_grow_1[22].var_int = &fan2_inf_pwm_stp;
     
-    // var_grow_1[23].pid = 0x19;
-    // var_grow_1[23].service = 0x01;
-    // var_grow_1[23].device = 0x0F;
-    // var_grow_1[23].descr = "Fan 3 Intensidade (PMW)";
-    // var_grow_1[23].eprom_address = 16784;
-    // var_grow_1[23].eprom_size = 16;
-    // var_grow_1[23].var_int = &fan3_inf_pwm_stp;
-
     var_grow_1[24].pid = 0x1A;
     var_grow_1[24].service = 0x01;
     var_grow_1[24].device = 0x0F;
@@ -379,14 +355,6 @@ void struc_mount_begin(){
     var_grow_1[25].eprom_size = 16;
     var_grow_1[25].var_int = &fan2_inf_pwm_light_stp;
     
-    // var_grow_1[26].pid = 0x1C;
-    // var_grow_1[26].service = 0x01;
-    // var_grow_1[26].device = 0x0F;
-    // var_grow_1[26].descr = "Fan 3 Intensidade Luz (PMW)";
-    // var_grow_1[26].eprom_address = 16832;
-    // var_grow_1[26].eprom_size = 16;
-    // var_grow_1[26].var_int = &fan3_inf_pwm_light_stp;
-
     var_grow_1[26].pid = 0x1D;
     var_grow_1[26].service = 0x01;
     var_grow_1[26].device = 0x0F;
@@ -403,78 +371,7 @@ void struc_mount_begin(){
     var_grow_1[27].eprom_size = 16;
     var_grow_1[27].var_int = &irr_interval_on_stp;
 
-    // var_grow_1[29].pid = 0x1F;
-    // var_grow_1[29].service = 0x01;
-    // var_grow_1[29].device = 0x0F;
-    // var_grow_1[29].descr = "Umidificador Intensidade";
-    // var_grow_1[29].eprom_address = 16880;
-    // var_grow_1[29].eprom_size = 16;
-    // var_grow_1[29].var_int = &irr_interval_on_stp;
-
-
-    // var_grow_1[22].pid = 0x16;
-    // var_grow_1[22].service = 0x01;
-    // var_grow_1[22].device = 0x0F;
-    // var_grow_1[22].descr = "Rega 3 ON (hora)";
-    // var_grow_1[22].eprom_address = 16672;
-    // var_grow_1[22].eprom_size = 16;
-    // var_grow_1[22].var_int = &irr_3_hr_stp;
-
-    // var_grow_1[23].pid = 0x17;
-    // var_grow_1[23].service = 0x01;
-    // var_grow_1[23].device = 0x0F;
-    // var_grow_1[23].descr = "Rega 3 ON (min)";
-    // var_grow_1[23].eprom_address = 16688;
-    // var_grow_1[23].eprom_size = 16;
-    // var_grow_1[23].var_int = &irr_3_min_stp;
     
-    // var_grow_1[24].pid = 0x18;
-    // var_grow_1[24].service = 0x01;
-    // var_grow_1[24].device = 0x0F;
-    // var_grow_1[24].descr = "Rega 4 ON (hora)";
-    // var_grow_1[24].eprom_address = 16704;
-    // var_grow_1[24].eprom_size = 16;
-    // var_grow_1[24].var_int = &irr_4_hr_stp;
-
-    // var_grow_1[25].pid = 0x19;
-    // var_grow_1[25].service = 0x01;
-    // var_grow_1[25].device = 0x0F;
-    // var_grow_1[25].descr = "Rega 4 ON (min)";
-    // var_grow_1[25].eprom_address = 16720;
-    // var_grow_1[25].eprom_size = 16;
-    // var_grow_1[25].var_int = &irr_4_min_stp;
-    
-    // var_grow_1[26].pid = 0x1A;
-    // var_grow_1[26].service = 0x01;
-    // var_grow_1[26].device = 0x0F;
-    // var_grow_1[26].descr = "Rega 5 ON (hora)";
-    // var_grow_1[26].eprom_address = 16736;
-    // var_grow_1[26].eprom_size = 16;
-    // var_grow_1[26].var_int = &irr_5_hr_stp;
-
-    // var_grow_1[27].pid = 0x1B;
-    // var_grow_1[27].service = 0x01;
-    // var_grow_1[27].device = 0x0F;
-    // var_grow_1[27].descr = "Rega 5 ON (min)";
-    // var_grow_1[27].eprom_address = 16752;
-    // var_grow_1[27].eprom_size = 16;
-    // var_grow_1[27].var_int = &irr_5_min_stp;
-    
-    // var_grow_1[28].pid = 0x1C;
-    // var_grow_1[28].service = 0x01;
-    // var_grow_1[28].device = 0x0F;
-    // var_grow_1[28].descr = "Rega 6 ON (hora)";
-    // var_grow_1[28].eprom_address = 16768;
-    // var_grow_1[28].eprom_size = 16;
-    // var_grow_1[28].var_int = &irr_6_hr_stp;
-    
-    // var_grow_1[29].pid = 0x1D;
-    // var_grow_1[29].service = 0x01;
-    // var_grow_1[29].device = 0x0F;
-    // var_grow_1[29].descr = "Rega 6 ON (min)";
-    // var_grow_1[29].eprom_address = 16784;
-    // var_grow_1[29].eprom_size = 16;
-    // var_grow_1[29].var_int = &irr_6_min_stp;
     
     //===================================
     //===================================
@@ -520,24 +417,6 @@ void struc_mount_begin(){
     var_grow_2[3].var_name = "hum_int";
     var_grow_2[3].var_float = &hum_int;
 
-    // var_grow_2[4].pid = 0x04;
-    // var_grow_2[4].service = 0x02;
-    // var_grow_2[4].device = 0x0F;
-    // var_grow_2[4].descr = "C02 Externo";
-    // var_grow_2[4].oldValue = 0.00F;
-    // var_grow_2[4].unity = "ppm";
-    // var_grow_2[4].var_name = "eco2_ext";
-    // var_grow_2[4].var_float = &eco2_ext;
-
-    // var_grow_2[5].pid = 0x05;
-    // var_grow_2[5].service = 0x02;
-    // var_grow_2[5].device = 0x0F;
-    // var_grow_2[5].descr = "C02 Interno";
-    // var_grow_2[5].oldValue = 0.00F;
-    // var_grow_2[5].unity = "ppm";
-    // var_grow_2[5].var_name = "eco2_int";
-    // var_grow_2[5].var_float = &eco2_int;
-
     var_grow_2[6].pid = 0x11;
     var_grow_2[6].service = 0x02;
     var_grow_2[6].device = 0x0F;
@@ -556,33 +435,7 @@ void struc_mount_begin(){
     var_grow_2[7].var_name = "soil_1_hum";
     var_grow_2[7].var_float = &soil_1_hum;
 
-    // var_grow_2[8].pid = 0x13;
-    // var_grow_2[8].service = 0x02;
-    // var_grow_2[8].device = 0x0F;
-    // var_grow_2[8].descr = "Umidade do Solo 2";
-    // var_grow_2[8].oldValue = 0.00F;
-    // var_grow_2[8].unity = "%";
-    // var_grow_2[8].var_name = "soil_2_hum";
-    // var_grow_2[8].var_float = &soil_2_hum;
-
-    // var_grow_2[9].pid = 0x14;
-    // var_grow_2[9].service = 0x02;
-    // var_grow_2[9].device = 0x0F;
-    // var_grow_2[9].descr = "Umidade do Solo 3";
-    // var_grow_2[9].oldValue = 0.00F;
-    // var_grow_2[9].unity = "%";
-    // var_grow_2[9].var_name = "soil_3_hum";
-    // var_grow_2[9].var_float = &soil_3_hum;
-
-    // var_grow_2[10].pid = 0x15;
-    // var_grow_2[10].service = 0x02;
-    // var_grow_2[10].device = 0x0F;
-    // var_grow_2[10].descr = "Umidade do Solo 2";
-    // var_grow_2[10].oldValue = 0.00F;
-    // var_grow_2[10].unity = "%";
-    // var_grow_2[10].var_name = "soil_4_hum";
-    // var_grow_2[10].var_float = &soil_4_hum;
-    
+       
     //===================================
     //===================================
     //===================================
@@ -599,25 +452,6 @@ void struc_mount_begin(){
     var_grow_3[0].var_name = "water_irrig_1_level";
     var_grow_3[0].var_bool = &water_irrig_1_level;
 
-    // var_grow_3[1].pid = 0x0D;
-    // var_grow_3[1].service = 0x03;
-    // var_grow_3[1].device = 0x0F;
-    // var_grow_3[1].descr = "Door";
-    // var_grow_3[1].oldValue = 0.00F;
-    // var_grow_3[1].unity = "B";
-    // var_grow_3[1].var_name = "door";
-    // var_grow_3[1].var_bool = &door;
-
-    // var_grow_3[2].pid = 0x21;
-    // var_grow_3[2].service = 0x03;
-    // var_grow_3[2].device = 0x0F;
-    // var_grow_3[2].descr = "WIFI";
-    // var_grow_3[2].oldValue = 0.00F;
-    // var_grow_3[2].unity = "B";
-    // var_grow_3[2].var_name = "wifi_connected";
-    // var_grow_3[2].var_bool = &wifi_connected;
-
-
     var_grow_3[3].pid = 0x22;
     var_grow_3[3].service = 0x03;
     var_grow_3[3].device = 0x0F;
@@ -627,14 +461,6 @@ void struc_mount_begin(){
     var_grow_3[3].var_name = "bt_connected";
     var_grow_3[3].var_bool = &bt_connected;
 
-    // var_grow_3[4].pid = 0x23;
-    // var_grow_3[4].service = 0x03;
-    // var_grow_3[4].device = 0x0F;
-    // var_grow_3[4].descr = "MQTT";
-    // var_grow_3[4].oldValue = 0.00F;
-    // var_grow_3[4].unity = "B";
-    // var_grow_3[4].var_name = "mqtt_connected";
-    // var_grow_3[4].var_bool = &mqtt_connected;
     
     //===================================
     //===================================
@@ -645,18 +471,6 @@ void struc_mount_begin(){
 
     //initial address service 7 7936
     //last address service 7 8400
-
-
-    // var_grow_4[0].pid = 0x00;
-    // var_grow_4[0].service = 0x04;
-    // var_grow_4[0].device = 0x0F;
-    // var_grow_4[0].descr = "Ventilador desumidificador";
-    // var_grow_4[0].oldValue = false;
-    // var_grow_4[0].unity = "B";
-    // var_grow_4[0].eprom_address = 12288;
-    // var_grow_4[0].eprom_size = 8;
-    // var_grow_4[0].var_name = "fan_dehum_on";
-    // var_grow_4[0].var_bool = &fan_dehum_on;
 
     var_grow_4[0].pid = 0x01;
     var_grow_4[0].service = 0x04;
@@ -776,18 +590,6 @@ void struc_mount_begin(){
     var_grow_5[2].var_name = "light_pwm";
     var_grow_5[2].var_int = &light_pwm;
 
-    // var_grow_5[3].pid = 0x0C;
-    // var_grow_5[3].service = 0x05;
-    // var_grow_5[3].device = 0x0F;
-    // var_grow_5[3].descr = "Umidificador";
-    // var_grow_5[3].oldValue = 0.00F;
-    // var_grow_5[3].unity = "%";
-    // var_grow_5[3].eprom_address = 20560;
-    // var_grow_5[3].eprom_size = 16;
-    // var_grow_5[3].var_name = "hum_1_pwm";
-    // var_grow_5[3].var_int = &hum_1_pwm;
-
-
     //===================================
     //===================================
     //===================================
@@ -795,37 +597,12 @@ void struc_mount_begin(){
     //===================================
     //===================================
 
-    // var_grow_6[0].pid = 0x00;
-    // var_grow_6[0].service = 0x06;
-    // var_grow_6[0].device = 0x0F;
-    // var_grow_6[0].descr = "Wifi begin (ssid, pwd)";
-
-
-
-    // var_grow_6[1].pid = 0x01;
-    // var_grow_6[1].service = 0x06;
-    // var_grow_6[1].device = 0x0F;
-    // var_grow_6[1].descr = "List Networks";
-
-    // var_grow_6[2].pid = 0x02;
-    // var_grow_6[2].service = 0x06;
-    // var_grow_6[2].device = 0x0F;
-    // var_grow_6[2].descr = "Chosen Network";
+    
 
     var_grow_6[3].pid = 0x03;
     var_grow_6[3].service = 0x06;
     var_grow_6[3].device = 0x0F;
     var_grow_6[3].descr = "update Variables";
-
-    // var_grow_6[4].pid = 0x04;
-    // var_grow_6[4].service = 0x06;
-    // var_grow_6[4].device = 0x0F;
-    // var_grow_6[4].descr = "send commands wifi/bt → master";
-
-    // var_grow_6[5].pid = 0x05;
-    // var_grow_6[5].service = 0x06;
-    // var_grow_6[5].device = 0x0F;
-    // var_grow_6[5].descr = "life_bit";
 
     var_grow_6[6].pid = 0x06;
     var_grow_6[6].service = 0x06;
@@ -846,79 +623,7 @@ void struc_mount_begin(){
 
     //initial address service 7 1024
     //last address service 7 7680
-
-
-    // var_grow_7[0].pid = 0x00;
-    // var_grow_7[0].service = 0x07;
-    // var_grow_7[0].descr = "WIFI SSID";
-    // var_grow_7[0].eprom_address = 0;
-    // var_grow_7[0].eprom_size = 255;
-    // var_grow_7[0].var_name = "ssid_name";
-    // var_grow_7[0].var_string = &ssid_name;
-
-    // var_grow_7[1].pid = 0x01;
-    // var_grow_7[1].service = 0x07;
-    // var_grow_7[1].descr = "WIFI Password";
-    // var_grow_7[1].eprom_address = 256;
-    // var_grow_7[1].eprom_size = 255;
-    // var_grow_7[1].var_name = "ssid_pwd";
-    // var_grow_7[1].var_string = &ssid_pwd;
-
-    // var_grow_7[2].pid = 0x02;
-    // var_grow_7[2].service = 0x07;
-    // var_grow_7[2].descr = "Local IP";
-    // var_grow_7[2].eprom_address = 512;
-    // var_grow_7[2].eprom_size = 16;
-    // var_grow_7[2].var_name = "ipaddress";
-    // var_grow_7[2].var_string = &ipaddress;
-
-    // var_grow_7[3].pid = 0x03;
-    // var_grow_7[3].service = 0x07;
-    // var_grow_7[3].descr = "Local Gateway";
-    // var_grow_7[3].eprom_address = 768;
-    // var_grow_7[3].eprom_size = 16;
-    // var_grow_7[3].var_name = "gateway";
-    // var_grow_7[3].var_string = &gateway;
-
-    // var_grow_7[4].pid = 0x04;
-    // var_grow_7[4].service = 0x07;
-    // var_grow_7[4].descr = "SubNet";
-    // var_grow_7[4].eprom_address = 1024;
-    // var_grow_7[4].eprom_size = 16;
-    // var_grow_7[4].var_name = "subnet";
-    // var_grow_7[4].var_string = &subnet;
-
-    // var_grow_7[5].pid = 0x05;
-    // var_grow_7[5].service = 0x07;
-    // var_grow_7[5].descr = "HA IP";
-    // var_grow_7[5].eprom_address = 1280;
-    // var_grow_7[5].eprom_size = 16;
-    // var_grow_7[5].var_name = "ha_ip";
-    // var_grow_7[5].var_string = &ha_ip;
-
-    // var_grow_7[6].pid = 0x06;
-    // var_grow_7[6].service = 0x07;
-    // var_grow_7[6].descr = "HA UserName";
-    // var_grow_7[6].eprom_address = 1536;
-    // var_grow_7[6].eprom_size = 255;
-    // var_grow_7[6].var_name = "ha_user";
-    // var_grow_7[6].var_string = &ha_user;
-
-    // var_grow_7[7].pid = 0x07;
-    // var_grow_7[7].service = 0x07;
-    // var_grow_7[7].descr = "HA Password";
-    // var_grow_7[7].eprom_address = 1792;
-    // var_grow_7[7].eprom_size = 255;
-    // var_grow_7[7].var_name = "ha_pwd";
-    // var_grow_7[7].var_string = &ha_pwd;
-
-    // var_grow_7[8].pid = 0x08;
-    // var_grow_7[8].service = 0x07;
-    // var_grow_7[8].descr = "HA Device Name";
-    // var_grow_7[8].eprom_address = 2048;
-    // var_grow_7[8].eprom_size = 255;
-    // var_grow_7[8].var_name = "ha_device_name";
-    // var_grow_7[8].var_string = &ha_device_name;
+ 
 
     var_grow_7[0].pid = 0x09;
     var_grow_7[0].service = 0x07;
@@ -957,12 +662,6 @@ void struc_mount_begin(){
     //last address service 7 7680
 
 
-    // var_grow_8[0].pid = 0x00;
-    // var_grow_8[0].service = 0x08;
-    // var_grow_8[0].descr = "WIFI SSID";
-    // var_grow_8[0].eprom_address = 0;
-    // var_grow_8[0].eprom_size = 255;
-    // var_grow_8[0].var_name = "ssid_name";
-    // var_grow_8[0].var_string = &ssid_name;
+    
 
 }

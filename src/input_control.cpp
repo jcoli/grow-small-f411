@@ -22,7 +22,7 @@ void printValues();
 
 #define DHTTYPE DHT22
 #define DHTTYPE1 DHT22
-#define DHTPIN PC14
+
 
 DHT dht_interno(INT_DHT, DHTTYPE);
 DHT dht_externo(EXT_DHT, DHTTYPE1);
@@ -70,15 +70,9 @@ void input_begin(){
     Serial.println("Input Begin "); 
     dht_interno.begin();
     dht_externo.begin();
-
-    pinMode(INT_ZERO, INPUT_PULLDOWN);
-    // for (int idx = 0; idx < 2; idx++)
-    // {
-    //     test_dht(idx);
-    // }
-    pinMode(INT_ZERO, INPUT_PULLDOWN);
+    
     pinMode(LV_W_IRR, INPUT_PULLDOWN);
-    pinMode(LV_W_HUM, INPUT_PULLDOWN);
+    // pinMode(LV_W_HUM, INPUT_PULLDOWN);
 }
 
 void input_read(){

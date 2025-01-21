@@ -10,11 +10,6 @@ STM32F411 - GrowSmall
 
 
 void output_begin();
-void TimerHandler();
-void zeroDetect(); 
-void write_output();
-
-
 
 
 #endif

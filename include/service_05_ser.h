@@ -9,7 +9,7 @@ STM32F103C8 - Grow Sensors
 #ifndef __SERVICE_05_SER_H__
 #define __SERVICE_05_SER_H__
 
-void service_05_ser(String line_in);
+void on_service_05_ser(String line_in);
 void com_ser05_0x00(float com_pwm);
 void com_ser05_0x01(float com_pwm);
 void com_ser05_0x01(float com_pwm);

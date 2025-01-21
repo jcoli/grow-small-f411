@@ -16,7 +16,7 @@ STM32F103C8 - Grow Sensors
 #include "tools.h" 
 #include "eprom.h"
 
-void service_05_ser(String line_in);
+void on_service_05_ser(String line_in);
 void com_ser05_0x00(float com_pwm);
 void com_ser05_0x01(float com_pwm);
 void com_ser05_0x01(float com_pwm);
@@ -68,7 +68,7 @@ extern int irr_6_min_stp;
 extern int light_pwm_stp;
 extern int fan1_inf_pwm_stp;
 extern int fan2_inf_pwm_stp;
-extern int fan3_inf_pwm_stp;
+// extern int fan3_inf_pwm_stp;
 
 //Service 02
 extern float eco2_ext;
@@ -150,7 +150,7 @@ extern var_grow var_grow_5[30];
 
 
 
-void service_05_ser(String line_in){
+void on_service_05_ser(String line_in){
     // Serial.println("on service 5");
 
     split_msg_5(line_in);

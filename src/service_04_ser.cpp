@@ -16,7 +16,7 @@ STM32F103C8 - Grow Sensors
 #include "tools.h" 
 #include "eprom.h"
 
-void service_04_ser(String line_in);
+void on_service_04_ser(String line_in);
 void save_on_flash_serv4();
 void com_ser04_0x00(String line_in);
 void com_ser04_0x01(String line_in);
@@ -144,7 +144,7 @@ extern var_grow var_grow_4[40];
 // extern var_grow var_grow_7[30];
 
 
-void service_04_ser(String line_in){
+void on_service_04_ser(String line_in){
  
     split_msg_5(line1);
     int i = toHexc(retMsg5[2]);

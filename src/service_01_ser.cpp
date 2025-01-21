@@ -120,11 +120,11 @@ extern int irr_6_min_stp;
 extern int light_pwm_stp;
 extern int fan1_inf_pwm_stp;
 extern int fan2_inf_pwm_stp;
-extern int fan3_inf_pwm_stp;
+// extern int fan3_inf_pwm_stp;
 
 extern int fan1_inf_pwm_light_stp;
 extern int fan2_inf_pwm_light_stp;
-extern int fan3_inf_pwm_light_stp;
+// extern int fan3_inf_pwm_light_stp;
 
 //Service 02
 extern float eco2_ext;
@@ -364,7 +364,7 @@ void on_service_01_ser(String line_in){
             com_ser01_0x25(retMsg5[3].toInt());
             break;  
         case 0xFF:
-            // Serial.println("Status Pump Insu 0x03 0x13");
+            Serial.println("Save Flash");
             com_ser01_0xFF(retMsg5[3].toInt());
             break;              
         
@@ -584,8 +584,8 @@ void com_ser01_0x20(int command){
 void com_ser01_0x21(int command){
     Serial.print("serv 01 - 21: ");
     // Serial.println(command);
-    fan3_inf_pwm_stp = command;
-    Serial.println(fan3_inf_pwm_stp);
+    // fan3_inf_pwm_stp = command;
+    // Serial.println(fan3_inf_pwm_stp);
 }
 
 void com_ser01_0x22(int command){
@@ -602,8 +602,8 @@ void com_ser01_0x23(int command){
 
 void com_ser01_0x24(int command){
     Serial.print("serv 01 - 24: ");
-    fan3_inf_pwm_light_stp = command;
-    Serial.println(fan3_inf_pwm_light_stp);
+    // fan3_inf_pwm_light_stp = command;
+    // Serial.println(fan3_inf_pwm_light_stp);
 }
 
 void com_ser01_0x25(int command){

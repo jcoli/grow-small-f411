@@ -149,6 +149,15 @@ void loop() {
           first_run = false;
       }
 
+    if ((millis() - loopDelay_pump > irr_time_stp) && (pump_irr_on)){ 
+      pump_irr_on = false;
+      digitalWrite(PUMP1, LOW );
+     
+      
+      Serial.print("com_bool_0x0B off/on: ");
+      Serial.println(irr_time_stp);
+  }      
+
 }
 
 void serialEvent()

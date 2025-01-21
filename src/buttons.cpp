@@ -23,14 +23,8 @@ void check_button();
 // RotaryEncoder encoder1(ENC1_CLK, ENC1_DT, RotaryEncoder::LatchMode::TWO03);
 // RotaryEncoder encoder2(ENC2_CLK, ENC2_DT, RotaryEncoder::LatchMode::TWO03);
 
-const uint8_t BUTTON_PINS[NUM_BUTTONS] = {BD_0, BD_1, BD_2, BD_3};
+const uint8_t BUTTON_PINS[NUM_BUTTONS] = {BD_0, BD_1, BD_2, BD_3, BD_4};
 Bounce * buttons = new Bounce[NUM_BUTTONS];
-
-extern unsigned long encoderDelay;
-extern int enc1oldPos;
-extern int enc1newPos;
-extern int enc2oldPos;
-extern int enc2newPos;
 
 extern bool ch_page;
 extern bool ch_page_ana;
@@ -58,36 +52,6 @@ void checkPosition(){
 } 
 
 void check_button(){
-    // if ((millis() - encoderDelay > 200)) {
-    //   encoderDelay = millis();
-    // } 
-    // enc1newPos = encoder1.getPosition(); 
-    // // enc2newPos = encoder2.getPosition(); 
-
-    // if (enc1newPos != enc1oldPos) {
-    //   Serial.println("enc0");
-    //       if (enc1oldPos>enc1newPos){
-    //         //  dec_ana();
-    //         Serial.println("enc0-dec");
-    //       }   
-    //       if (enc1oldPos<enc1newPos){
-    //         Serial.println("enc0-inc");
-    //       }
-    //       enc1oldPos = enc1newPos;
-    // }
-
-    // if (enc2newPos != enc2oldPos) {
-    //   Serial.println("enc1");  
-    //       if (enc2oldPos>enc2newPos){
-    //         //  dec_ana();
-    //         Serial.println("enc1-dec");
-    //       }   
-    //       if (enc2oldPos<enc2newPos){
-    //         // inc_ana();
-    //         Serial.println("enc1-inc");
-    //       }
-    //       enc2oldPos = enc2newPos;
-    // }
 
 
     for (int i = 0; i < NUM_BUTTONS; i++)  {
@@ -126,42 +90,7 @@ void check_button(){
           // Serial.println("button6");
           //^^
           break;
-        // case 7:
-        //   Serial.println("button7");
-        //   break;   
-    //     case 8:
-    //       Serial.println("button8");
-    //       break;   
-    //     case 9:
-    //       Serial.println("button9");
-    //       break;
-    //     case 10:
-    //       Serial.println("button10");
-    //       break;     
-    //     case 11:
-    //       Serial.println("button11");
-    //       break;     
-    //     case 12:
-    //       Serial.println("button12");
-    //       break;
-    //     case 13:
-    //       Serial.println("button13");
-    //       break;   
-    //     case 14:
-    //       Serial.println("button14");
-    //       break;    
-    //     case 15:
-    //       tft_page++;
-    //       if (tft_page>1) tft_page=1;
-    //       change_tft_page();
-    //       Serial.println("button16");
-    //       break;    
-    //     case 16:
-    //       tft_page--;
-    //       if (tft_page<0) tft_page=0;
-    //       change_tft_page();
-    //       Serial.println("button15");
-    //       break;    
+  
       }
       
       

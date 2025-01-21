@@ -18,7 +18,7 @@ STM32F411 - GrowSmall
 // #define BT_SERIAL Serial2
 #define BT_SERIAL Serial2
 
-#define NUM_BUTTONS 4
+#define NUM_BUTTONS 5
 
 #define LL_ADC_RESOLUTION LL_ADC_RESOLUTION_12B
 #define ADC_RANGE 4096

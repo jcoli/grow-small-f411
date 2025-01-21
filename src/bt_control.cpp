@@ -170,10 +170,19 @@ void bt_begin(){
     char COMM_CHK[] = "AT"; 
     BT_SERIAL.write(COMM_CHK);
     delay(1000);
-    if (BT_SERIAL.available()) {
+    Serial.println("BT");
+    char COMM_CHK_1[] = "AT+RESET"; 
+    BT_SERIAL.write(COMM_CHK_1); 
+    delay(1000);
+    Serial.println("BT");
+    // if (BT_SERIAL.available()) {
+      while (BT_SERIAL.available())Serial.write(BT_SERIAL.read());
       String command = BT_SERIAL.readStringUntil('\n');
-        Serial.println(command); 
-     }
+      Serial.print("response: "); 
+      Serial.println(command); 
+    //  }else{
+    //   Serial.println("no response"); 
+    //  }
     //  BT_SERIAL.write("AT+NAMEGrow");
     // delay(1000);
     //  if (BT_SERIAL.available()) {
@@ -220,35 +229,35 @@ void on_receive_bt(String line_in){
      switch (i) {
         case 0:
           Serial.println("esp- case 0");
-        //   service_0x00_ser(line_in);
+          on_service_00_ser(line_in);
           break;
         case 1:
           Serial.println("esp - case 1");
-        //   service_0x01_ser(line_in);
+          on_service_01_ser(line_in);
           break;
         case 2:
           Serial.println("esp - case 2");
-        //   service_0x02_ser(line_in);
+          on_service_02_ser(line_in);
           break;
         case 3:
           Serial.println("esp - case 3");
-        //   service_0x03_ser(line_in);
+          on_service_03_ser(line_in);
           break;
         case 4:
           Serial.println("esp - case 4");
-          service_04_ser(line_in);
+          on_service_04_ser(line_in);
           break;
         case 5:
           Serial.println("esp - case 5");
-          service_05_ser(line_in);
+          on_service_05_ser(line_in);
           break;  
         case 6:
           Serial.println("esp - case 6");
-        //   service_0x06_ser(line_in);
+          on_service_06_ser(line_in);
           break;    
         case 7:
           Serial.println("esp - case 7");
-        //   service_0x07_ser(line_in);
+          on_service_07_ser(line_in);
           break;    
         case 9:
           Serial.println("esp - case 9");
@@ -300,39 +309,38 @@ void BTconnectionCheck(){
 
 void service_0x0A_ser(String line_in){
     Serial.print("Receive Service 0A SER: ");
-    Serial.println(line_in);
     split_msg_5(line_in);
     int i = toHexc(retMsg5[2]);
     if (i == 0){
         Serial.print("User: ");
         Serial.println(retMsg5[3]);
-        if (!(var_grow_7[11].var_string->equals("0"))){
-          if (var_grow_7[10].var_string->equals(retMsg5[3])){
+        Serial.println("User: 2");
+        if (!(var_grow_7[1].var_string->equals("0"))){
+          if (var_grow_7[1].var_string->equals(retMsg5[3])){
               Serial.println("User OK ");
           }else{
-              Serial.println("User NOT OK ");
-              char COMM_CHK[] = "AT+DISC"; 
-              BT_SERIAL.write(COMM_CHK);
-              // BT_SERIAL
-              
+            Serial.println("User NOT OK ");
+            digitalWrite(BT_POWER, LOW);
+            delay(1000);
+            digitalWrite(BT_POWER, HIGH);
           }
         }
     }else if(i == 1){
         Serial.print("Password: ");
         Serial.println(retMsg5[3]);
-        if (!(var_grow_7[11].var_string->equals("0"))){
-          if (var_grow_7[11].var_string->equals(retMsg5[3])){
+        if (!(var_grow_7[2].var_string->equals("0"))){
+          if (var_grow_7[2].var_string->equals(retMsg5[3])){
             Serial.println("Password OK ");
           }else{
             Serial.println("PWD NOT OK ");
-            char COMM_CHK[] = "AT+DISC"; 
-            BT_SERIAL.write(COMM_CHK); 
-            //  bt_begin();       
+            digitalWrite(BT_POWER, LOW);
+            delay(1000);
+            digitalWrite(BT_POWER, HIGH);
+
           }
         }
-        
     }
-    // on_service_0A_ser(line_in);
+    
 
 }
 

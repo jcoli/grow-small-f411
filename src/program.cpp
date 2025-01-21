@@ -48,7 +48,7 @@ extern int irr_6_min_stp;
 extern int light_pwm_stp;
 extern int fan1_inf_pwm_stp;
 extern int fan2_inf_pwm_stp;
-extern int fan3_inf_pwm_stp;
+// extern int fan3_inf_pwm_stp;
 
 extern float eco2_ext;
 extern float eco2_int;

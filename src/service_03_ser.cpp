@@ -90,7 +90,7 @@ extern int irr_6_min_stp;
 extern int light_pwm_stp;
 extern int fan1_inf_pwm_stp;
 extern int fan2_inf_pwm_stp;
-extern int fan3_inf_pwm_stp;
+// extern int fan3_inf_pwm_stp;
 
 //Service 02
 extern float eco2_ext;
@@ -227,11 +227,11 @@ void com_ser03_0x07(String command){
     }
 }    
 void com_ser03_0x0D(String command){
-    if (command.equals("1")){
-        door = true;
-    }else{
-        door = false;
-    }
+    // if (command.equals("1")){
+    //     door = true;
+    // }else{
+    //     door = false;
+    // }
     // if (door){
     //     Serial.println("door: close");
     // }else{
@@ -240,13 +240,13 @@ void com_ser03_0x0D(String command){
 }    
 void com_ser03_0x21(String command){
     
-    if (command.equals("1")){
-        wifi_connected = true;
-        // Serial.println("com_ser04_0x21 true");
-    }else{
-        wifi_connected = false;
-        // Serial.println("com_ser04_0x21 false");
-    }
+    // if (command.equals("1")){
+    //     wifi_connected = true;
+    //     // Serial.println("com_ser04_0x21 true");
+    // }else{
+    //     wifi_connected = false;
+    //     // Serial.println("com_ser04_0x21 false");
+    // }
     // sendValuesBoolean(0x33A, 0x03, 0x21, wifi_connected);    
 }    
 void com_ser03_0x22(String command){
@@ -262,13 +262,13 @@ void com_ser03_0x22(String command){
 }    
 void com_ser03_0x23(String command){
     // Serial.println("com_ser04_0x23");
-    if (command.equals("1")){
-        mqtt_connected = true;
-        // Serial.println("com_ser04_0x23 true");
-    }else{
-        mqtt_connected = false;
-        // Serial.println("com_ser04_0x23 false");
-    }
+    // if (command.equals("1")){
+    //     mqtt_connected = true;
+    //     // Serial.println("com_ser04_0x23 true");
+    // }else{
+    //     mqtt_connected = false;
+    //     // Serial.println("com_ser04_0x23 false");
+    // }
     // sendValuesBoolean(0x33A, 0x03, 0x23, mqtt_connected);    
 }    
 
