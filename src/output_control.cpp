@@ -64,7 +64,7 @@ void output_begin(){
     pinMode(BT_POWER, OUTPUT);
     pinMode(LED_PIN, OUTPUT);
 
-    digitalWrite(BT_POWER, HIGH);
+    digitalWrite(BT_POWER, LOW);
 
 
     

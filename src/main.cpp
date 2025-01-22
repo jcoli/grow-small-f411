@@ -86,10 +86,10 @@ void setup() {
     loopDelay_watchdog = millis();
     // if(!rtc.isConfigured()){
       // rtc.setHours(16);
-      // rtc.setMinutes(00);
+      // rtc.setMinutes(49);
       // rtc.setSeconds(0);
       // rtc.setWeekDay(3);
-      // rtc.setDay(15);
+      // rtc.setDay(22);
       // rtc.setMonth(1);
       // rtc.setYear(25); 
     // }  
@@ -108,6 +108,7 @@ void loop() {
      loopDelay_watchdog  = millis();
      digitalWrite(LED_PIN, !digitalRead(LED_PIN)); 
      IWatchdog.reload();
+    //  digitalWrite(BT_POWER,!(digitalRead(BT_POWER)));
     }
 
     if (millis() - loopDelay > TIMER_ANALOG){

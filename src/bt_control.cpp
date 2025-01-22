@@ -183,7 +183,7 @@ void bt_begin(){
     //  }else{
     //   Serial.println("no response"); 
     //  }
-    //  BT_SERIAL.write("AT+NAMEGrow");
+    BT_SERIAL.write("AT+NAMEGrowMini");
     // delay(1000);
     //  if (BT_SERIAL.available()) {
     //   String command = BT_SERIAL.readStringUntil('\n');
