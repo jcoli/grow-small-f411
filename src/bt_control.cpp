@@ -132,6 +132,9 @@ extern bool relay_2_on;
 extern bool soil_hum_dig;
 
 extern bool bt_connected;
+extern bool bt_enabled;
+extern bool bt_alive;
+extern bool bt_rec;
 
 extern float VRef;
 extern float intTemp;
@@ -170,20 +173,21 @@ void bt_begin(){
     char COMM_CHK[] = "AT"; 
     BT_SERIAL.write(COMM_CHK);
     delay(1000);
-    Serial.println("BT");
-    char COMM_CHK_1[] = "AT+RESET"; 
-    BT_SERIAL.write(COMM_CHK_1); 
-    delay(1000);
-    Serial.println("BT");
+    // Serial.println("BT");
+    // char COMM_CHK_1[] = "AT+RESET"; 
+    // BT_SERIAL.write(COMM_CHK_1); 
+    // delay(1000);
+    Serial.print("BT: ");
     // if (BT_SERIAL.available()) {
-      while (BT_SERIAL.available())Serial.write(BT_SERIAL.read());
+      // while (BT_SERIAL.available())Serial.write(BT_SERIAL.read());
       String command = BT_SERIAL.readStringUntil('\n');
       Serial.print("response: "); 
       Serial.println(command); 
+      if (command.equals("OK")) bt_enabled = true;
     //  }else{
     //   Serial.println("no response"); 
     //  }
-    BT_SERIAL.write("AT+NAMEGrowMini");
+    // BT_SERIAL.write("AT+NAMEGrow_Mini");
     // delay(1000);
     //  if (BT_SERIAL.available()) {
     //   String command = BT_SERIAL.readStringUntil('\n');

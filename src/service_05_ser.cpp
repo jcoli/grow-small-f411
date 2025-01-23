@@ -114,6 +114,9 @@ extern int fan2_inf_pwm;
 extern int light_pwm;
 extern int hum_1_pwm;
 
+extern HardwareTimer *tim1;
+
+
 
 // extern bool soil_hum_dig;
 
@@ -176,10 +179,6 @@ void on_service_05_ser(String line_in){
             // Serial.println("on/off 0x04 0x01 Fan1 Insu");
             com_ser05_0x02(rec_data[3]);
             break;           
-        case 0x03:
-            // Serial.println("on/off 0x04 0x06 Lights");
-            com_ser05_0x03(rec_data[3]);
-            break;    
         case 0x06:
             // Serial.println("on/off 0x04 0x06 Lights");
             com_ser05_0x06(rec_data[3]);
@@ -216,71 +215,51 @@ void save_on_flash_serv5(){
 }
 
 void com_ser05_0x00(float com_pwm){
-    
-    // fan_dehum_pwm = com_pwm;
-    // if (fan_dehum_pwm){
-        // Serial.println("com_ser05_0x00 on");
-        // sendValuesFloat(CANID_OUTPUT , 0x05, 0x00, fan_dehum_pwm);
-        // save_on_flash_serv5();
-    // }
-    // else{
-    //     Serial.println("com_ser05_0x00 off");
-    //     sendValuesFloat(CANID_OUTPUT , 0x05, 0x00, 0);
-    // }
+   
 }
 
 void com_ser05_0x01(float com_pwm){
     fan1_inf_pwm = com_pwm;
-    
-    // if (fan_dehum_on){
-        // Serial.println("com_ser05_0x01 on");
-        // sendValuesFloat(CANID_OUTPUT , 0x05, 0x01, fan1_inf_pwm);
-        save_on_flash_serv5();
-    // }
-    // else{
-    //     Serial.println("com_ser05_0x01 off");
-    //     sendValuesFloat(CANID_OUTPUT , 0x05, 0x01, 0);
-    // } 
+    if (fan1_inf_on){
+        Serial.println("com_pwm_0x01 on");
+        tim1->setCaptureCompare(1, fan1_inf_pwm, PERCENT_COMPARE_FORMAT);
+    }else{
+        Serial.println("com_pwm_0x01 off");
+        tim1->setCaptureCompare(1, 0, PERCENT_COMPARE_FORMAT);
+    }     
+    save_on_flash_serv5();
 }
 
 void com_ser05_0x02(float com_pwm){
-    fan2_inf_pwm = com_pwm;
-    
-    // if (fan1_inf_pwm){
-        // Serial.println("com_ser05_0x02 on");
-        // sendValuesFloat(CANID_OUTPUT , 0x05, 0x02, fan2_inf_pwm);
-        save_on_flash_serv5();
-    // }
-    // else{
-    //     Serial.println("com_ser05_0x01 off");
-    //     sendValuesFloat(CANID_OUTPUT , 0x05, 0x02, 0);
-    // } 
+    fan2_inf_pwm = com_pwm;    
+    // Serial.println("fan2: "+fan2_inf_pwm);
+    if (fan2_inf_on){
+        Serial.println("com_pwm_0x02 on");
+        tim1->setCaptureCompare(2, fan2_inf_pwm, PERCENT_COMPARE_FORMAT);
+    }else{
+         Serial.println("com_pwm_0x02 off");
+         tim1->setCaptureCompare(2, 0, PERCENT_COMPARE_FORMAT);
+    } 
+    save_on_flash_serv5();    
 }
 
 void com_ser05_0x03(float com_pwm){
-    
-    
-    // if (fan1_inf_pwm){
-        // Serial.println("com_ser05_0x03 on");
-        // sendValuesFloat(CANID_OUTPUT , 0x05, 0x03, fan3_inf_pwm);
-        save_on_flash_serv5();
-    // }
-    // else{
-    //     Serial.println("com_ser05_0x01 off");
-    //     sendValuesFloat(CANID_OUTPUT , 0x05, 0x02, 0);
-    // } 
+    // save_on_flash_serv5();    
 }
 
 
 void com_ser05_0x06(float com_pwm){
     light_pwm = com_pwm;
-    // if (light_on){
-        // Serial.println("com_ser05_0x06 on");
-        // sendValuesFloat(CANID_OUTPUT, 0x05, 0x06, light_pwm);
-        save_on_flash_serv5();
-    // }else{
-    //     Serial.println("com_ser05_0x06 off");
-    //     sendValuesFloat(CANID_OUTPUT , 0x05, 0x06, 0);
-    // }    
+    light_pwm = com_pwm;
+    // Serial.println("light1: "+light_pwm);
+    if (light_on){
+        Serial.println("com_pwm_0x06 on");
+        tim1->setCaptureCompare(3, light_pwm, PERCENT_COMPARE_FORMAT);
+    }else{
+        Serial.println("com_pwm_0x06 off");
+        tim1->setCaptureCompare(3, 0, PERCENT_COMPARE_FORMAT);
+    }
+    save_on_flash_serv5();
+    
 }
 

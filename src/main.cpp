@@ -52,6 +52,7 @@ void serialEventRun(void)
 void setup() {
     Serial.begin(115200);
     BT_SERIAL.begin(57600);
+    
     delay(7000);
     Serial.println("==================================");
     Serial.println("setup");

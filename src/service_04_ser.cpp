@@ -256,24 +256,19 @@ void save_on_flash_serv4(){
 }
 
 void com_ser04_0x00(String command){
-    Serial.println("Fan dehum");
-    // if (command.equals("1")){
-    //     fan_hum_pwm = true;
-    // }else{
-    //     fan_hum_pwm = false;
-    // }
-    // sendValuesBoolean(CANID_OUTPUT , 0x04, 0x00, *var_grow_4[0].var_bool );    
-    save_on_flash_serv4();
+    
 }
 
 void com_ser04_0x01(String command){
     Serial.println("Fan1");
     if (command.equals("1")){
         fan1_inf_on = true;
+        Serial.println("com_0x01 on");
     }else{
         fan1_inf_on = false;
+        Serial.println("com_0x01 off");
     } 
-    // sendValuesBoolean(CANID_OUTPUT , 0x04, 0x01, *var_grow_4[1].var_bool );   
+    digitalWrite(FAN01, fan1_inf_on);  
     save_on_flash_serv4();
 }
 
@@ -281,11 +276,12 @@ void com_ser04_0x02(String command){
     Serial.println("Fan2");
     if (command.equals("1")){
         fan2_inf_on = true;
+        Serial.println("com_0x02 on");
       }else{
         fan2_inf_on = false;
-        // Serial.println("com_ser04_0x02 off");
+        Serial.println("com_0x02 off");
     }    
-    // sendValuesBoolean(CANID_OUTPUT , 0x04, 0x02, *var_grow_4[2].var_bool );
+    digitalWrite(FAN02, fan2_inf_on);
     save_on_flash_serv4();
 }
 
@@ -293,10 +289,12 @@ void com_ser04_0x06(String command){
     Serial.println("Light");
     if (command.equals("1")){
         light_on = true;
+        Serial.println("com_0x06 on");
     }else{
         light_on = false;
+        Serial.println("com_0x06 off");
     }    
-    // sendValuesBoolean(CANID_OUTPUT , 0x04, 0x06, *var_grow_4[4].var_bool );
+    digitalWrite(LIGHTS, light_on);
     save_on_flash_serv4();
 }
 
@@ -304,20 +302,26 @@ void com_ser04_0x0B(String command){
     Serial.println("Rega");
     if (command.equals("1")){
         pump_irr_on= true;
+        Serial.println("com_0x0B on");
     }else{
         pump_irr_on = false;
+        Serial.println("com_0x0B off");
     }    
     save_on_flash_serv4();
+    digitalWrite(PUMP1, pump_irr_on);
 }
 
 void com_ser04_0x0C(String command){
     Serial.println("Hum");
     if (command.equals("1")){
         hum_1_on = true;
+        Serial.println("com_0x0C on");
     }else{
         hum_1_on = false;
+        Serial.println("com_0x0C off");
     }    
     save_on_flash_serv4();
+    digitalWrite(HUM, hum_1_on);
 
 }
 
@@ -335,20 +339,26 @@ void com_ser04_0x0E(String command){
     Serial.println("Relay 1");
     if (command.equals("1")){
         relay_1_on = true;
+        Serial.println("com_0x0E on");
     }else{
         relay_1_on = false;
+        Serial.println("com_0x0E off");
     }    
     save_on_flash_serv4();
+    digitalWrite(RELAY1, relay_1_on);
 }
 
 void com_ser04_0x0F(String command){
     Serial.println("Relay 2");
     if (command.equals("1")){
         relay_2_on = true;
+        Serial.println("com_0x0F on");
     }else{
         relay_2_on = false;
+        Serial.println("com_0x0F off");
     }    
     save_on_flash_serv4();
+    digitalWrite(RELAY2, relay_2_on);
 }
 
 void com_ser04_0x10(String command){
@@ -379,7 +389,7 @@ void com_ser04_0x12(String command){
     //     output_1_on = false;
     // }    
     // sendValuesBoolean(CANID_OUTPUT , 0x04, 0x12, *var_grow_4[12].var_bool );
-    save_on_flash_serv4();
+    // save_on_flash_serv4();
 }
 
 void com_ser04_0x13(String command){
@@ -389,7 +399,7 @@ void com_ser04_0x13(String command){
     //     output_2_on = false;
     // }    
     // sendValuesBoolean(CANID_OUTPUT , 0x04, 0x13, *var_grow_4[13].var_bool );
-    save_on_flash_serv4();
+    // save_on_flash_serv4();
 }
 
 
