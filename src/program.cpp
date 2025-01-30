@@ -11,44 +11,29 @@ STM32F407VET6 - Grown
 #include "tools.h"
 #include "eprom.h"
 #include "structures.h"
-
+#include "io_defines.h"
 
 void program_begin();
 void vpd_calculate();
 void append_struct_life_bit(); 
 bool eraseDataSetup();
 void avg_calculate();
+void send_bool_command(int ind);
+void send_float_command(int ind);
 
-extern int temp_int_stp;
-extern int hum_int_stp;
-extern int soil_hum_stp;
-extern int ph_irrig_stp;
-extern int ph_hum_stp;
-extern int light_hr_on_stp;
-extern int light_min_on_stp;
-extern int light_hr_off_stp;
-extern int light_min_off_stp;
-extern int pump_hr_irr_on_stp;
-extern int pump_min_irr_on_stp;
-extern int pump_hr_irr_off_stp;
-extern int pump_min_irr_off_stp;
-extern int irr_interval_stp;
-extern int irr_1_hr_stp;
-extern int irr_1_min_stp;
-extern int irr_2_hr_stp;
-extern int irr_2_min_stp;
-extern int irr_3_hr_stp;
-extern int irr_3_min_stp;
-extern int irr_4_hr_stp;
-extern int irr_4_min_stp;
-extern int irr_5_hr_stp;
-extern int irr_5_min_stp;
-extern int irr_6_hr_stp;
-extern int irr_6_min_stp;
-extern int light_pwm_stp;
-extern int fan1_inf_pwm_stp;
-extern int fan2_inf_pwm_stp;
-// extern int fan3_inf_pwm_stp;
+extern byte minutes;
+extern byte hours;
+extern byte weekDay ;
+extern byte day;
+extern byte month;
+extern byte year;
+
+extern byte lastMinutes;
+extern byte lastHours;
+extern byte lastWeekDay ;
+extern byte lastDay;
+extern byte lastMonth;
+extern byte lastYear;
 
 extern float eco2_ext;
 extern float eco2_int;
@@ -63,14 +48,13 @@ extern float soil_3_hum;
 extern float soil_4_hum;
 extern float light_1_int;
 
-extern bool water_irrig_1_level;
+extern bool water_irrig_1_level; 
 extern bool water_hum_1_level;
 
 extern bool fan_dehum_on;
 extern bool fan1_inf_on;
 extern bool fan2_inf_on;
 extern bool fan3_inf_on;
-
 extern bool fan_hum_on;
 extern bool light_on;
 extern bool pump_irr_on;
@@ -102,6 +86,7 @@ extern float intTemp;
 extern bool first_run;
 extern bool scheduleRun;
 
+
 extern float actual_vpd;
 extern float avg_vpd_int;
 extern float sum_vpd_int;
@@ -112,8 +97,52 @@ extern float sum_temp_int;
 extern float avg_hum_int;
 extern float sum_hum_int;
 
-extern var_grow var_grow_1[30];
-extern var_grow var_grow_2[30];
+extern int temp_int_min_stp;
+extern int temp_int_max_stp;
+extern int hum_int_on_stp;
+extern int hum_int_on_light_stp;
+extern int hum_int_min_stp;
+extern int hum_int_max_stp;
+extern int vpd_int_min_stp;
+extern int vpd_int_max_stp;
+extern int soil_hum_min_stp;
+extern int soil_hum_max_stp;
+extern int ph_irrig_stp;
+extern int ph_hum_stp;
+extern int light_hr_on_stp;
+extern int light_min_on_stp;
+extern int light_hr_off_stp;
+extern int light_min_off_stp;
+extern int pump_irr_on_stp;
+extern int pump_hr_irr_on_stp;
+extern int pump_min_irr_on_stp;
+extern int pump_hr_irr_off_stp;
+extern int pump_min_irr_off_stp;
+extern int irr_interval_stp;
+extern int irr_time_stp;
+extern int irr_interval_on_stp;
+extern int irr_1_hr_stp;
+extern int irr_1_min_stp;
+extern int irr_2_hr_stp;
+extern int irr_2_min_stp;
+extern int irr_3_hr_stp;
+extern int irr_3_min_stp;
+extern int irr_4_hr_stp;
+extern int irr_4_min_stp;
+extern int irr_5_hr_stp;
+extern int irr_5_min_stp;
+extern int irr_6_hr_stp;
+extern int irr_6_min_stp;
+extern int light_pwm_stp;
+extern int fan1_inf_pwm_stp;
+extern int fan2_inf_pwm_stp;
+extern int fan1_inf_pwm_light_stp;
+extern int fan2_inf_pwm_light_stp;
+
+extern HardwareTimer *tim1;
+
+extern var_grow var_grow_1[40];
+extern var_grow var_grow_2[40];
 extern var_grow var_grow_3[40];
 extern var_grow var_grow_4[40];
 extern var_grow var_grow_5[30];
@@ -136,7 +165,20 @@ void program_begin(){
     uint32_t data_int = 0;
     // sendValuesFloat(CANID_OUTPUT , 0x05, 0x01, 100);
     // sendValuesFloat(CANID_OUTPUT , 0x05, 0x02, 100);
-    for (int i = 0; i < 6; i++){
+     for (int i = 0; i <= 6; i++){ 
+        addr = var_grow_4[i].eprom_address;
+        uint8_t data = read_Byte(addr);
+        *var_grow_4[i].var_bool = data;
+        send_bool_command(i);
+        Serial.print("Program ON/OFF ");
+        Serial.print(var_grow_4[i].descr);
+        Serial.print(", ");
+        Serial.print(addr);
+        Serial.print(", ");
+        Serial.println(data, BIN);
+        send_bool_command(i);
+    }  
+    for (int i = 0; i <= 2; i++){
         addr = var_grow_5[i].eprom_address;
         data_int = read_int(addr);
         *var_grow_5[i].var_int = data_int;
@@ -146,34 +188,48 @@ void program_begin(){
         Serial.print(addr);
         Serial.print(", ");
         Serial.println(data_int);
-        // sendValuesFloat(CANID_OUTPUT , var_grow_5[i].service, var_grow_5[i].pid, *var_grow_5[i].var_int);
-        // Serial.print(CANID_OUTPUT, HEX);
+        send_float_command(i);
         Serial.print(" - ");
         Serial.print(var_grow_5[i].service, HEX);
         Serial.print(" - ");
         Serial.print(var_grow_5[i].pid, HEX);
         Serial.print(" - ");
         Serial.println(*var_grow_5[i].var_int);
-        delay(300);
     }
-    for (int i = 0; i < 14; i++){
-        addr = var_grow_4[i].eprom_address;
-        uint8_t data = read_Byte(addr);
-        *var_grow_4[i].var_bool = data;
-
-        Serial.print("Program ON/OFF ");
-        Serial.print(var_grow_4[i].descr);
-        Serial.print(", ");
-        Serial.print(addr);
-        Serial.print(", ");
-        Serial.println(data, BIN);
-        // sendValuesBoolean(CANID_OUTPUT , var_grow_4[i].service, var_grow_4[i].pid, *var_grow_4[i].var_bool);
-        delay(300);
-        
-    }  
+   
     
     scheduleRun = true;  
     // sendValuesBoolean(CANID_OUTPUT , 0x04, 0x02, ret);
+}
+
+void send_bool_command(int ind){
+    switch (ind) {
+        case 4:
+            digitalWrite(HUM, hum_1_on);     
+            break;
+        case 5:
+            digitalWrite(RELAY1, relay_1_on);         
+            break;  
+        case 6:
+            digitalWrite(RELAY2, relay_2_on);        
+            break;         
+
+    }
+}
+
+void send_float_command(int ind){
+    switch (ind) {
+        case 0:
+            tim1->setCaptureCompare(1, *var_grow_5[ind].var_int, PERCENT_COMPARE_FORMAT);
+            break;
+        case 1:
+            tim1->setCaptureCompare(2, *var_grow_5[ind].var_int, PERCENT_COMPARE_FORMAT);
+            break; 
+        case 2:
+            tim1->setCaptureCompare(3, *var_grow_5[ind].var_int, PERCENT_COMPARE_FORMAT);
+            break;           
+    }
+    
 }
 
 void avg_calculate(){

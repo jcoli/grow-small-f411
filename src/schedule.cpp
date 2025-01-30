@@ -11,6 +11,7 @@ STM32F407VET6 - Grown
 #include "tools.h"
 #include "eprom.h"
 #include "structures.h"
+#include "io_defines.h"
 
 
 void schedule_begin();
@@ -45,7 +46,7 @@ extern float soil_3_hum;
 extern float soil_4_hum;
 extern float light_1_int;
 
-extern bool water_irrig_1_level;
+extern bool water_irrig_1_level; 
 extern bool water_hum_1_level;
 
 extern bool fan_dehum_on;
@@ -97,6 +98,7 @@ extern float sum_hum_int;
 extern int temp_int_min_stp;
 extern int temp_int_max_stp;
 extern int hum_int_on_stp;
+extern int hum_int_on_light_stp;
 extern int hum_int_min_stp;
 extern int hum_int_max_stp;
 extern int vpd_int_min_stp;
@@ -117,28 +119,17 @@ extern int pump_min_irr_off_stp;
 extern int irr_interval_stp;
 extern int irr_time_stp;
 extern int irr_interval_on_stp;
-extern int irr_1_hr_stp;
-extern int irr_1_min_stp;
-extern int irr_2_hr_stp;
-extern int irr_2_min_stp;
-extern int irr_3_hr_stp;
-extern int irr_3_min_stp;
-extern int irr_4_hr_stp;
-extern int irr_4_min_stp;
-extern int irr_5_hr_stp;
-extern int irr_5_min_stp;
-extern int irr_6_hr_stp;
-extern int irr_6_min_stp;
+extern int irr_interval_last_hour;
 extern int light_pwm_stp;
 extern int fan1_inf_pwm_stp;
 extern int fan2_inf_pwm_stp;
 extern int fan1_inf_pwm_light_stp;
 extern int fan2_inf_pwm_light_stp;
 
+extern HardwareTimer *tim1;
 
-
-extern var_grow var_grow_1[30];
-extern var_grow var_grow_2[30];
+extern var_grow var_grow_1[40];
+extern var_grow var_grow_2[40];
 extern var_grow var_grow_3[40];
 extern var_grow var_grow_4[40];
 extern var_grow var_grow_5[30];
@@ -150,7 +141,7 @@ void schedule_begin(){
     uint32_t addr;
     uint8_t data = 0;
     uint32_t data_int = 0;
-    for (int i = 0; i <= 27; i++){
+    for (int i = 0; i <= 35; i++){
         addr = var_grow_1[i].eprom_address;
         data_int = read_long(addr);
         *var_grow_1[i].var_int = data_int;
@@ -189,7 +180,7 @@ void schedule_save(){
     uint32_t addr;
     uint32_t data = 0;
     eraseSector(16384);
-    for (int i = 0; i <= 28; i++){
+    for (int i = 0; i <= 35; i++){
         addr = var_grow_1[i].eprom_address;
             data = *var_grow_1[i].var_int; 
             if(writeLong(addr, data)){
@@ -215,46 +206,68 @@ void schedule_check(){
         if ((light_hr_on_stp<=hours) && (light_min_on_stp<minutes)){
             Serial.println("Light ON 1");
             light_pwm = *var_grow_1[20].var_int;
-            relay_4_on = true;   
-            // sendValuesBoolean(CANID_OUTPUT , 0x04, 0x11, relay_4_on );
-            delay(400);
-            // sendValuesFloat(CANID_OUTPUT, 0x05, 0x06, light_pwm);
-            delay(400);
+            light_on = true;
+            if (light_on){
+                tim1->setCaptureCompare(3, light_pwm, PERCENT_COMPARE_FORMAT);
+            }else{
+                tim1->setCaptureCompare(3, 0, PERCENT_COMPARE_FORMAT);
+            }       
             Serial.println("Fan");
             fan1_inf_pwm = fan1_inf_pwm_light_stp; 
-            Serial.println("Fan 1 PWM Light ON");                
+            Serial.println("Fan 1 PWM Light ON");  
+            if (fan1_inf_pwm>0){
+                fan1_inf_on = true;
+                tim1->setCaptureCompare(1, fan1_inf_pwm_light_stp, PERCENT_COMPARE_FORMAT);
+            }else{
+                fan1_inf_on = false;
+                tim1->setCaptureCompare(1, 0, PERCENT_COMPARE_FORMAT);
+            }             
             // sendValuesFloat(CANID_OUTPUT, 0x05, 0x01, fan1_inf_pwm);
-            delay(400);   
+            
             fan2_inf_pwm = fan2_inf_pwm_light_stp; 
-            Serial.println("Fan 2 PWM Light ON");                
-            // sendValuesFloat(CANID_OUTPUT, 0x05, 0x02, fan2_inf_pwm);
-            delay(400);
-            // fan3_inf_pwm = fan3_inf_pwm_light_stp; 
-            // Serial.println("Fan 3 PWM Light ON");                
-            // sendValuesFloat(CANID_OUTPUT, 0x05, 0x03, fan3_inf_pwm);
-            delay(400);
+            if (fan2_inf_pwm>0){
+                fan2_inf_on = true;
+                tim1->setCaptureCompare(2, fan2_inf_pwm_light_stp, PERCENT_COMPARE_FORMAT);
+            }else{
+                fan2_inf_on = false;
+                tim1->setCaptureCompare(2, 0, PERCENT_COMPARE_FORMAT);
+            }
+            hum_1_on = *var_grow_1[27].var_int;
+            digitalWrite(HUM, hum_1_on);
+                         
+            
         }
         else if ((light_hr_off_stp<=hours) && (light_min_off_stp<minutes)){
-            Serial.println("Light OFF 1");
+            Serial.println("Light ON 1");
             light_pwm = *var_grow_1[20].var_int;
-            relay_4_on = false;   
-            // sendValuesBoolean(CANID_OUTPUT , 0x04, 0x11, relay_4_on);
-            delay(400);
-            // sendValuesFloat(CANID_OUTPUT, 0x05, 0x06, light_pwm);
-            delay(400);
+            light_on = false;
+            if (light_on){
+                tim1->setCaptureCompare(3, light_pwm, PERCENT_COMPARE_FORMAT);
+            }else{
+                tim1->setCaptureCompare(3, 0, PERCENT_COMPARE_FORMAT);
+            }       
             Serial.println("Fan");
-            fan1_inf_pwm = fan1_inf_pwm_stp; 
-            Serial.println("Fan 1 PWM Light ON");                
+            fan1_inf_pwm = fan1_inf_pwm_light_stp; 
+            Serial.println("Fan 1 PWM Light ON");  
+            if (fan1_inf_pwm>0){
+                fan1_inf_on = true;
+                tim1->setCaptureCompare(1, fan1_inf_pwm, PERCENT_COMPARE_FORMAT);
+            }else{
+                fan1_inf_on = false;
+                tim1->setCaptureCompare(1, 0, PERCENT_COMPARE_FORMAT);
+            }             
             // sendValuesFloat(CANID_OUTPUT, 0x05, 0x01, fan1_inf_pwm);
-            delay(400);  
-            fan2_inf_pwm = fan2_inf_pwm_stp; 
-            Serial.println("Fan 2 PWM Light ON");                
-            // sendValuesFloat(CANID_OUTPUT, 0x05, 0x02, fan2_inf_pwm);
-            delay(400);  
-            // fan3_inf_pwm = fan3_inf_pwm_stp; 
-            // Serial.println("Fan 3 PWM Light ON");                
-            // // sendValuesFloat(CANID_OUTPUT, 0x05, 0x03, fan3_inf_pwm);
-            // delay(400);  
+            
+            fan2_inf_pwm = fan2_inf_pwm_light_stp; 
+            if (fan2_inf_pwm>0){
+                fan2_inf_on = true;
+                tim1->setCaptureCompare(2, fan2_inf_pwm, PERCENT_COMPARE_FORMAT);
+            }else{
+                fan2_inf_on = false;
+                tim1->setCaptureCompare(2, 0, PERCENT_COMPARE_FORMAT);
+            }
+            hum_1_on = *var_grow_1[28].var_int;
+            digitalWrite(HUM, hum_1_on);
         }
 
     }
@@ -265,128 +278,122 @@ void schedule_run(){
     if ((lastMinutes != minutes)){
         lastHours = hours;
         lastMinutes = minutes;
+        Serial.print("Light ON: ");
         Serial.println("Schedule ok");
         Serial.print(light_hr_on_stp);
         Serial.print(":");
         Serial.println(light_min_on_stp);
-        Serial.println("Light ON");
         if ((light_hr_on_stp==hours) && (light_min_on_stp==minutes)){
-            Serial.println("Light ON 1");
+           Serial.println("Light ON 1");
             light_pwm = *var_grow_1[20].var_int;
-            relay_4_on = true;   
-            // sendValuesBoolean(CANID_OUTPUT , 0x04, 0x11, relay_4_on );
-            delay(400);
-            // sendValuesFloat(CANID_OUTPUT, 0x05, 0x06, light_pwm);
-            delay(400);
+            light_on = true;
+            if (light_on){
+                tim1->setCaptureCompare(3, light_pwm, PERCENT_COMPARE_FORMAT);
+            }else{
+                tim1->setCaptureCompare(3, 0, PERCENT_COMPARE_FORMAT);
+            }       
             Serial.println("Fan");
             fan1_inf_pwm = fan1_inf_pwm_light_stp; 
-            Serial.println("Fan 1 PWM Light ON");                
+            Serial.println("Fan 1 PWM Light ON");  
+            if (fan1_inf_pwm>0){
+                fan1_inf_on = true;
+                tim1->setCaptureCompare(1, fan1_inf_pwm_light_stp, PERCENT_COMPARE_FORMAT);
+            }else{
+                fan1_inf_on = false;
+                tim1->setCaptureCompare(1, 0, PERCENT_COMPARE_FORMAT);
+            }             
             // sendValuesFloat(CANID_OUTPUT, 0x05, 0x01, fan1_inf_pwm);
-            delay(400);   
+            
             fan2_inf_pwm = fan2_inf_pwm_light_stp; 
-            Serial.println("Fan 2 PWM Light ON");                
-            // sendValuesFloat(CANID_OUTPUT, 0x05, 0x02, fan2_inf_pwm);
-            delay(400);
-            // fan3_inf_pwm = fan3_inf_pwm_light_stp; 
-            // Serial.println("Fan 3 PWM Light ON");                
-            // sendValuesFloat(CANID_OUTPUT, 0x05, 0x03, fan3_inf_pwm);
-            delay(400);
+            if (fan2_inf_pwm>0){
+                fan2_inf_on = true;
+                tim1->setCaptureCompare(2, fan2_inf_pwm_light_stp, PERCENT_COMPARE_FORMAT);
+            }else{
+                fan2_inf_on = false;
+                tim1->setCaptureCompare(2, 0, PERCENT_COMPARE_FORMAT);
+            }
+            hum_1_on = *var_grow_1[27].var_int;
+            digitalWrite(HUM, hum_1_on);            
+           
+           
         }
+        Serial.print("Light OFF: ");
         Serial.print(light_hr_off_stp);
         Serial.print(":");
         Serial.println(light_min_off_stp);
-        Serial.println("Light OFF");
         if ((light_hr_off_stp==hours) && (light_min_off_stp==minutes)){
-            Serial.println("Light OFF 1");
+             Serial.println("Light ON 1");
             light_pwm = *var_grow_1[20].var_int;
-            relay_4_on = false;   
-            // sendValuesBoolean(CANID_OUTPUT , 0x04, 0x11, relay_4_on);
-            delay(400);
-            // sendValuesFloat(CANID_OUTPUT, 0x05, 0x06, light_pwm);
-            delay(400);
+            light_on = true;
+            if (light_on){
+                tim1->setCaptureCompare(3, light_pwm, PERCENT_COMPARE_FORMAT);
+            }else{
+                tim1->setCaptureCompare(3, 0, PERCENT_COMPARE_FORMAT);
+            }       
             Serial.println("Fan");
-            fan1_inf_pwm = fan1_inf_pwm_stp; 
-            Serial.println("Fan 1 PWM Light ON");                
-            // sendValuesFloat(CANID_OUTPUT, 0x05, 0x01, fan1_inf_pwm);
-            delay(400);  
-            fan2_inf_pwm = fan2_inf_pwm_stp; 
-            Serial.println("Fan 2 PWM Light ON");                
-            // sendValuesFloat(CANID_OUTPUT, 0x05, 0x02, fan2_inf_pwm);
-            delay(400);  
-            // fan3_inf_pwm = fan3_inf_pwm_stp; 
-            // Serial.println("Fan 3 PWM Light ON");                
-            // // sendValuesFloat(CANID_OUTPUT, 0x05, 0x03, fan3_inf_pwm);
-            // delay(400);  
+           
         }
-        Serial.print(pump_hr_irr_on_stp);
-        Serial.print(":");
-        Serial.println(pump_min_irr_on_stp);
-        Serial.println("Pump ON");
-        // if ((pump_hr_irr_on_stp==hours) && (pump_min_irr_on_stp==minutes)){
-        //     Serial.println("Pump ON 1");
-        //     pump_irr_on = true;   
-        //     sendValuesBoolean(CANID_OUTPUT , 0x04, 0x0B, pump_irr_on );
-        //     delay(400);
-        // }
-        // // Serial.print(pump_hr_irr_off_stp);
-        // Serial.print(":");
-        // Serial.println(pump_min_irr_off_stp);
-        // Serial.println("Pump OFF");
-        // if ((pump_hr_irr_off_stp==hours) && (pump_min_irr_off_stp==minutes)){
-        //     Serial.println("Pump OFF 1");
-        //     pump_irr_on = false;   
-        //     sendValuesBoolean(CANID_OUTPUT , 0x04, 0x0B, pump_irr_on );
-        //     delay(400);
-        // }
-        Serial.print(irr_1_hr_stp);
-        Serial.print(":");
-        Serial.println(irr_1_min_stp);
-        Serial.println("Irrig1 ON");
-        if ((irr_1_hr_stp==hours) && (irr_1_min_stp==minutes)){
-            Serial.println("Irrig1 ON 1");
-            pump_irr_on = true;   
-            // sendValuesBoolean(CANID_OUTPUT , 0x04, 0x0B, pump_irr_on );
-            delay(400);
+        Serial.print("Irrig : ");
+        Serial.print(irr_interval_stp);
+        Serial.print(". ");
+        Serial.print(irr_time_stp);
+        Serial.print(". ");
+        Serial.print(irr_interval_last_hour);
+
+        if (irr_interval_last_hour<hours){
+            irr_interval_last_hour<hours;
+            Serial.println("Irrigation");
         }
-        Serial.print(irr_2_hr_stp);
-        Serial.print(":");
-        Serial.println(irr_2_min_stp);
-        Serial.println("Irrig2 ON");
-        if ((irr_2_hr_stp==hours) && (irr_2_min_stp==minutes)){
-            Serial.println("Irrig2 ON 1");
-            pump_irr_on = true;   
-            // sendValuesBoolean(CANID_OUTPUT , 0x04, 0x0B, pump_irr_on );
-            delay(400);
-        }
+
+
         
         // Serial.println("Fan");
-        // if (light_on){
-        //         fan1_inf_pwm = fan1_inf_pwm_light_stp; 
-        //         Serial.println("Fan 1 PWM Light ON");                
-        //         sendValuesFloat(CANID_OUTPUT, 0x05, 0x01, fan1_inf_pwm);
-        //         delay(400);   
-        //         fan2_inf_pwm = fan2_inf_pwm_light_stp; 
-        //         Serial.println("Fan 2 PWM Light ON");                
-        //         sendValuesFloat(CANID_OUTPUT, 0x05, 0x02, fan2_inf_pwm);
-        //         delay(400);
-        //         fan3_inf_pwm = fan3_inf_pwm_light_stp; 
-        //         Serial.println("Fan 3 PWM Light ON");                
-        //         sendValuesFloat(CANID_OUTPUT, 0x05, 0x03, fan3_inf_pwm);
-        //         delay(400);
-        // }else{
-        //         fan1_inf_pwm = fan1_inf_pwm_stp; 
-        //         Serial.println("Fan 1 PWM Light ON");                
-        //         sendValuesFloat(CANID_OUTPUT, 0x05, 0x01, fan1_inf_pwm);
-        //         delay(400);  
-        //         fan2_inf_pwm = fan2_inf_pwm_stp; 
-        //         Serial.println("Fan 2 PWM Light ON");                
-        //         sendValuesFloat(CANID_OUTPUT, 0x05, 0x02, fan2_inf_pwm);
-        //         delay(400);  
-        //         fan3_inf_pwm = fan3_inf_pwm_stp; 
-        //         Serial.println("Fan 3 PWM Light ON");                
-        //         sendValuesFloat(CANID_OUTPUT, 0x05, 0x03, fan3_inf_pwm);
-        //         delay(400);  
-        // }
+        if (light_on){
+                 fan1_inf_pwm = fan1_inf_pwm_light_stp; 
+            Serial.println("Fan 1 PWM Light ON");  
+            if (fan1_inf_pwm>0){
+                fan1_inf_on = true;
+                tim1->setCaptureCompare(1, fan1_inf_pwm_light_stp, PERCENT_COMPARE_FORMAT);
+            }else{
+                fan1_inf_on = false;
+                tim1->setCaptureCompare(1, 0, PERCENT_COMPARE_FORMAT);
+            }             
+            // sendValuesFloat(CANID_OUTPUT, 0x05, 0x01, fan1_inf_pwm);
+            
+            fan2_inf_pwm = fan2_inf_pwm_light_stp; 
+            if (fan2_inf_pwm>0){
+                fan2_inf_on = true;
+                tim1->setCaptureCompare(2, fan2_inf_pwm_light_stp, PERCENT_COMPARE_FORMAT);
+            }else{
+                fan2_inf_on = false;
+                tim1->setCaptureCompare(2, 0, PERCENT_COMPARE_FORMAT);
+            }
+            hum_1_on = *var_grow_1[27].var_int;
+            digitalWrite(HUM, hum_1_on);
+        }else{
+                 Serial.println("Fan");
+            fan1_inf_pwm = fan1_inf_pwm_light_stp; 
+            Serial.println("Fan 1 PWM Light ON");  
+            if (fan1_inf_pwm>0){
+                fan1_inf_on = true;
+                tim1->setCaptureCompare(1, fan1_inf_pwm, PERCENT_COMPARE_FORMAT);
+            }else{
+                fan1_inf_on = false;
+                tim1->setCaptureCompare(1, 0, PERCENT_COMPARE_FORMAT);
+            }             
+            // sendValuesFloat(CANID_OUTPUT, 0x05, 0x01, fan1_inf_pwm);
+            
+            fan2_inf_pwm = fan2_inf_pwm_light_stp; 
+            if (fan2_inf_pwm>0){
+                fan2_inf_on = true;
+                tim1->setCaptureCompare(2, fan2_inf_pwm, PERCENT_COMPARE_FORMAT);
+            }else{
+                fan2_inf_on = false;
+                tim1->setCaptureCompare(2, 0, PERCENT_COMPARE_FORMAT);
+            }
+            hum_1_on = *var_grow_1[28].var_int;
+            digitalWrite(HUM, hum_1_on);
+        }
             
         
     }

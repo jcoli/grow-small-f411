@@ -45,6 +45,8 @@ extern byte day;
 extern byte month;
 extern byte year;
 
+extern unsigned long loopDelay_pump;
+
 extern bool first_run;
 
 extern int language;
@@ -110,6 +112,7 @@ extern int fan2_inf_pwm;
 extern int light_pwm;
 extern int hum_1_pwm;
 
+extern HardwareTimer *tim1;
 
 // extern bool soil_hum_dig;
 
@@ -263,12 +266,14 @@ void com_ser04_0x01(String command){
     Serial.println("Fan1");
     if (command.equals("1")){
         fan1_inf_on = true;
+        tim1->setCaptureCompare(1, fan1_inf_pwm, PERCENT_COMPARE_FORMAT);
         Serial.println("com_0x01 on");
     }else{
         fan1_inf_on = false;
+        tim1->setCaptureCompare(1, 0, PERCENT_COMPARE_FORMAT);
         Serial.println("com_0x01 off");
     } 
-    digitalWrite(FAN01, fan1_inf_on);  
+    // digitalWrite(FAN01, fan1_inf_on);  
     save_on_flash_serv4();
 }
 
@@ -276,12 +281,14 @@ void com_ser04_0x02(String command){
     Serial.println("Fan2");
     if (command.equals("1")){
         fan2_inf_on = true;
+        tim1->setCaptureCompare(2, fan2_inf_pwm, PERCENT_COMPARE_FORMAT);
         Serial.println("com_0x02 on");
       }else{
         fan2_inf_on = false;
+        tim1->setCaptureCompare(2, 0, PERCENT_COMPARE_FORMAT);
         Serial.println("com_0x02 off");
     }    
-    digitalWrite(FAN02, fan2_inf_on);
+    // digitalWrite(FAN02, fan2_inf_on);
     save_on_flash_serv4();
 }
 
@@ -289,12 +296,14 @@ void com_ser04_0x06(String command){
     Serial.println("Light");
     if (command.equals("1")){
         light_on = true;
+        tim1->setCaptureCompare(3, light_pwm, PERCENT_COMPARE_FORMAT);
         Serial.println("com_0x06 on");
     }else{
         light_on = false;
+        tim1->setCaptureCompare(3, 0, PERCENT_COMPARE_FORMAT);
         Serial.println("com_0x06 off");
     }    
-    digitalWrite(LIGHTS, light_on);
+    // digitalWrite(LIGHTS, light_on);
     save_on_flash_serv4();
 }
 
@@ -309,6 +318,7 @@ void com_ser04_0x0B(String command){
     }    
     save_on_flash_serv4();
     digitalWrite(PUMP1, pump_irr_on);
+    loopDelay_pump = millis();
 }
 
 void com_ser04_0x0C(String command){
@@ -345,7 +355,7 @@ void com_ser04_0x0E(String command){
         Serial.println("com_0x0E off");
     }    
     save_on_flash_serv4();
-    digitalWrite(RELAY1, relay_1_on);
+    digitalWrite(RELAY1, !relay_1_on);
 }
 
 void com_ser04_0x0F(String command){
@@ -358,7 +368,7 @@ void com_ser04_0x0F(String command){
         Serial.println("com_0x0F off");
     }    
     save_on_flash_serv4();
-    digitalWrite(RELAY2, relay_2_on);
+    digitalWrite(RELAY2, !relay_2_on);
 }
 
 void com_ser04_0x10(String command){

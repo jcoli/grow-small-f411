@@ -74,10 +74,9 @@ void setup() {
     delay(500);
     struc_mount_begin();
     Serial.println("setup c");
-    input_begin();
-    Serial.println("setup d");
-    delay(500);
     output_begin();
+    Serial.println("setup d");
+    input_begin();
     Serial.println("setup e");
     delay(500);
     bt_begin();
@@ -154,6 +153,7 @@ void loop() {
     if ((millis() - loopDelay_pump > irr_time_stp) && (pump_irr_on)){ 
       pump_irr_on = false;
       digitalWrite(PUMP1, LOW );
+      loopDelay_pump = millis();
      
       
       Serial.print("com_bool_0x0B off/on: ");

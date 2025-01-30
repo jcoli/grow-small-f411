@@ -63,9 +63,13 @@ void output_begin(){
     pinMode(HUM, OUTPUT);
     pinMode(BT_POWER, OUTPUT);
     pinMode(LED_PIN, OUTPUT);
-
+   
+    
+    digitalWrite(RELAY1, HIGH);
+    digitalWrite(RELAY2, HIGH);
+    digitalWrite(PUMP1, LOW);
+    digitalWrite(HUM, LOW);
     digitalWrite(BT_POWER, LOW);
-
 
     
     tim1->setPWM(1, FAN01, 10000, 0);

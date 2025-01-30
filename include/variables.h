@@ -128,9 +128,12 @@ int temp_int_min_stp = 0;
 int temp_int_max_stp = 0;
 
 int hum_int_on_stp = 0;
+int hum_int_on_light_stp = 0;
 
 int hum_int_min_stp = 0;
 int hum_int_max_stp = 0;
+
+int hum_on_stp = 0;
 
 int vpd_int_min_stp = 0;
 int vpd_int_max_stp = 0;
@@ -152,22 +155,29 @@ int pump_hr_irr_off_stp = 0;
 int pump_min_irr_off_stp = 0;
 
 int irr_interval_stp = 0;
+int irr_interval_last_hour = 0;
 int irr_time_stp = 0;
 int irr_interval_on_stp = 0;
+int irr_on_stp = 0;
 
-int irr_1_hr_stp = 0;
-int irr_1_min_stp = 0;
-int irr_2_hr_stp = 0;
-int irr_2_min_stp = 0;
-int irr_3_hr_stp = 0;
-int irr_3_min_stp = 0;
-int irr_4_hr_stp = 0;
-int irr_4_min_stp = 0;
-int irr_5_hr_stp = 0;
-int irr_5_min_stp = 0;
-int irr_6_hr_stp = 0;
-int irr_6_min_stp = 0;
+int relay_1_on_hr_stp = 0;
+int relay_1_on_min_stp = 0;
+int relay_1_off_hr_stp = 0;
+int relay_1_off_min_stp = 0;
+int relay_2_on_hr_stp = 0;
+int relay_2_on_min_stp = 0;
+int relay_2_off_hr_stp = 0;
+int relay_2_off_min_stp = 0;
+int relay_3_on_hr_stp = 0;
+int relay_3_on_min_stp = 0;
+int relay_3_off_hr_stp = 0;
+int relay_3_off_min_stp = 0;
+int relay_4_on_hr_stp = 0;
+int relay_4_on_min_stp = 0;
+int relay_4_off_hr_stp = 0;
+int relay_4_off_min_stp = 0;
 
+//
 int light_pwm_stp = 0;
 int fan1_inf_pwm_stp = 0;
 int fan2_inf_pwm_stp = 0;

@@ -63,19 +63,24 @@ extern int pump_min_irr_off_stp;
 extern int irr_interval_stp;
 extern int irr_time_stp;
 extern int irr_interval_on_stp;
+extern int irr_on_stp;
 
-extern int irr_1_hr_stp;
-extern int irr_1_min_stp;
-extern int irr_2_hr_stp;
-extern int irr_2_min_stp;
-extern int irr_3_hr_stp;
-extern int irr_3_min_stp;
-extern int irr_4_hr_stp;
-extern int irr_4_min_stp;
-extern int irr_5_hr_stp;
-extern int irr_5_min_stp;
-extern int irr_6_hr_stp;
-extern int irr_6_min_stp;
+extern int relay_1_on_hr_stp;
+extern int relay_1_on_min_stp;
+extern int relay_1_off_hr_stp;
+extern int relay_1_off_min_stp;
+extern int relay_2_on_hr_stp;
+extern int relay_2_on_min_stp;
+extern int relay_2_off_hr_stp;
+extern int relay_2_off_min_stp;
+extern int relay_3_on_hr_stp;
+extern int relay_3_on_min_stp;
+extern int relay_3_off_hr_stp;
+extern int relay_3_off_min_stp;
+extern int relay_4_on_hr_stp;
+extern int relay_4_on_min_stp;
+extern int relay_4_off_hr_stp;
+extern int relay_4_off_min_stp;
 
 extern int light_pwm_stp;
 extern int fan1_inf_pwm_stp;
@@ -133,8 +138,8 @@ extern String owner_name;
 extern String user_name;
 extern String user_pwd;
 
-extern var_grow var_grow_1[30];
-extern var_grow var_grow_2[30];
+extern var_grow var_grow_1[40];
+extern var_grow var_grow_2[40];
 extern var_grow var_grow_3[40];
 extern var_grow var_grow_4[40];
 extern var_grow var_grow_5[30];
@@ -289,7 +294,7 @@ void struc_mount_begin(){
     var_grow_1[16].descr = "Rega 1 ON (hora)";
     var_grow_1[16].eprom_address = 16672;
     var_grow_1[16].eprom_size = 16;
-    var_grow_1[16].var_int = &irr_1_hr_stp;
+    var_grow_1[16].var_int = &irr_time_stp;
 
     var_grow_1[17].pid = 0x13;
     var_grow_1[17].service = 0x01;
@@ -297,7 +302,7 @@ void struc_mount_begin(){
     var_grow_1[17].descr = "Rega 1 ON (min)";
     var_grow_1[17].eprom_address = 16688;
     var_grow_1[17].eprom_size = 16;
-    var_grow_1[17].var_int = &irr_1_min_stp;
+    var_grow_1[17].var_int = &irr_time_stp;
     
     var_grow_1[18].pid = 0x14;
     var_grow_1[18].service = 0x01;
@@ -305,7 +310,7 @@ void struc_mount_begin(){
     var_grow_1[18].descr = "Rega 2 ON (hora)";
     var_grow_1[18].eprom_address = 16704;
     var_grow_1[18].eprom_size = 16;
-    var_grow_1[18].var_int = &irr_2_hr_stp;
+    var_grow_1[18].var_int = &irr_time_stp;
 
     var_grow_1[19].pid = 0x15;
     var_grow_1[19].service = 0x01;
@@ -313,7 +318,7 @@ void struc_mount_begin(){
     var_grow_1[19].descr = "Rega 2 ON (min)";
     var_grow_1[19].eprom_address = 16720;
     var_grow_1[19].eprom_size = 16;
-    var_grow_1[19].var_int = &irr_2_min_stp;
+    var_grow_1[19].var_int = &irr_time_stp;
 
     var_grow_1[20].pid = 0x16;
     var_grow_1[20].service = 0x01;
@@ -358,10 +363,10 @@ void struc_mount_begin(){
     var_grow_1[26].pid = 0x1D;
     var_grow_1[26].service = 0x01;
     var_grow_1[26].device = 0x0F;
-    var_grow_1[26].descr = "Rega Intervalo ON";
+    var_grow_1[26].descr = "Rega ON";
     var_grow_1[26].eprom_address = 16848;
     var_grow_1[26].eprom_size = 16;
-    var_grow_1[26].var_int = &irr_interval_on_stp;
+    var_grow_1[26].var_int = &irr_on_stp;
 
     var_grow_1[27].pid = 0x1E;
     var_grow_1[27].service = 0x01;
@@ -369,8 +374,135 @@ void struc_mount_begin(){
     var_grow_1[27].descr = "Umidificador ON";
     var_grow_1[27].eprom_address = 16864;
     var_grow_1[27].eprom_size = 16;
-    var_grow_1[27].var_int = &irr_interval_on_stp;
+    var_grow_1[27].var_int = &hum_int_on_stp;
 
+    var_grow_1[28].pid = 0x1F;
+    var_grow_1[28].service = 0x01;
+    var_grow_1[28].device = 0x0F;
+    var_grow_1[28].descr = "Relay1 ON (hour)";
+    var_grow_1[28].eprom_address = 16880;
+    var_grow_1[28].eprom_size = 16;
+    var_grow_1[28].var_int = &relay_1_on_hr_stp;
+
+    var_grow_1[29].pid = 0x20;
+    var_grow_1[29].service = 0x01;
+    var_grow_1[29].device = 0x0F;
+    var_grow_1[29].descr = "Relay1 ON (min)";
+    var_grow_1[29].eprom_address = 16896;
+    var_grow_1[29].eprom_size = 16;
+    var_grow_1[29].var_int = &relay_1_on_min_stp;
+
+    var_grow_1[30].pid = 0x21;
+    var_grow_1[30].service = 0x01;
+    var_grow_1[30].device = 0x0F;
+    var_grow_1[30].descr = "Relay1 OFF (hour)";
+    var_grow_1[30].eprom_address = 16912;
+    var_grow_1[30].eprom_size = 16;
+    var_grow_1[30].var_int = &relay_1_off_hr_stp;
+
+    var_grow_1[31].pid = 0x22;
+    var_grow_1[31].service = 0x01;
+    var_grow_1[31].device = 0x0F;
+    var_grow_1[31].descr = "Relay1 OFF (min)";
+    var_grow_1[31].eprom_address = 16928;
+    var_grow_1[31].eprom_size = 16;
+    var_grow_1[31].var_int = &relay_1_off_min_stp;
+
+    var_grow_1[32].pid = 0x23;
+    var_grow_1[32].service = 0x01;
+    var_grow_1[32].device = 0x0F;
+    var_grow_1[32].descr = "Relay2 ON (hour)";
+    var_grow_1[32].eprom_address = 16944;
+    var_grow_1[32].eprom_size = 16;
+    var_grow_1[32].var_int = &relay_2_on_hr_stp;
+
+    var_grow_1[33].pid = 0x24;
+    var_grow_1[33].service = 0x01;
+    var_grow_1[33].device = 0x0F;
+    var_grow_1[33].descr = "Relay2 ON (min)";
+    var_grow_1[33].eprom_address = 16960;
+    var_grow_1[33].eprom_size = 16;
+    var_grow_1[33].var_int = &relay_2_on_min_stp;
+
+    var_grow_1[34].pid = 0x25;
+    var_grow_1[34].service = 0x01;
+    var_grow_1[34].device = 0x0F;
+    var_grow_1[34].descr = "Relay2 OFF (hour)";
+    var_grow_1[34].eprom_address = 16976;
+    var_grow_1[34].eprom_size = 16;
+    var_grow_1[34].var_int = &relay_2_off_hr_stp;
+
+    var_grow_1[35].pid = 0x26;
+    var_grow_1[35].service = 0x01;
+    var_grow_1[35].device = 0x0F;
+    var_grow_1[35].descr = "Relay2 OFF (min)";
+    var_grow_1[35].eprom_address = 16992;
+    var_grow_1[35].eprom_size = 16;
+    var_grow_1[35].var_int = &relay_2_off_min_stp;
+
+    var_grow_1[32].pid = 0x27;
+    var_grow_1[32].service = 0x01;
+    var_grow_1[32].device = 0x0F;
+    var_grow_1[32].descr = "Relay3 ON (hour)";
+    var_grow_1[32].eprom_address = 17008;
+    var_grow_1[32].eprom_size = 16;
+    var_grow_1[32].var_int = &relay_3_on_hr_stp;
+
+    var_grow_1[33].pid = 0x28;
+    var_grow_1[33].service = 0x01;
+    var_grow_1[33].device = 0x0F;
+    var_grow_1[33].descr = "Relay3 ON (min)";
+    var_grow_1[33].eprom_address = 17024;
+    var_grow_1[33].eprom_size = 16;
+    var_grow_1[33].var_int = &relay_3_on_min_stp;
+
+    var_grow_1[34].pid = 0x29;
+    var_grow_1[34].service = 0x01;
+    var_grow_1[34].device = 0x0F;
+    var_grow_1[34].descr = "Relay3 OFF (hour)";
+    var_grow_1[34].eprom_address = 17040;
+    var_grow_1[34].eprom_size = 16;
+    var_grow_1[34].var_int = &relay_3_off_hr_stp;
+
+    var_grow_1[35].pid = 0x2A;
+    var_grow_1[35].service = 0x01;
+    var_grow_1[35].device = 0x0F;
+    var_grow_1[35].descr = "Relay3 OFF (min)";
+    var_grow_1[35].eprom_address = 17056;
+    var_grow_1[35].eprom_size = 16;
+    var_grow_1[35].var_int = &relay_3_off_min_stp;
+
+    var_grow_1[32].pid = 0x2B;
+    var_grow_1[32].service = 0x01;
+    var_grow_1[32].device = 0x0F;
+    var_grow_1[32].descr = "Relay4 ON (hour)";
+    var_grow_1[32].eprom_address = 17072;
+    var_grow_1[32].eprom_size = 16;
+    var_grow_1[32].var_int = &relay_4_on_hr_stp;
+
+    var_grow_1[33].pid = 0x2C;
+    var_grow_1[33].service = 0x01;
+    var_grow_1[33].device = 0x0F;
+    var_grow_1[33].descr = "Relay4 ON (min)";
+    var_grow_1[33].eprom_address = 17088;
+    var_grow_1[33].eprom_size = 16;
+    var_grow_1[33].var_int = &relay_4_on_min_stp;
+
+    var_grow_1[34].pid = 0x2D;
+    var_grow_1[34].service = 0x01;
+    var_grow_1[34].device = 0x0F;
+    var_grow_1[34].descr = "Relay4 OFF (hour)";
+    var_grow_1[34].eprom_address = 17104;
+    var_grow_1[34].eprom_size = 16;
+    var_grow_1[34].var_int = &relay_4_off_hr_stp;
+
+    var_grow_1[35].pid = 0x2E;
+    var_grow_1[35].service = 0x01;
+    var_grow_1[35].device = 0x0F;
+    var_grow_1[35].descr = "Relay4 OFF (min)";
+    var_grow_1[35].eprom_address = 17120;
+    var_grow_1[35].eprom_size = 16;
+    var_grow_1[35].var_int = &relay_4_off_min_stp;
     
     
     //===================================
@@ -482,7 +614,7 @@ void struc_mount_begin(){
     var_grow_4[0].eprom_size = 8;
     var_grow_4[0].var_name = "fan1_inf_on";
     var_grow_4[0].var_bool = &fan1_inf_on;
-
+    
     var_grow_4[1].pid = 0x02;
     var_grow_4[1].service = 0x04;
     var_grow_4[1].device = 0x0F;
@@ -493,7 +625,7 @@ void struc_mount_begin(){
     var_grow_4[1].eprom_size = 8;
     var_grow_4[1].var_name = "fan2_inf_on";
     var_grow_4[1].var_bool = &fan2_inf_on;
-
+    
     var_grow_4[2].pid = 0x06;
     var_grow_4[2].service = 0x04;
     var_grow_4[2].device = 0x0F;
@@ -504,7 +636,7 @@ void struc_mount_begin(){
     var_grow_4[2].eprom_size = 8;
     var_grow_4[2].var_name = "light_on";
     var_grow_4[2].var_bool = &light_on;
-
+    
     var_grow_4[3].pid = 0x0B;
     var_grow_4[3].service = 0x04;
     var_grow_4[3].device = 0x0F;
@@ -515,7 +647,7 @@ void struc_mount_begin(){
     var_grow_4[3].eprom_size = 8;
     var_grow_4[3].var_name = "pump_irr_on";
     var_grow_4[3].var_bool = &pump_irr_on;
-
+    
     var_grow_4[4].pid = 0x0C;
     var_grow_4[4].service = 0x04;
     var_grow_4[4].device = 0x0F;
@@ -526,7 +658,7 @@ void struc_mount_begin(){
     var_grow_4[4].eprom_size = 8;
     var_grow_4[4].var_name = "hum_1_on";
     var_grow_4[4].var_bool = &hum_1_on;
-    
+        
     var_grow_4[5].pid = 0x0E;
     var_grow_4[5].service = 0x04;
     var_grow_4[5].device = 0x0F;
@@ -535,9 +667,9 @@ void struc_mount_begin(){
     var_grow_4[5].unity = "B";
     var_grow_4[5].eprom_address = 12512;
     var_grow_4[5].eprom_size = 8;
-    var_grow_4[5].var_name = "relay_1_on";
+    var_grow_4[5].var_name = "relay_1_on"; 
     var_grow_4[5].var_bool = &relay_1_on;
-
+    
     var_grow_4[6].pid = 0x0F;
     var_grow_4[6].service = 0x04;
     var_grow_4[6].device = 0x0F;
@@ -548,6 +680,7 @@ void struc_mount_begin(){
     var_grow_4[6].eprom_size = 8;
     var_grow_4[6].var_name = "relay_2_on";
     var_grow_4[6].var_bool = &relay_2_on;
+
 
 
     //===================================

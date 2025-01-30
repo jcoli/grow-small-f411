@@ -81,6 +81,7 @@ extern int hum_int_on_stp;
 extern int hum_int_min_stp;
 extern int hum_int_max_stp;
 
+
 extern int vpd_int_min_stp;
 extern int vpd_int_max_stp;
 
@@ -103,19 +104,8 @@ extern int pump_min_irr_off_stp;
 extern int irr_interval_stp;
 extern int irr_time_stp;
 extern int irr_interval_on_stp;
+extern int irr_on_stp; 
 
-extern int irr_1_hr_stp;
-extern int irr_1_min_stp;
-extern int irr_2_hr_stp;
-extern int irr_2_min_stp;
-extern int irr_3_hr_stp;
-extern int irr_3_min_stp;
-extern int irr_4_hr_stp;
-extern int irr_4_min_stp;
-extern int irr_5_hr_stp;
-extern int irr_5_min_stp;
-extern int irr_6_hr_stp;
-extern int irr_6_min_stp;
 
 extern int light_pwm_stp;
 extern int fan1_inf_pwm_stp;
@@ -164,45 +154,17 @@ extern bool relay_2_on;
 
 extern bool hum_1_on;
 
-
 //Service 05
 extern int fan1_inf_pwm;
 extern int fan2_inf_pwm;
 extern int light_pwm;
 extern int hum_1_pwm;
 
-
-// extern bool soil_hum_dig;
-
-// extern bool ch_page;
-// extern bool ch_page_ana;
-// extern int tft_page;
-// extern int tft_page_ant;
-// extern int tft_sub_page;
-// extern int tft_sub_page_ant;
-// extern int draw_tab;
-// extern int draw_page;
-
-// extern String line;
 extern String line1;
-// extern String line2;
-// extern String retMsg2[2];
-// extern String retMsg3[3];
-// extern String retMsg4[4];
 extern String retMsg5[5];
-// extern String retMsg6[6];
-// extern String retMsg7[7];
-// extern String retMsg8[8];
-// extern String retMsg9[9];
-// extern String retMsg10[10];
 
-extern var_grow var_grow_1[30];
-// extern var_grow var_grow_2[30];
-// extern var_grow var_grow_3[40];
-// extern var_grow var_grow_4[40];
-// extern var_grow var_grow_5[30];
-// extern var_grow var_grow_6[30];
-// extern var_grow var_grow_7[30];
+extern var_grow var_grow_1[40];
+
 
 
 void on_service_01_ser(String line_in){
@@ -283,22 +245,22 @@ void on_service_01_ser(String line_in){
             // Serial.println("Status Fan Petier 0x03 0x11");
             com_ser01_0x11(retMsg5[3].toInt());
             break;
-        case 0x12:
-            // Serial.println("Status Pump Desum 0x03 0x12");
-            com_ser01_0x12(retMsg5[3].toInt());
-            break;
-        case 0x13:
-            // Serial.println("Status Pump Insu 0x03 0x13");
-            com_ser01_0x13(retMsg5[3].toInt());
-            break;
-        case 0x14:
-            // Serial.println("Status Pump Insu 0x03 0x13");
-            com_ser01_0x14(retMsg5[3].toInt());
-            break;    
-        case 0x15:
-            // Serial.println("Status Pump Insu 0x03 0x13");
-            com_ser01_0x15(retMsg5[3].toInt());
-            break;    
+        // case 0x12:
+        //     // Serial.println("Status Pump Desum 0x03 0x12");
+        //     com_ser01_0x12(retMsg5[3].toInt());
+        //     break;
+        // case 0x13:
+        //     // Serial.println("Status Pump Insu 0x03 0x13");
+        //     com_ser01_0x13(retMsg5[3].toInt());
+        //     break;
+        // case 0x14:
+        //     // Serial.println("Status Pump Insu 0x03 0x13");
+        //     com_ser01_0x14(retMsg5[3].toInt());
+        //     break;    
+        // case 0x15:
+        //     // Serial.println("Status Pump Insu 0x03 0x13");
+        //     com_ser01_0x15(retMsg5[3].toInt());
+        //     break;    
         case 0x16:
             // Serial.println("Status Pump Insu 0x03 0x13");
             com_ser01_0x16(retMsg5[3].toInt());
@@ -335,34 +297,10 @@ void on_service_01_ser(String line_in){
             // Serial.println("Status Pump Insu 0x03 0x13");
             com_ser01_0x1E(retMsg5[3].toInt());
             break;    
-        case 0x1F:
-            // Serial.println("Status Pump Insu 0x03 0x13");
-            com_ser01_0x1F(retMsg5[3].toInt());
-            break;    
-        case 0x20:
-            // Serial.println("Status Pump Insu 0x03 0x13");
-            com_ser01_0x20(retMsg5[3].toInt());
-            break;    
-        case 0x21:
-            // Serial.println("Fan 3 Intensidade (PMW)");
-            com_ser01_0x21(retMsg5[3].toInt());
-            break;    
-        case 0x22:
-            // Serial.println("Status Pump Insu 0x03 0x13");
-            com_ser01_0x22(retMsg5[3].toInt());
-            break;        
-        case 0x23:
-            // Serial.println("Status Pump Insu 0x03 0x13");
-            com_ser01_0x23(retMsg5[3].toInt());
-            break;        
-        case 0x24:
-            // Serial.println("Status Pump Insu 0x03 0x13");
-            com_ser01_0x24(retMsg5[3].toInt());
-            break;        
-        case 0x25:
-            // Serial.println("Status Pump Insu 0x03 0x13");
-            com_ser01_0x25(retMsg5[3].toInt());
-            break;  
+        // case 0x1F:
+        //     // Serial.println("Status Pump Insu 0x03 0x13");
+        //     com_ser01_0x1F(retMsg5[3].toInt());
+        //     break;    
         case 0xFF:
             Serial.println("Save Flash");
             com_ser01_0xFF(retMsg5[3].toInt());
@@ -375,8 +313,8 @@ void save_on_flash_serv1(){
     Serial.print("Save Flash");
     uint32_t addr;
     uint32_t data = 0;
-    eraseSector(16384);
-    for (int i = 0; i <= 28; i++){
+    eraseSector(var_grow_1[0].eprom_address);
+    for (int i = 0; i <= 35; i++){
         addr = var_grow_1[i].eprom_address;
         data = *var_grow_1[i].var_int; 
         Serial.print("Eprom 1 ");
@@ -499,119 +437,56 @@ void com_ser01_0x10(int command){
 
 void com_ser01_0x11(int command){
     Serial.println("serv 01 - 11");
-    irr_time_stp = command;    
-}
-
-void com_ser01_0x12(int command){
-    Serial.println("serv 01 - 12");
-    irr_1_hr_stp = command;
-}
-
-void com_ser01_0x13(int command){
-    Serial.println("serv 01 - 13");
-    irr_1_min_stp = command;
-}
-
-void com_ser01_0x14(int command){
-    Serial.println("serv 01 - 14");
-    irr_2_hr_stp = command;
-}
-
-void com_ser01_0x15(int command){
-    Serial.println("serv 01 - 15");
-    irr_2_min_stp = command;
+    irr_time_stp = command*1000;    
 }
 
 void com_ser01_0x16(int command){
     Serial.println("serv 01 - 16");
-    irr_3_hr_stp = command;
+    light_pwm_stp = command;
 }
 
 void com_ser01_0x17(int command){
     Serial.println("serv 01 - 17");
-    irr_3_min_stp = command;
+    fan1_inf_pwm_stp = command;
 }
 
 void com_ser01_0x18(int command){
     Serial.println("serv 01 - 18");
-    irr_4_hr_stp = command;
+    fan2_inf_pwm_stp = command;
 }
 
 void com_ser01_0x19(int command){
     Serial.println("serv 01 - 19");
-    irr_4_min_stp = command;
+   
 }
 
 void com_ser01_0x1A(int command){
     Serial.println("serv 01 - 1A");
-    irr_5_hr_stp = command;
+    fan1_inf_pwm_light_stp = command;
 }
 
 void com_ser01_0x1B(int command){
     Serial.println("serv 01 - 1B");
-    irr_5_min_stp = command;
+    fan2_inf_pwm_light_stp = command;
 }
 
 void com_ser01_0x1C(int command){
     Serial.println("serv 01 - 1C");
-    irr_6_hr_stp = command;
+   
 }
 
 void com_ser01_0x1D(int command){
     Serial.println("serv 01 - 1D");
-    irr_6_min_stp = command;
+    irr_on_stp = command;
 }
 
 void com_ser01_0x1E(int command){
     Serial.println("serv 01 - 1E");
-    light_pwm_stp = command;
-}
-
-void com_ser01_0x1F(int command){
-    Serial.print("serv 01 - 1F: ");
-    // Serial.println(command);
-    fan1_inf_pwm_stp = command;
-    Serial.println(fan1_inf_pwm_stp);
-}
-
-void com_ser01_0x20(int command){
-    Serial.print("serv 01 - 20: ");
-    // Serial.println(command);
-    fan2_inf_pwm_stp = command;
-    Serial.println(fan2_inf_pwm_stp);
-}
-
-void com_ser01_0x21(int command){
-    Serial.print("serv 01 - 21: ");
-    // Serial.println(command);
-    // fan3_inf_pwm_stp = command;
-    // Serial.println(fan3_inf_pwm_stp);
-}
-
-void com_ser01_0x22(int command){
-    Serial.print("serv 01 - 22: ");
-    fan1_inf_pwm_light_stp = command;
-    Serial.println(fan1_inf_pwm_light_stp);
-}
-
-void com_ser01_0x23(int command){
-    Serial.print("serv 01 - 23: ");
-    fan2_inf_pwm_light_stp = command;
-    Serial.println(fan2_inf_pwm_light_stp);
-}
-
-void com_ser01_0x24(int command){
-    Serial.print("serv 01 - 24: ");
-    // fan3_inf_pwm_light_stp = command;
-    // Serial.println(fan3_inf_pwm_light_stp);
-}
-
-void com_ser01_0x25(int command){
-    Serial.println("serv 01 - 25");
-    irr_interval_on_stp = command;
+    hum_int_on_stp = command;
 }
 
 void com_ser01_0xFF(int command){
     Serial.println("serv 01 - FF");
     save_on_flash_serv1();
 }  
+

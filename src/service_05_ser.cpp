@@ -220,6 +220,7 @@ void com_ser05_0x00(float com_pwm){
 
 void com_ser05_0x01(float com_pwm){
     fan1_inf_pwm = com_pwm;
+    Serial.println("fan1: "+fan1_inf_pwm);
     if (fan1_inf_on){
         Serial.println("com_pwm_0x01 on");
         tim1->setCaptureCompare(1, fan1_inf_pwm, PERCENT_COMPARE_FORMAT);
@@ -232,7 +233,7 @@ void com_ser05_0x01(float com_pwm){
 
 void com_ser05_0x02(float com_pwm){
     fan2_inf_pwm = com_pwm;    
-    // Serial.println("fan2: "+fan2_inf_pwm);
+    Serial.println("fan2: "+fan2_inf_pwm);
     if (fan2_inf_on){
         Serial.println("com_pwm_0x02 on");
         tim1->setCaptureCompare(2, fan2_inf_pwm, PERCENT_COMPARE_FORMAT);
@@ -250,8 +251,8 @@ void com_ser05_0x03(float com_pwm){
 
 void com_ser05_0x06(float com_pwm){
     light_pwm = com_pwm;
-    light_pwm = com_pwm;
-    // Serial.println("light1: "+light_pwm);
+    
+    Serial.println("light1: "+light_pwm);
     if (light_on){
         Serial.println("com_pwm_0x06 on");
         tim1->setCaptureCompare(3, light_pwm, PERCENT_COMPARE_FORMAT);
