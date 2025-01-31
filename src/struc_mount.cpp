@@ -82,6 +82,13 @@ extern int relay_4_on_min_stp;
 extern int relay_4_off_hr_stp;
 extern int relay_4_off_min_stp;
 
+extern int relay_1_red_stp;
+extern int relay_2_red_stp;
+extern int relay_3_red_stp;
+extern int relay_4_red_stp;
+
+extern int relay_red[40];
+
 extern int light_pwm_stp;
 extern int fan1_inf_pwm_stp;
 extern int fan2_inf_pwm_stp;
@@ -138,7 +145,7 @@ extern String owner_name;
 extern String user_name;
 extern String user_pwd;
 
-extern var_grow var_grow_1[40];
+extern var_grow var_grow_1[50];
 extern var_grow var_grow_2[40];
 extern var_grow var_grow_3[40];
 extern var_grow var_grow_4[40];
@@ -343,6 +350,14 @@ void struc_mount_begin(){
     var_grow_1[22].eprom_address = 16768;
     var_grow_1[22].eprom_size = 16;
     var_grow_1[22].var_int = &fan2_inf_pwm_stp;
+
+    var_grow_1[23].pid = 0x18;
+    var_grow_1[23].service = 0x01;
+    var_grow_1[23].device = 0x0F;
+    var_grow_1[23].descr = "Fan 2 Intensidade (PMW)";
+    var_grow_1[23].eprom_address = 16784;
+    var_grow_1[23].eprom_size = 16;
+    var_grow_1[23].var_int = &fan2_inf_pwm_stp;
     
     var_grow_1[24].pid = 0x1A;
     var_grow_1[24].service = 0x01;
@@ -503,6 +518,39 @@ void struc_mount_begin(){
     var_grow_1[35].eprom_address = 17120;
     var_grow_1[35].eprom_size = 16;
     var_grow_1[35].var_int = &relay_4_off_min_stp;
+
+    var_grow_1[36].pid = 0x2F;
+    var_grow_1[36].service = 0x01;
+    var_grow_1[36].device = 0x0F;
+    var_grow_1[36].descr = "Relay1 Redirect";
+    var_grow_1[36].eprom_address = 17136;
+    var_grow_1[36].eprom_size = 16;
+    var_grow_1[36].var_int = &relay_1_red_stp;
+
+    var_grow_1[37].pid = 0x30;
+    var_grow_1[37].service = 0x01;
+    var_grow_1[37].device = 0x0F;
+    var_grow_1[37].descr = "Relay2 Redirect";
+    var_grow_1[37].eprom_address = 17152;
+    var_grow_1[37].eprom_size = 16;
+    var_grow_1[37].var_int = &relay_2_red_stp;
+
+    var_grow_1[38].pid = 0x31;
+    var_grow_1[38].service = 0x01;
+    var_grow_1[38].device = 0x0F;
+    var_grow_1[38].descr = "Relay3 Redirect";
+    var_grow_1[38].eprom_address = 17168;
+    var_grow_1[38].eprom_size = 16;
+    var_grow_1[38].var_int = &relay_3_red_stp;
+
+    var_grow_1[39].pid = 0x32;
+    var_grow_1[39].service = 0x01;
+    var_grow_1[39].device = 0x0F;
+    var_grow_1[39].descr = "Relay4 Redirect";
+    var_grow_1[39].eprom_address = 17184;
+    var_grow_1[39].eprom_size = 16;
+    var_grow_1[39].var_int = &relay_4_red_stp;
+
     
     
     //===================================
@@ -519,9 +567,6 @@ void struc_mount_begin(){
     var_grow_2[0].descr = "Temperatura Interna";
     var_grow_2[0].oldValue = 0.00F;
     var_grow_2[0].unity = "C";
-    var_grow_2[0].var_name = "temp_int";
-    var_grow_2[0].var_float = &temp_int;
-
     var_grow_2[1].pid = 0x01;
     var_grow_2[1].service = 0x02;
     var_grow_2[1].device = 0x0F;
@@ -614,6 +659,7 @@ void struc_mount_begin(){
     var_grow_4[0].eprom_size = 8;
     var_grow_4[0].var_name = "fan1_inf_on";
     var_grow_4[0].var_bool = &fan1_inf_on;
+    var_grow_4[0].relay_red = relay_red[0];
     
     var_grow_4[1].pid = 0x02;
     var_grow_4[1].service = 0x04;
@@ -625,6 +671,7 @@ void struc_mount_begin(){
     var_grow_4[1].eprom_size = 8;
     var_grow_4[1].var_name = "fan2_inf_on";
     var_grow_4[1].var_bool = &fan2_inf_on;
+    var_grow_4[1].relay_red = relay_red[1];
     
     var_grow_4[2].pid = 0x06;
     var_grow_4[2].service = 0x04;
@@ -636,6 +683,7 @@ void struc_mount_begin(){
     var_grow_4[2].eprom_size = 8;
     var_grow_4[2].var_name = "light_on";
     var_grow_4[2].var_bool = &light_on;
+    var_grow_4[2].relay_red = relay_red[2];
     
     var_grow_4[3].pid = 0x0B;
     var_grow_4[3].service = 0x04;
@@ -647,6 +695,7 @@ void struc_mount_begin(){
     var_grow_4[3].eprom_size = 8;
     var_grow_4[3].var_name = "pump_irr_on";
     var_grow_4[3].var_bool = &pump_irr_on;
+    var_grow_4[3].relay_red = relay_red[3];
     
     var_grow_4[4].pid = 0x0C;
     var_grow_4[4].service = 0x04;
@@ -658,6 +707,7 @@ void struc_mount_begin(){
     var_grow_4[4].eprom_size = 8;
     var_grow_4[4].var_name = "hum_1_on";
     var_grow_4[4].var_bool = &hum_1_on;
+    var_grow_4[4].relay_red = relay_red[4];
         
     var_grow_4[5].pid = 0x0E;
     var_grow_4[5].service = 0x04;
@@ -669,6 +719,7 @@ void struc_mount_begin(){
     var_grow_4[5].eprom_size = 8;
     var_grow_4[5].var_name = "relay_1_on"; 
     var_grow_4[5].var_bool = &relay_1_on;
+    var_grow_4[5].relay_red = relay_red[5];
     
     var_grow_4[6].pid = 0x0F;
     var_grow_4[6].service = 0x04;
@@ -680,6 +731,7 @@ void struc_mount_begin(){
     var_grow_4[6].eprom_size = 8;
     var_grow_4[6].var_name = "relay_2_on";
     var_grow_4[6].var_bool = &relay_2_on;
+    var_grow_4[6].relay_red = relay_red[6];
 
 
 

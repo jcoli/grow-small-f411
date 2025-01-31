@@ -142,8 +142,8 @@ extern String retMsg5[5];
 // extern String retMsg9[9];
 // extern String retMsg10[10];
 
-// extern var_grow var_grow_1[30];
-// extern var_grow var_grow_2[30];
+// extern var_grow var_grow_1[50];
+// extern var_grow var_grow_2[40];
 // extern var_grow var_grow_3[40];
 // extern var_grow var_grow_4[40];
 extern var_grow var_grow_5[30];

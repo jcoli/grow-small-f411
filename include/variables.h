@@ -32,7 +32,7 @@ String retMsg10[10] = {"", "", "", "", "", "", "", "", "", ""};
 String name_device = "Grow Master";
 String manufacturer = "GreenTomate";
 
-var_grow var_grow_1[40];
+var_grow var_grow_1[50];
 var_grow var_grow_2[40];
 var_grow var_grow_3[40];
 var_grow var_grow_4[40];
@@ -176,6 +176,12 @@ int relay_4_on_hr_stp = 0;
 int relay_4_on_min_stp = 0;
 int relay_4_off_hr_stp = 0;
 int relay_4_off_min_stp = 0;
+int relay_1_red_stp = 0;
+int relay_2_red_stp = 0;
+int relay_3_red_stp = 0;
+int relay_4_red_stp = 0;
+
+int relay_red[40];
 
 //
 int light_pwm_stp = 0;

@@ -152,8 +152,8 @@ extern float sum_temp_int;
 extern float avg_hum_int;
 extern float sum_hum_int;
 
-extern var_grow var_grow_1[30];
-extern var_grow var_grow_2[30];
+extern var_grow var_grow_1[50];
+extern var_grow var_grow_2[40];
 extern var_grow var_grow_3[40];
 extern var_grow var_grow_4[40];
 extern var_grow var_grow_5[30];

@@ -58,6 +58,20 @@ void com_ser01_0x22(int command);
 void com_ser01_0x23(int command);
 void com_ser01_0x24(int command);
 void com_ser01_0x25(int command);
+void com_ser01_0x26(int command);
+void com_ser01_0x27(int command);
+void com_ser01_0x28(int command);
+void com_ser01_0x29(int command);
+void com_ser01_0x2A(int command);
+void com_ser01_0x2B(int command);
+void com_ser01_0x2C(int command);
+void com_ser01_0x2D(int command);
+void com_ser01_0x2E(int command);
+void com_ser01_0x2F(int command);
+void com_ser01_0x30(int command);
+void com_ser01_0x31(int command);
+void com_ser01_0x32(int command);
+
 void com_ser01_0xFF(int command);
 
 extern byte minutes;
@@ -163,7 +177,7 @@ extern int hum_1_pwm;
 extern String line1;
 extern String retMsg5[5];
 
-extern var_grow var_grow_1[40];
+extern var_grow var_grow_1[50];
 
 
 
@@ -297,10 +311,88 @@ void on_service_01_ser(String line_in){
             // Serial.println("Status Pump Insu 0x03 0x13");
             com_ser01_0x1E(retMsg5[3].toInt());
             break;    
-        // case 0x1F:
-        //     // Serial.println("Status Pump Insu 0x03 0x13");
-        //     com_ser01_0x1F(retMsg5[3].toInt());
-        //     break;    
+        case 0x1F:
+            // Serial.println("Status Pump Insu 0x03 0x13");
+            com_ser01_0x1F(retMsg5[3].toInt());
+            break;    
+        case 0x20:
+            // Serial.println("Status Pump Insu 0x03 0x13");
+            com_ser01_0x20(retMsg5[3].toInt());
+            break;    
+        case 0x21:
+            // Serial.println("Status Pump Insu 0x03 0x13");
+            com_ser01_0x21(retMsg5[3].toInt());
+            break;    
+        case 0x22:
+            // Serial.println("Status Pump Insu 0x03 0x13");
+            com_ser01_0x22(retMsg5[3].toInt());
+            break;    
+        case 0x23:
+            // Serial.println("Status Pump Insu 0x03 0x13");
+            com_ser01_0x23(retMsg5[3].toInt());
+            break;    
+        case 0x24:
+            // Serial.println("Status Pump Insu 0x03 0x13");
+            com_ser01_0x24(retMsg5[3].toInt());
+            break;    
+        case 0x25:
+            // Serial.println("Status Pump Insu 0x03 0x13");
+            com_ser01_0x25(retMsg5[3].toInt());
+            break;    
+        case 0x26:
+            // Serial.println("Status Pump Insu 0x03 0x13");
+            com_ser01_0x26(retMsg5[3].toInt());
+            break;    
+        case 0x27:
+            // Serial.println("Status Pump Insu 0x03 0x13");
+            com_ser01_0x27(retMsg5[3].toInt());
+            break;    
+        case 0x28:
+            // Serial.println("Status Pump Insu 0x03 0x13");
+            com_ser01_0x28(retMsg5[3].toInt());
+            break;    
+        case 0x29:
+            // Serial.println("Status Pump Insu 0x03 0x13");
+            com_ser01_0x29(retMsg5[3].toInt());
+            break;    
+        case 0x2A:
+            // Serial.println("Status Pump Insu 0x03 0x13");
+            com_ser01_0x2A(retMsg5[3].toInt());
+            break;    
+        case 0x2B:
+            // Serial.println("Status Pump Insu 0x03 0x13");
+            com_ser01_0x2B(retMsg5[3].toInt());
+            break;    
+        case 0x2C:
+            // Serial.println("Status Pump Insu 0x03 0x13");
+            com_ser01_0x2C(retMsg5[3].toInt());
+            break;    
+        case 0x2D:
+            // Serial.println("Status Pump Insu 0x03 0x13");
+            com_ser01_0x2D(retMsg5[3].toInt());
+            break;            
+         case 0x2E:
+            // Serial.println("Status Pump Insu 0x03 0x13");
+            com_ser01_0x2E(retMsg5[3].toInt());
+            break;            
+        case 0x2F:
+            // Serial.println("Status Pump Insu 0x03 0x13");
+            com_ser01_0x2F(retMsg5[3].toInt());
+            break;            
+        case 0x30:
+            // Serial.println("Status Pump Insu 0x03 0x13");
+            com_ser01_0x30(retMsg5[3].toInt());
+            break;            
+        case 0x31:
+            // Serial.println("Status Pump Insu 0x03 0x13");
+            com_ser01_0x31(retMsg5[3].toInt());
+            break;            
+        case 0x32:
+            // Serial.println("Status Pump Insu 0x03 0x13");
+            com_ser01_0x32(retMsg5[3].toInt());
+            break;            
+                  
+            
         case 0xFF:
             Serial.println("Save Flash");
             com_ser01_0xFF(retMsg5[3].toInt());
@@ -484,6 +576,119 @@ void com_ser01_0x1E(int command){
     Serial.println("serv 01 - 1E");
     hum_int_on_stp = command;
 }
+
+void com_ser01_0x1F(int command){
+    Serial.println("serv 01 - 1F");
+    
+}
+
+void com_ser01_0x20(int command){
+    Serial.println("serv 01 - 20");
+    
+}
+
+void com_ser01_0x21(int command){
+    Serial.println("serv 01 - 21");
+    
+}
+
+void com_ser01_0x22(int command){
+    Serial.println("serv 01 - 22");
+    
+}
+
+void com_ser01_0x23(int command){
+    Serial.println("serv 01 - 23");
+    
+}
+
+void com_ser01_0x24(int command){
+    Serial.println("serv 01 - 24");
+    
+}
+
+void com_ser01_0x25(int command){
+    Serial.println("serv 01 - 25");
+    
+}
+
+void com_ser01_0x26(int command){
+    Serial.println("serv 01 - 26");
+    
+}
+
+void com_ser01_0x27(int command){
+    Serial.println("serv 01 - 27");
+    
+}
+
+void com_ser01_0x28(int command){
+    Serial.println("serv 01 - 28");
+    
+}
+
+void com_ser01_0x29(int command){
+    Serial.println("serv 01 - 29");
+    
+}
+
+void com_ser01_0x2A(int command){
+    Serial.println("serv 01 - 2A");
+    
+}
+
+void com_ser01_0x2B(int command){
+    Serial.println("serv 01 - 2B");
+    
+}
+
+void com_ser01_0x2C(int command){
+    Serial.println("serv 01 - 2C");
+    
+}
+
+void com_ser01_0x2D(int command){
+    Serial.println("serv 01 - 2D");
+    
+}
+
+void com_ser01_0x2E(int command){
+    Serial.println("serv 01 - 2E");
+    
+}
+
+void com_ser01_0x2F(int command){
+    Serial.println("serv 01 - 2F");
+    
+}
+
+void com_ser01_0x30(int command){
+    Serial.println("serv 01 - 30");
+    
+}
+
+void com_ser01_0x31(int command){
+    Serial.println("serv 01 - 31");
+    
+}
+
+void com_ser01_0x32(int command){
+    Serial.println("serv 01 - 32");
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void com_ser01_0xFF(int command){
     Serial.println("serv 01 - FF");

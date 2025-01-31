@@ -25,6 +25,7 @@ struct _var_grow
     float* var_float;
     int* var_int;
     bool* var_bool;
+    int relay_red;
     String* var_string;
     String eprom_val;
     String stringValue;
