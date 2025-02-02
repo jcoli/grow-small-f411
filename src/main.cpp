@@ -85,12 +85,12 @@ void setup() {
     IWatchdog.begin(10000000);
     loopDelay_watchdog = millis();
     // if(!rtc.isConfigured()){
-      // rtc.setHours(16);
-      // rtc.setMinutes(49);
+      // rtc.setHours(8);
+      // rtc.setMinutes(33);
       // rtc.setSeconds(0);
-      // rtc.setWeekDay(3);
-      // rtc.setDay(22);
-      // rtc.setMonth(1);
+      // rtc.setWeekDay(0);
+      // rtc.setDay(2);
+      // rtc.setMonth(2);
       // rtc.setYear(25); 
     // }  
 
@@ -100,6 +100,7 @@ void setup() {
     Serial.println("setup 1");
     delay(300);
     schedule_begin();
+    loopDelay_first = millis();
 
 }
 
@@ -158,7 +159,18 @@ void loop() {
       
       Serial.print("com_bool_0x0B off/on: ");
       Serial.println(irr_time_stp);
-  }      
+  }   
+
+  if ((millis() - loopDelay_schedule > TIMER_SCHEDULE) && (scheduleRun)){
+          loopDelay_schedule = millis();
+          rtc.getDate(&weekDay, &day, &month, &year);
+          rtc.getTime(&hours, &minutes, &seconds, &subSec);
+          // Serial.printf("%02d/%02d/%02d ", day, month, year);
+          Serial.printf("%02d:%02d\n", hours, minutes);
+          Serial.println("");
+          Serial.println(lastMinutes);
+          schedule_run();
+      }   
 
 }
 

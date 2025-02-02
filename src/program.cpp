@@ -141,7 +141,7 @@ extern int fan2_inf_pwm_light_stp;
 
 extern HardwareTimer *tim1;
 
-extern var_grow var_grow_1[50];
+extern var_grow var_grow_1[60];
 extern var_grow var_grow_2[40];
 extern var_grow var_grow_3[40];
 extern var_grow var_grow_4[40];

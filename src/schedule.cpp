@@ -123,12 +123,37 @@ extern int irr_interval_last_hour;
 extern int light_pwm_stp;
 extern int fan1_inf_pwm_stp;
 extern int fan2_inf_pwm_stp;
+extern int fan3_inf_pwm_stp;
 extern int fan1_inf_pwm_light_stp;
 extern int fan2_inf_pwm_light_stp;
+extern int fan3_inf_pwm_light_stp;
+
+extern int relay_1_on_hr_stp;
+extern int relay_1_on_min_stp;
+extern int relay_1_off_hr_stp;
+extern int relay_1_off_min_stp;
+extern int relay_2_on_hr_stp;
+extern int relay_2_on_min_stp;
+extern int relay_2_off_hr_stp;
+extern int relay_2_off_min_stp;
+extern int relay_3_on_hr_stp;
+extern int relay_3_on_min_stp;
+extern int relay_3_off_hr_stp;
+extern int relay_3_off_min_stp;
+extern int relay_4_on_hr_stp;
+extern int relay_4_on_min_stp;
+extern int relay_4_off_hr_stp;
+extern int relay_4_off_min_stp;
+extern int relay_1_red_stp;
+extern int relay_2_red_stp;
+extern int relay_3_red_stp;
+extern int relay_4_red_stp;
+
+extern int relay_red[4];
 
 extern HardwareTimer *tim1;
 
-extern var_grow var_grow_1[50];
+extern var_grow var_grow_1[60];
 extern var_grow var_grow_2[40];
 extern var_grow var_grow_3[40];
 extern var_grow var_grow_4[40];
@@ -141,7 +166,7 @@ void schedule_begin(){
     uint32_t addr;
     uint8_t data = 0;
     uint32_t data_int = 0;
-    for (int i = 0; i <= 35; i++){
+    for (int i = 0; i <= 48; i++){
         addr = var_grow_1[i].eprom_address;
         data_int = read_long(addr);
         *var_grow_1[i].var_int = data_int;
@@ -153,6 +178,10 @@ void schedule_begin(){
         Serial.println(data_int);
         delay(100);
     }
+    relay_red[0] = relay_1_red_stp;
+    relay_red[1] = relay_2_red_stp;
+    relay_red[2] = relay_3_red_stp;
+    relay_red[3] = relay_4_red_stp;
     Serial.println("Schedule 1");
 
     for (int i = 0; i <= 2; i++){
@@ -180,7 +209,7 @@ void schedule_save(){
     uint32_t addr;
     uint32_t data = 0;
     eraseSector(16384);
-    for (int i = 0; i <= 35; i++){
+    for (int i = 0; i <= 48; i++){
         addr = var_grow_1[i].eprom_address;
             data = *var_grow_1[i].var_int; 
             if(writeLong(addr, data)){
@@ -209,8 +238,24 @@ void schedule_check(){
             light_on = true;
             if (light_on){
                 tim1->setCaptureCompare(3, light_pwm, PERCENT_COMPARE_FORMAT);
+                for (int i = 0; i <= 3; i++){
+                    if (relay_red[i] == 3){
+                        if (i==0) relay_1_on = true;
+                        if (i==1) relay_2_on = true;
+                        if (i==2) relay_3_on = true;
+                        if (i==3) relay_4_on = true;
+                    }
+                }
             }else{
                 tim1->setCaptureCompare(3, 0, PERCENT_COMPARE_FORMAT);
+                for (int i = 0; i <= 3; i++){
+                    if (relay_red[i] == 3){
+                        if (i==0) relay_1_on = false;
+                        if (i==1) relay_2_on = false;
+                        if (i==2) relay_3_on = false;
+                        if (i==3) relay_4_on = false;
+                    }
+                }
             }       
             Serial.println("Fan");
             fan1_inf_pwm = fan1_inf_pwm_light_stp; 
@@ -218,57 +263,145 @@ void schedule_check(){
             if (fan1_inf_pwm>0){
                 fan1_inf_on = true;
                 tim1->setCaptureCompare(1, fan1_inf_pwm_light_stp, PERCENT_COMPARE_FORMAT);
+                for (int i = 0; i <= 3; i++){
+                    if (relay_red[i] == 1){
+                        if (i==0) relay_1_on = true;
+                        if (i==1) relay_2_on = true;
+                        if (i==2) relay_3_on = true;
+                        if (i==3) relay_4_on = true;
+                    }
+                }
             }else{
                 fan1_inf_on = false;
                 tim1->setCaptureCompare(1, 0, PERCENT_COMPARE_FORMAT);
+                for (int i = 0; i <= 3; i++){
+                    if (relay_red[i] == 1){
+                        if (i==0) relay_1_on = false;
+                        if (i==1) relay_2_on = false;
+                        if (i==2) relay_3_on = false;
+                        if (i==3) relay_4_on = false;
+                    }
+                }      
             }             
             // sendValuesFloat(CANID_OUTPUT, 0x05, 0x01, fan1_inf_pwm);
             
             fan2_inf_pwm = fan2_inf_pwm_light_stp; 
+            Serial.println("Fan 1 PWM Light ON");  
             if (fan2_inf_pwm>0){
                 fan2_inf_on = true;
                 tim1->setCaptureCompare(2, fan2_inf_pwm_light_stp, PERCENT_COMPARE_FORMAT);
+                for (int i = 0; i <= 2; i++){
+                    if (relay_red[i] == 1){
+                        if (i==0) relay_1_on = true;
+                        if (i==1) relay_2_on = true;
+                        if (i==2) relay_3_on = true;
+                        if (i==3) relay_4_on = true;
+                    }
+                }
             }else{
                 fan2_inf_on = false;
                 tim1->setCaptureCompare(2, 0, PERCENT_COMPARE_FORMAT);
+                for (int i = 0; i <= 3; i++){
+                    if (relay_red[i] == 2){
+                        if (i==0) relay_1_on = false;
+                        if (i==1) relay_2_on = false;
+                        if (i==2) relay_3_on = false;
+                        if (i==3) relay_4_on = false;
+                    }
+                }     
             }
             hum_1_on = *var_grow_1[27].var_int;
             digitalWrite(HUM, hum_1_on);
-                         
-            
+
+            digitalWrite(RELAY1, !relay_1_on);
+            digitalWrite(RELAY2, !relay_2_on);
         }
         else if ((light_hr_off_stp<=hours) && (light_min_off_stp<minutes)){
-            Serial.println("Light ON 1");
+            Serial.println("Light OFF 1");
             light_pwm = *var_grow_1[20].var_int;
             light_on = false;
             if (light_on){
                 tim1->setCaptureCompare(3, light_pwm, PERCENT_COMPARE_FORMAT);
+                for (int i = 0; i <= 3; i++){
+                    if (relay_red[i] == 3){
+                        if (i==0) relay_1_on = true;
+                        if (i==1) relay_2_on = true;
+                        if (i==2) relay_3_on = true;
+                        if (i==3) relay_4_on = true;
+                    }
+                }
             }else{
                 tim1->setCaptureCompare(3, 0, PERCENT_COMPARE_FORMAT);
+                for (int i = 0; i <= 3; i++){
+                    if (relay_red[i] == 3){
+                        if (i==0) relay_1_on = false;
+                        if (i==1) relay_2_on = false;
+                        if (i==2) relay_3_on = false;
+                        if (i==3) relay_4_on = false;
+                    }
+                }     
             }       
             Serial.println("Fan");
             fan1_inf_pwm = fan1_inf_pwm_light_stp; 
-            Serial.println("Fan 1 PWM Light ON");  
+            Serial.println("Fan 1 PWM Light OFF");  
             if (fan1_inf_pwm>0){
                 fan1_inf_on = true;
                 tim1->setCaptureCompare(1, fan1_inf_pwm, PERCENT_COMPARE_FORMAT);
+                for (int i = 0; i <= 3; i++){
+                    if (relay_red[i] == 1){
+                        if (i==0) relay_1_on = true;
+                        if (i==1) relay_2_on = true;
+                        if (i==2) relay_3_on = true;
+                        if (i==3) relay_4_on = true;
+                    }
+                }
             }else{
                 fan1_inf_on = false;
                 tim1->setCaptureCompare(1, 0, PERCENT_COMPARE_FORMAT);
+                for (int i = 0; i <= 3; i++){
+                    if (relay_red[i] == 1){
+                        if (i==0) relay_1_on = false;
+                        if (i==1) relay_2_on = false;
+                        if (i==2) relay_3_on = false;
+                        if (i==3) relay_4_on = false;
+                    }
+                }     
             }             
-            // sendValuesFloat(CANID_OUTPUT, 0x05, 0x01, fan1_inf_pwm);
             
+            Serial.println("Fan 2 PWM Light OFF"); 
             fan2_inf_pwm = fan2_inf_pwm_light_stp; 
             if (fan2_inf_pwm>0){
                 fan2_inf_on = true;
                 tim1->setCaptureCompare(2, fan2_inf_pwm, PERCENT_COMPARE_FORMAT);
+                for (int i = 0; i <= 3; i++){
+                    if (relay_red[i] == 2){
+                        if (i==0) relay_1_on = true;
+                        if (i==1) relay_2_on = true;
+                        if (i==2) relay_3_on = true;
+                        if (i==3) relay_4_on = true;
+                    }
+                }
             }else{
                 fan2_inf_on = false;
                 tim1->setCaptureCompare(2, 0, PERCENT_COMPARE_FORMAT);
+                for (int i = 0; i <= 3; i++){
+                    if (relay_red[i] == 2){
+                        if (i==0) relay_1_on = false;
+                        if (i==1) relay_2_on = false;
+                        if (i==2) relay_3_on = false;
+                        if (i==3) relay_4_on = false;
+                    }
+                }     
             }
             hum_1_on = *var_grow_1[28].var_int;
             digitalWrite(HUM, hum_1_on);
+
+            digitalWrite(RELAY1, !relay_1_on);
+            digitalWrite(RELAY2, !relay_2_on);
         }
+        
+        // digitalWrite(RELAY3, !relay_3_on);
+        // digitalWrite(RELAY4, !relay_4_on);
 
     }
 }
@@ -283,14 +416,34 @@ void schedule_run(){
         Serial.print(light_hr_on_stp);
         Serial.print(":");
         Serial.println(light_min_on_stp);
+        Serial.print("Hora: ");
+        Serial.print(hours);
+        Serial.print(":");
+        Serial.println(minutes);
         if ((light_hr_on_stp==hours) && (light_min_on_stp==minutes)){
            Serial.println("Light ON 1");
             light_pwm = *var_grow_1[20].var_int;
             light_on = true;
             if (light_on){
                 tim1->setCaptureCompare(3, light_pwm, PERCENT_COMPARE_FORMAT);
+                for (int i = 0; i <= 3; i++){
+                    if (relay_red[i] == 3){
+                        if (i==0) relay_1_on = true;
+                        if (i==1) relay_2_on = true;
+                        if (i==2) relay_3_on = true;
+                        if (i==3) relay_4_on = true;
+                    }
+                }
             }else{
                 tim1->setCaptureCompare(3, 0, PERCENT_COMPARE_FORMAT);
+                for (int i = 0; i <= 3; i++){
+                    if (relay_red[i] == 3){
+                        if (i==0) relay_1_on = false;
+                        if (i==1) relay_2_on = false;
+                        if (i==2) relay_3_on = false;
+                        if (i==3) relay_4_on = false;
+                    }
+                }     
             }       
             Serial.println("Fan");
             fan1_inf_pwm = fan1_inf_pwm_light_stp; 
@@ -298,19 +451,51 @@ void schedule_run(){
             if (fan1_inf_pwm>0){
                 fan1_inf_on = true;
                 tim1->setCaptureCompare(1, fan1_inf_pwm_light_stp, PERCENT_COMPARE_FORMAT);
+                for (int i = 0; i <= 3; i++){
+                    if (relay_red[i] == 1){
+                        if (i==0) relay_1_on = true;
+                        if (i==1) relay_2_on = true;
+                        if (i==2) relay_3_on = true;
+                        if (i==3) relay_4_on = true;
+                    }
+                }
             }else{
                 fan1_inf_on = false;
                 tim1->setCaptureCompare(1, 0, PERCENT_COMPARE_FORMAT);
+                for (int i = 0; i <= 3; i++){
+                    if (relay_red[i] == 1){
+                        if (i==0) relay_1_on = false;
+                        if (i==1) relay_2_on = false;
+                        if (i==2) relay_3_on = false;
+                        if (i==3) relay_4_on = false;
+                    }
+                }     
             }             
-            // sendValuesFloat(CANID_OUTPUT, 0x05, 0x01, fan1_inf_pwm);
             
+            Serial.println("Fan 2 PWM Light ON"); 
             fan2_inf_pwm = fan2_inf_pwm_light_stp; 
             if (fan2_inf_pwm>0){
                 fan2_inf_on = true;
                 tim1->setCaptureCompare(2, fan2_inf_pwm_light_stp, PERCENT_COMPARE_FORMAT);
+                for (int i = 0; i <= 3; i++){
+                    if (relay_red[i] == 2){
+                        if (i==0) relay_1_on = true;
+                        if (i==1) relay_2_on = true;
+                        if (i==2) relay_3_on = true;
+                        if (i==3) relay_4_on = true;
+                    }
+                }
             }else{
                 fan2_inf_on = false;
                 tim1->setCaptureCompare(2, 0, PERCENT_COMPARE_FORMAT);
+                for (int i = 0; i <= 3; i++){
+                    if (relay_red[i] == 2){
+                        if (i==0) relay_1_on = false;
+                        if (i==1) relay_2_on = false;
+                        if (i==2) relay_3_on = false;
+                        if (i==3) relay_4_on = false;
+                    }
+                }     
             }
             hum_1_on = *var_grow_1[27].var_int;
             digitalWrite(HUM, hum_1_on);            
@@ -322,13 +507,29 @@ void schedule_run(){
         Serial.print(":");
         Serial.println(light_min_off_stp);
         if ((light_hr_off_stp==hours) && (light_min_off_stp==minutes)){
-             Serial.println("Light ON 1");
+             Serial.println("Light OFF 1");
             light_pwm = *var_grow_1[20].var_int;
-            light_on = true;
+            light_on = false;
             if (light_on){
                 tim1->setCaptureCompare(3, light_pwm, PERCENT_COMPARE_FORMAT);
+                for (int i = 0; i <= 3; i++){
+                    if (relay_red[i] == 3){
+                        if (i==0) relay_1_on = true;
+                        if (i==1) relay_2_on = true;
+                        if (i==2) relay_3_on = true;
+                        if (i==3) relay_4_on = true;
+                    }
+                }
             }else{
                 tim1->setCaptureCompare(3, 0, PERCENT_COMPARE_FORMAT);
+                for (int i = 0; i <= 3; i++){
+                    if (relay_red[i] == 3){
+                        if (i==0) relay_1_on = false;
+                        if (i==1) relay_2_on = false;
+                        if (i==2) relay_3_on = false;
+                        if (i==3) relay_4_on = false;
+                    }
+                }     
             }       
             Serial.println("Fan");
            
@@ -349,14 +550,30 @@ void schedule_run(){
         
         // Serial.println("Fan");
         if (light_on){
-                 fan1_inf_pwm = fan1_inf_pwm_light_stp; 
+            fan1_inf_pwm = fan1_inf_pwm_light_stp; 
             Serial.println("Fan 1 PWM Light ON");  
             if (fan1_inf_pwm>0){
                 fan1_inf_on = true;
                 tim1->setCaptureCompare(1, fan1_inf_pwm_light_stp, PERCENT_COMPARE_FORMAT);
+                for (int i = 0; i <= 3; i++){
+                    if (relay_red[i] == 1){
+                        if (i==0) relay_1_on = true;
+                        if (i==1) relay_2_on = true;
+                        if (i==2) relay_3_on = true;
+                        if (i==3) relay_4_on = true;
+                    }
+                }
             }else{
                 fan1_inf_on = false;
                 tim1->setCaptureCompare(1, 0, PERCENT_COMPARE_FORMAT);
+                 for (int i = 0; i <= 3; i++){
+                    if (relay_red[i] == 1){
+                        if (i==0) relay_1_on = false;
+                        if (i==1) relay_2_on = false;
+                        if (i==2) relay_3_on = false;
+                        if (i==3) relay_4_on = false;
+                    }
+                }     
             }             
             // sendValuesFloat(CANID_OUTPUT, 0x05, 0x01, fan1_inf_pwm);
             
@@ -364,36 +581,99 @@ void schedule_run(){
             if (fan2_inf_pwm>0){
                 fan2_inf_on = true;
                 tim1->setCaptureCompare(2, fan2_inf_pwm_light_stp, PERCENT_COMPARE_FORMAT);
+                for (int i = 0; i <= 3; i++){
+                    if (relay_red[i] == 2){
+                        if (i==0) relay_1_on = true;
+                        if (i==1) relay_2_on = true;
+                        if (i==2) relay_3_on = true;
+                        if (i==3) relay_4_on = true;
+                    }
+                }
             }else{
                 fan2_inf_on = false;
                 tim1->setCaptureCompare(2, 0, PERCENT_COMPARE_FORMAT);
+                for (int i = 0; i <= 3; i++){
+                    if (relay_red[i] == 2){
+                        if (i==0) relay_1_on = false;
+                        if (i==1) relay_2_on = false;
+                        if (i==2) relay_3_on = false;
+                        if (i==3) relay_4_on = false;
+                    }
+                }     
             }
             hum_1_on = *var_grow_1[27].var_int;
             digitalWrite(HUM, hum_1_on);
+
+            digitalWrite(RELAY1, !relay_1_on);
+            digitalWrite(RELAY2, !relay_2_on);
         }else{
-                 Serial.println("Fan");
-            fan1_inf_pwm = fan1_inf_pwm_light_stp; 
-            Serial.println("Fan 1 PWM Light ON");  
+            Serial.println("Fan");
+            fan1_inf_pwm = fan1_inf_pwm_stp; 
+            Serial.println("Fan 1 PWM Light OFF");  
             if (fan1_inf_pwm>0){
+                Serial.println("Fan 1 PWM Light OFF 1");
                 fan1_inf_on = true;
                 tim1->setCaptureCompare(1, fan1_inf_pwm, PERCENT_COMPARE_FORMAT);
+                for (int i = 0; i <= 3; i++){
+                    if (relay_red[i] == 1){
+                        if (i==0) relay_1_on = true;
+                        if (i==1) relay_2_on = true;
+                        if (i==2) relay_3_on = true;
+                        if (i==3) relay_4_on = true;
+                    }
+                }
+                
             }else{
+                Serial.println("Fan 1 PWM Light OFF 2");
                 fan1_inf_on = false;
                 tim1->setCaptureCompare(1, 0, PERCENT_COMPARE_FORMAT);
+                for (int i = 0; i <= 3; i++){
+                    if (relay_red[i] == 2){
+                        if (i==0) relay_1_on = false;
+                        if (i==1) relay_2_on = false;
+                        if (i==2) relay_3_on = false;
+                        if (i==3) relay_4_on = false;
+                    }
+                }     
             }             
-            // sendValuesFloat(CANID_OUTPUT, 0x05, 0x01, fan1_inf_pwm);
             
-            fan2_inf_pwm = fan2_inf_pwm_light_stp; 
+            Serial.println("Fan 2 PWM Light OFF"); 
+            fan2_inf_pwm = fan2_inf_pwm_stp; 
             if (fan2_inf_pwm>0){
+                Serial.println("Fan 2 PWM Light OFF 1");
                 fan2_inf_on = true;
                 tim1->setCaptureCompare(2, fan2_inf_pwm, PERCENT_COMPARE_FORMAT);
+                for (int i = 0; i <= 3; i++){
+                    if (relay_red[i] == 2){
+                        if (i==0) relay_1_on = true;
+                        if (i==1) relay_2_on = true;
+                        if (i==2) relay_3_on = true;
+                        if (i==3) relay_4_on = true;
+                    }
+                }
             }else{
+                Serial.println("Fan 2 PWM Light OFF 2");
                 fan2_inf_on = false;
                 tim1->setCaptureCompare(2, 0, PERCENT_COMPARE_FORMAT);
+                for (int i = 0; i <= 3; i++){
+                    if (relay_red[i] == 2){
+                        if (i==0) relay_1_on = false;
+                        if (i==1) relay_2_on = false;
+                        if (i==2) relay_3_on = false;
+                        if (i==3) relay_4_on = false;
+                    }
+                }     
             }
-            hum_1_on = *var_grow_1[28].var_int;
+            hum_1_on = *var_grow_1[27].var_int;
             digitalWrite(HUM, hum_1_on);
+
+            digitalWrite(RELAY1, !relay_1_on);
+            digitalWrite(RELAY2, !relay_2_on);
         }
+        // digitalWrite(RELAY1, !relay_1_on);
+        // digitalWrite(RELAY2, !relay_2_on);
+        // digitalWrite(RELAY3, !relay_3_on);
+        // digitalWrite(RELAY4, !relay_4_on);
             
         
     }

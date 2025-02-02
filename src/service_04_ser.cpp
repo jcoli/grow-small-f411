@@ -82,6 +82,8 @@ extern int light_pwm_stp;
 extern int fan1_inf_pwm_stp;
 extern int fan2_inf_pwm_stp;
 
+extern int relay_red[4];
+
 
 //Service 02
 extern float temp_ext;
@@ -258,80 +260,170 @@ void save_on_flash_serv4(){
 void com_ser04_0x00(String command){
     
 }
-
+//1 - Fan1, 2 - Fan2, 3 - light, 4 - Rega, 5 - Umidificador
 void com_ser04_0x01(String command){
     Serial.println("Fan1");
     if (command.equals("1")){
         fan1_inf_on = true;
         tim1->setCaptureCompare(1, fan1_inf_pwm, PERCENT_COMPARE_FORMAT);
+        for (int i = 0; i <= 3; i++){
+            if (relay_red[i] == 1){
+                if (i==0) com_ser04_0x0E("1");
+                if (i==1) com_ser04_0x0F("1");
+                if (i==2) com_ser04_0x10("1");
+                if (i==3) com_ser04_0x11("1");
+            }
+        }
         Serial.println("com_0x01 on");
     }else{
         fan1_inf_on = false;
         tim1->setCaptureCompare(1, 0, PERCENT_COMPARE_FORMAT);
+        for (int i = 0; i <= 3; i++){
+            if (relay_red[i] == 1){
+                if (i==0) com_ser04_0x0E("0");
+                if (i==1) com_ser04_0x0F("0");
+                if (i==2) com_ser04_0x10("0");
+                if (i==3) com_ser04_0x11("0");
+            }
+        }
         Serial.println("com_0x01 off");
     } 
     // digitalWrite(FAN01, fan1_inf_on);  
     save_on_flash_serv4();
 }
-
+//1 - Fan1, 2 - Fan2, 3 - light, 4 - Rega, 5 - Umidificador
 void com_ser04_0x02(String command){
     Serial.println("Fan2");
     if (command.equals("1")){
         fan2_inf_on = true;
         tim1->setCaptureCompare(2, fan2_inf_pwm, PERCENT_COMPARE_FORMAT);
+        for (int i = 0; i <= 3; i++){
+            if (relay_red[i] == 2){
+                if (i==0) com_ser04_0x0E("1");
+                if (i==1) com_ser04_0x0F("1");
+                if (i==2) com_ser04_0x10("1");
+                if (i==3) com_ser04_0x11("1");
+            }
+        }
         Serial.println("com_0x02 on");
       }else{
         fan2_inf_on = false;
         tim1->setCaptureCompare(2, 0, PERCENT_COMPARE_FORMAT);
+        for (int i = 0; i <= 3; i++){
+            if (relay_red[i] == 2){
+                if (i==0) com_ser04_0x0E("0");
+                if (i==1) com_ser04_0x0F("0");
+                if (i==2) com_ser04_0x10("0");
+                if (i==3) com_ser04_0x11("0");
+            }
+        }
         Serial.println("com_0x02 off");
     }    
     // digitalWrite(FAN02, fan2_inf_on);
     save_on_flash_serv4();
 }
-
+//1 - Fan1, 2 - Fan2, 3 - light, 4 - Rega, 5 - Umidificador
 void com_ser04_0x06(String command){
     Serial.println("Light");
     if (command.equals("1")){
         light_on = true;
         tim1->setCaptureCompare(3, light_pwm, PERCENT_COMPARE_FORMAT);
+        for (int i = 0; i <= 3; i++){
+            Serial.print("Light Relay: ");
+            Serial.print(i);
+            Serial.print(", ");
+            Serial.println(relay_red[i]);
+            if (relay_red[i] == 3){
+                Serial.println("Light Relay");
+                if (i==0) com_ser04_0x0E("1");
+                if (i==1) com_ser04_0x0F("1");
+                if (i==2) com_ser04_0x10("1");
+                if (i==3) com_ser04_0x11("1");
+            }
+        }
         Serial.println("com_0x06 on");
     }else{
         light_on = false;
         tim1->setCaptureCompare(3, 0, PERCENT_COMPARE_FORMAT);
+        for (int i = 0; i <= 3; i++){
+            Serial.print("Light Relay: ");
+            Serial.print(i);
+            Serial.print(", ");
+            Serial.println(relay_red[i]);
+            if (relay_red[i] == 3){
+                Serial.println("Light Relay");
+                if (i==0) com_ser04_0x0E("0");
+                if (i==1) com_ser04_0x0F("0");
+                if (i==2) com_ser04_0x10("0");
+                if (i==3) com_ser04_0x11("0");
+            }
+        }
         Serial.println("com_0x06 off");
     }    
     // digitalWrite(LIGHTS, light_on);
     save_on_flash_serv4();
 }
-
+//1 - Fan1, 2 - Fan2, 3 - light, 4 - Rega, 5 - Umidificador
 void com_ser04_0x0B(String command){
     Serial.println("Rega");
     if (command.equals("1")){
         pump_irr_on= true;
         Serial.println("com_0x0B on");
+        for (int i = 0; i <= 3; i++){
+            if (relay_red[i] == 4){
+                if (i==0) com_ser04_0x0E("1");
+                if (i==1) com_ser04_0x0F("1");
+                if (i==2) com_ser04_0x10("1");
+                if (i==3) com_ser04_0x11("1");
+            }
+        }
     }else{
         pump_irr_on = false;
         Serial.println("com_0x0B off");
+        for (int i = 0; i <= 3; i++){
+            if (relay_red[i] == 4){
+                if (i==0) com_ser04_0x0E("0");
+                if (i==1) com_ser04_0x0F("0");
+                if (i==2) com_ser04_0x10("0");
+                if (i==3) com_ser04_0x11("0");
+            }
+        }
     }    
     save_on_flash_serv4();
     digitalWrite(PUMP1, pump_irr_on);
     loopDelay_pump = millis();
 }
-
+//1 - Fan1, 2 - Fan2, 3 - light, 4 - Rega, 5 - Umidificador
 void com_ser04_0x0C(String command){
     Serial.println("Hum");
     if (command.equals("1")){
         hum_1_on = true;
         Serial.println("com_0x0C on");
+        for (int i = 0; i <= 3; i++){
+            if (relay_red[i] == 5){
+                if (i==0) com_ser04_0x0E("1");
+                if (i==1) com_ser04_0x0F("1");
+                if (i==2) com_ser04_0x10("1");
+                if (i==3) com_ser04_0x11("1");
+            }
+        }
     }else{
         hum_1_on = false;
         Serial.println("com_0x0C off");
+        for (int i = 0; i <= 3; i++){
+            if (relay_red[i] == 5){
+                if (i==0) com_ser04_0x0E("0");
+                if (i==1) com_ser04_0x0F("0");
+                if (i==2) com_ser04_0x10("0");
+                if (i==3) com_ser04_0x11("0");
+            }
+        }
     }    
     save_on_flash_serv4();
     digitalWrite(HUM, hum_1_on);
 
 }
-
+//1 - Fan1, 2 - Fan2, 3 - light, 4 - Rega, 5 - Umidificador
 void com_ser04_0x0D(String command){
     Serial.println("Desum");
     // if (command.equals("1")){

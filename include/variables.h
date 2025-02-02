@@ -17,6 +17,7 @@ unsigned long loopDelay_input = millis();
 unsigned long lastAvailabilityToggleAt = millis();
 unsigned long loopDelay_watchdog = millis();
 unsigned long loopDelay_pump = millis();
+unsigned long loopDelay_schedule = millis();
 
 String retMsg2[2] = {"", ""};
 String retMsg3[3] = {"", "", ""};
@@ -32,7 +33,7 @@ String retMsg10[10] = {"", "", "", "", "", "", "", "", "", ""};
 String name_device = "Grow Master";
 String manufacturer = "GreenTomate";
 
-var_grow var_grow_1[50];
+var_grow var_grow_1[60];
 var_grow var_grow_2[40];
 var_grow var_grow_3[40];
 var_grow var_grow_4[40];
@@ -181,14 +182,16 @@ int relay_2_red_stp = 0;
 int relay_3_red_stp = 0;
 int relay_4_red_stp = 0;
 
-int relay_red[40];
+int relay_red[4]; //1 - Fan1, 2 - Fan2, 3 - light, 4 - Rega, 5 - Umidificador
 
 //
 int light_pwm_stp = 0;
 int fan1_inf_pwm_stp = 0;
 int fan2_inf_pwm_stp = 0;
+int fan3_inf_pwm_stp = 0;
 
 int fan1_inf_pwm_light_stp = 0;
 int fan2_inf_pwm_light_stp = 0;
+int fan3_inf_pwm_light_stp = 0;
 
 #endif

@@ -92,10 +92,11 @@ extern int relay_red[40];
 extern int light_pwm_stp;
 extern int fan1_inf_pwm_stp;
 extern int fan2_inf_pwm_stp;
+extern int fan3_inf_pwm_stp;
 
 extern int fan1_inf_pwm_light_stp;
 extern int fan2_inf_pwm_light_stp;
-
+extern int fan3_inf_pwm_light_stp;
 
 extern float temp_ext;
 extern float hum_ext;
@@ -145,7 +146,7 @@ extern String owner_name;
 extern String user_name;
 extern String user_pwd;
 
-extern var_grow var_grow_1[50];
+extern var_grow var_grow_1[60];
 extern var_grow var_grow_2[40];
 extern var_grow var_grow_3[40];
 extern var_grow var_grow_4[40];
@@ -351,13 +352,13 @@ void struc_mount_begin(){
     var_grow_1[22].eprom_size = 16;
     var_grow_1[22].var_int = &fan2_inf_pwm_stp;
 
-    var_grow_1[23].pid = 0x18;
+    var_grow_1[23].pid = 0x19;
     var_grow_1[23].service = 0x01;
     var_grow_1[23].device = 0x0F;
-    var_grow_1[23].descr = "Fan 2 Intensidade (PMW)";
+    var_grow_1[23].descr = "Fan 3 Intensidade (PMW)";
     var_grow_1[23].eprom_address = 16784;
     var_grow_1[23].eprom_size = 16;
-    var_grow_1[23].var_int = &fan2_inf_pwm_stp;
+    var_grow_1[23].var_int = &fan3_inf_pwm_stp;
     
     var_grow_1[24].pid = 0x1A;
     var_grow_1[24].service = 0x01;
@@ -374,182 +375,190 @@ void struc_mount_begin(){
     var_grow_1[25].eprom_address = 16816;
     var_grow_1[25].eprom_size = 16;
     var_grow_1[25].var_int = &fan2_inf_pwm_light_stp;
-    
-    var_grow_1[26].pid = 0x1D;
+
+    var_grow_1[26].pid = 0x1C;
     var_grow_1[26].service = 0x01;
     var_grow_1[26].device = 0x0F;
-    var_grow_1[26].descr = "Rega ON";
-    var_grow_1[26].eprom_address = 16848;
+    var_grow_1[26].descr = "Fan 3 Intensidade Luz (PMW)";
+    var_grow_1[26].eprom_address = 16832;
     var_grow_1[26].eprom_size = 16;
-    var_grow_1[26].var_int = &irr_on_stp;
-
-    var_grow_1[27].pid = 0x1E;
+    var_grow_1[26].var_int = &fan3_inf_pwm_light_stp;
+   
+    var_grow_1[27].pid = 0x1D;
     var_grow_1[27].service = 0x01;
     var_grow_1[27].device = 0x0F;
-    var_grow_1[27].descr = "Umidificador ON";
-    var_grow_1[27].eprom_address = 16864;
+    var_grow_1[27].descr = "Rega ON";
+    var_grow_1[27].eprom_address = 16848;
     var_grow_1[27].eprom_size = 16;
-    var_grow_1[27].var_int = &hum_int_on_stp;
+    var_grow_1[27].var_int = &irr_on_stp;
 
-    var_grow_1[28].pid = 0x1F;
+    var_grow_1[28].pid = 0x1E;
     var_grow_1[28].service = 0x01;
     var_grow_1[28].device = 0x0F;
-    var_grow_1[28].descr = "Relay1 ON (hour)";
-    var_grow_1[28].eprom_address = 16880;
+    var_grow_1[28].descr = "Umidificador ON";
+    var_grow_1[28].eprom_address = 16864;
     var_grow_1[28].eprom_size = 16;
-    var_grow_1[28].var_int = &relay_1_on_hr_stp;
+    var_grow_1[28].var_int = &hum_int_on_stp;
 
-    var_grow_1[29].pid = 0x20;
+    var_grow_1[29].pid = 0x1F;
     var_grow_1[29].service = 0x01;
     var_grow_1[29].device = 0x0F;
-    var_grow_1[29].descr = "Relay1 ON (min)";
-    var_grow_1[29].eprom_address = 16896;
+    var_grow_1[29].descr = "Relay1 ON (hour)";
+    var_grow_1[29].eprom_address = 16880;
     var_grow_1[29].eprom_size = 16;
-    var_grow_1[29].var_int = &relay_1_on_min_stp;
+    var_grow_1[29].var_int = &relay_1_on_hr_stp;
 
-    var_grow_1[30].pid = 0x21;
+    var_grow_1[30].pid = 0x20;
     var_grow_1[30].service = 0x01;
     var_grow_1[30].device = 0x0F;
-    var_grow_1[30].descr = "Relay1 OFF (hour)";
-    var_grow_1[30].eprom_address = 16912;
+    var_grow_1[30].descr = "Relay1 ON (min)";
+    var_grow_1[30].eprom_address = 16896;
     var_grow_1[30].eprom_size = 16;
-    var_grow_1[30].var_int = &relay_1_off_hr_stp;
+    var_grow_1[30].var_int = &relay_1_on_min_stp;
 
-    var_grow_1[31].pid = 0x22;
+    var_grow_1[31].pid = 0x21;
     var_grow_1[31].service = 0x01;
     var_grow_1[31].device = 0x0F;
-    var_grow_1[31].descr = "Relay1 OFF (min)";
-    var_grow_1[31].eprom_address = 16928;
+    var_grow_1[31].descr = "Relay1 OFF (hour)";
+    var_grow_1[31].eprom_address = 16912;
     var_grow_1[31].eprom_size = 16;
-    var_grow_1[31].var_int = &relay_1_off_min_stp;
+    var_grow_1[31].var_int = &relay_1_off_hr_stp;
 
-    var_grow_1[32].pid = 0x23;
+    var_grow_1[32].pid = 0x22;
     var_grow_1[32].service = 0x01;
     var_grow_1[32].device = 0x0F;
-    var_grow_1[32].descr = "Relay2 ON (hour)";
-    var_grow_1[32].eprom_address = 16944;
+    var_grow_1[32].descr = "Relay1 OFF (min)";
+    var_grow_1[32].eprom_address = 16928;
     var_grow_1[32].eprom_size = 16;
-    var_grow_1[32].var_int = &relay_2_on_hr_stp;
+    var_grow_1[32].var_int = &relay_1_off_min_stp;
 
-    var_grow_1[33].pid = 0x24;
+    var_grow_1[33].pid = 0x23;
     var_grow_1[33].service = 0x01;
     var_grow_1[33].device = 0x0F;
-    var_grow_1[33].descr = "Relay2 ON (min)";
-    var_grow_1[33].eprom_address = 16960;
+    var_grow_1[33].descr = "Relay2 ON (hour)";
+    var_grow_1[33].eprom_address = 16944;
     var_grow_1[33].eprom_size = 16;
-    var_grow_1[33].var_int = &relay_2_on_min_stp;
+    var_grow_1[33].var_int = &relay_2_on_hr_stp;
 
-    var_grow_1[34].pid = 0x25;
+    var_grow_1[34].pid = 0x24;
     var_grow_1[34].service = 0x01;
     var_grow_1[34].device = 0x0F;
-    var_grow_1[34].descr = "Relay2 OFF (hour)";
-    var_grow_1[34].eprom_address = 16976;
+    var_grow_1[34].descr = "Relay2 ON (min)";
+    var_grow_1[34].eprom_address = 16960;
     var_grow_1[34].eprom_size = 16;
-    var_grow_1[34].var_int = &relay_2_off_hr_stp;
+    var_grow_1[34].var_int = &relay_2_on_min_stp;
 
-    var_grow_1[35].pid = 0x26;
+    var_grow_1[35].pid = 0x25;
     var_grow_1[35].service = 0x01;
     var_grow_1[35].device = 0x0F;
-    var_grow_1[35].descr = "Relay2 OFF (min)";
-    var_grow_1[35].eprom_address = 16992;
+    var_grow_1[35].descr = "Relay2 OFF (hour)";
+    var_grow_1[35].eprom_address = 16976;
     var_grow_1[35].eprom_size = 16;
-    var_grow_1[35].var_int = &relay_2_off_min_stp;
+    var_grow_1[35].var_int = &relay_2_off_hr_stp;
 
-    var_grow_1[32].pid = 0x27;
-    var_grow_1[32].service = 0x01;
-    var_grow_1[32].device = 0x0F;
-    var_grow_1[32].descr = "Relay3 ON (hour)";
-    var_grow_1[32].eprom_address = 17008;
-    var_grow_1[32].eprom_size = 16;
-    var_grow_1[32].var_int = &relay_3_on_hr_stp;
-
-    var_grow_1[33].pid = 0x28;
-    var_grow_1[33].service = 0x01;
-    var_grow_1[33].device = 0x0F;
-    var_grow_1[33].descr = "Relay3 ON (min)";
-    var_grow_1[33].eprom_address = 17024;
-    var_grow_1[33].eprom_size = 16;
-    var_grow_1[33].var_int = &relay_3_on_min_stp;
-
-    var_grow_1[34].pid = 0x29;
-    var_grow_1[34].service = 0x01;
-    var_grow_1[34].device = 0x0F;
-    var_grow_1[34].descr = "Relay3 OFF (hour)";
-    var_grow_1[34].eprom_address = 17040;
-    var_grow_1[34].eprom_size = 16;
-    var_grow_1[34].var_int = &relay_3_off_hr_stp;
-
-    var_grow_1[35].pid = 0x2A;
-    var_grow_1[35].service = 0x01;
-    var_grow_1[35].device = 0x0F;
-    var_grow_1[35].descr = "Relay3 OFF (min)";
-    var_grow_1[35].eprom_address = 17056;
-    var_grow_1[35].eprom_size = 16;
-    var_grow_1[35].var_int = &relay_3_off_min_stp;
-
-    var_grow_1[32].pid = 0x2B;
-    var_grow_1[32].service = 0x01;
-    var_grow_1[32].device = 0x0F;
-    var_grow_1[32].descr = "Relay4 ON (hour)";
-    var_grow_1[32].eprom_address = 17072;
-    var_grow_1[32].eprom_size = 16;
-    var_grow_1[32].var_int = &relay_4_on_hr_stp;
-
-    var_grow_1[33].pid = 0x2C;
-    var_grow_1[33].service = 0x01;
-    var_grow_1[33].device = 0x0F;
-    var_grow_1[33].descr = "Relay4 ON (min)";
-    var_grow_1[33].eprom_address = 17088;
-    var_grow_1[33].eprom_size = 16;
-    var_grow_1[33].var_int = &relay_4_on_min_stp;
-
-    var_grow_1[34].pid = 0x2D;
-    var_grow_1[34].service = 0x01;
-    var_grow_1[34].device = 0x0F;
-    var_grow_1[34].descr = "Relay4 OFF (hour)";
-    var_grow_1[34].eprom_address = 17104;
-    var_grow_1[34].eprom_size = 16;
-    var_grow_1[34].var_int = &relay_4_off_hr_stp;
-
-    var_grow_1[35].pid = 0x2E;
-    var_grow_1[35].service = 0x01;
-    var_grow_1[35].device = 0x0F;
-    var_grow_1[35].descr = "Relay4 OFF (min)";
-    var_grow_1[35].eprom_address = 17120;
-    var_grow_1[35].eprom_size = 16;
-    var_grow_1[35].var_int = &relay_4_off_min_stp;
-
-    var_grow_1[36].pid = 0x2F;
+    var_grow_1[36].pid = 0x26;
     var_grow_1[36].service = 0x01;
     var_grow_1[36].device = 0x0F;
-    var_grow_1[36].descr = "Relay1 Redirect";
-    var_grow_1[36].eprom_address = 17136;
+    var_grow_1[36].descr = "Relay2 OFF (min)";
+    var_grow_1[36].eprom_address = 16992;
     var_grow_1[36].eprom_size = 16;
-    var_grow_1[36].var_int = &relay_1_red_stp;
+    var_grow_1[36].var_int = &relay_2_off_min_stp;
 
-    var_grow_1[37].pid = 0x30;
+    var_grow_1[37].pid = 0x27;
     var_grow_1[37].service = 0x01;
     var_grow_1[37].device = 0x0F;
-    var_grow_1[37].descr = "Relay2 Redirect";
-    var_grow_1[37].eprom_address = 17152;
+    var_grow_1[37].descr = "Relay3 ON (hour)";
+    var_grow_1[37].eprom_address = 17008;
     var_grow_1[37].eprom_size = 16;
-    var_grow_1[37].var_int = &relay_2_red_stp;
+    var_grow_1[37].var_int = &relay_3_on_hr_stp;
 
-    var_grow_1[38].pid = 0x31;
+    var_grow_1[38].pid = 0x28;
     var_grow_1[38].service = 0x01;
     var_grow_1[38].device = 0x0F;
-    var_grow_1[38].descr = "Relay3 Redirect";
-    var_grow_1[38].eprom_address = 17168;
+    var_grow_1[38].descr = "Relay3 ON (min)";
+    var_grow_1[38].eprom_address = 17024;
     var_grow_1[38].eprom_size = 16;
-    var_grow_1[38].var_int = &relay_3_red_stp;
+    var_grow_1[38].var_int = &relay_3_on_min_stp;
 
-    var_grow_1[39].pid = 0x32;
+    var_grow_1[39].pid = 0x29;
     var_grow_1[39].service = 0x01;
     var_grow_1[39].device = 0x0F;
-    var_grow_1[39].descr = "Relay4 Redirect";
-    var_grow_1[39].eprom_address = 17184;
+    var_grow_1[39].descr = "Relay3 OFF (hour)";
+    var_grow_1[39].eprom_address = 17040;
     var_grow_1[39].eprom_size = 16;
-    var_grow_1[39].var_int = &relay_4_red_stp;
+    var_grow_1[39].var_int = &relay_3_off_hr_stp;
+
+    var_grow_1[40].pid = 0x2A;
+    var_grow_1[40].service = 0x01;
+    var_grow_1[40].device = 0x0F;
+    var_grow_1[40].descr = "Relay3 OFF (min)";
+    var_grow_1[40].eprom_address = 17056;
+    var_grow_1[40].eprom_size = 16;
+    var_grow_1[40].var_int = &relay_3_off_min_stp;
+
+    var_grow_1[41].pid = 0x2B;
+    var_grow_1[41].service = 0x01;
+    var_grow_1[41].device = 0x0F;
+    var_grow_1[41].descr = "Relay4 ON (hour)";
+    var_grow_1[41].eprom_address = 17072;
+    var_grow_1[41].eprom_size = 16;
+    var_grow_1[41].var_int = &relay_4_on_hr_stp;
+
+    var_grow_1[42].pid = 0x2C;
+    var_grow_1[42].service = 0x01;
+    var_grow_1[42].device = 0x0F;
+    var_grow_1[42].descr = "Relay4 ON (min)";
+    var_grow_1[42].eprom_address = 17088;
+    var_grow_1[42].eprom_size = 16;
+    var_grow_1[42].var_int = &relay_4_on_min_stp;
+
+    var_grow_1[43].pid = 0x2D;
+    var_grow_1[43].service = 0x01;
+    var_grow_1[43].device = 0x0F;
+    var_grow_1[43].descr = "Relay4 OFF (hour)";
+    var_grow_1[43].eprom_address = 17104;
+    var_grow_1[43].eprom_size = 16;
+    var_grow_1[43].var_int = &relay_4_off_hr_stp;
+
+    var_grow_1[44].pid = 0x2E;
+    var_grow_1[44].service = 0x01;
+    var_grow_1[44].device = 0x0F;
+    var_grow_1[44].descr = "Relay4 OFF (min)";
+    var_grow_1[44].eprom_address = 17120;
+    var_grow_1[44].eprom_size = 16;
+    var_grow_1[44].var_int = &relay_4_off_min_stp;
+
+    var_grow_1[45].pid = 0x2F;
+    var_grow_1[45].service = 0x01;
+    var_grow_1[45].device = 0x0F;
+    var_grow_1[45].descr = "Relay1 Redirect";
+    var_grow_1[45].eprom_address = 17136;
+    var_grow_1[45].eprom_size = 16;
+    var_grow_1[45].var_int = &relay_1_red_stp;
+
+    var_grow_1[46].pid = 0x30;
+    var_grow_1[46].service = 0x01;
+    var_grow_1[46].device = 0x0F;
+    var_grow_1[46].descr = "Relay2 Redirect";
+    var_grow_1[46].eprom_address = 17152;
+    var_grow_1[46].eprom_size = 16;
+    var_grow_1[46].var_int = &relay_2_red_stp;
+
+    var_grow_1[47].pid = 0x31;
+    var_grow_1[47].service = 0x01;
+    var_grow_1[47].device = 0x0F;
+    var_grow_1[47].descr = "Relay3 Redirect";
+    var_grow_1[47].eprom_address = 17168;
+    var_grow_1[47].eprom_size = 16;
+    var_grow_1[47].var_int = &relay_3_red_stp;
+
+    var_grow_1[48].pid = 0x32;
+    var_grow_1[48].service = 0x01;
+    var_grow_1[48].device = 0x0F;
+    var_grow_1[48].descr = "Relay4 Redirect";
+    var_grow_1[48].eprom_address = 17184;
+    var_grow_1[48].eprom_size = 16;
+    var_grow_1[48].var_int = &relay_4_red_stp;
 
     
     

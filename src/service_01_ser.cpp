@@ -124,11 +124,34 @@ extern int irr_on_stp;
 extern int light_pwm_stp;
 extern int fan1_inf_pwm_stp;
 extern int fan2_inf_pwm_stp;
-// extern int fan3_inf_pwm_stp;
+extern int fan3_inf_pwm_stp;
 
 extern int fan1_inf_pwm_light_stp;
 extern int fan2_inf_pwm_light_stp;
-// extern int fan3_inf_pwm_light_stp;
+extern int fan3_inf_pwm_light_stp;
+
+extern int relay_1_on_hr_stp;
+extern int relay_1_on_min_stp;
+extern int relay_1_off_hr_stp;
+extern int relay_1_off_min_stp;
+extern int relay_2_on_hr_stp;
+extern int relay_2_on_min_stp;
+extern int relay_2_off_hr_stp;
+extern int relay_2_off_min_stp;
+extern int relay_3_on_hr_stp;
+extern int relay_3_on_min_stp;
+extern int relay_3_off_hr_stp;
+extern int relay_3_off_min_stp;
+extern int relay_4_on_hr_stp;
+extern int relay_4_on_min_stp;
+extern int relay_4_off_hr_stp;
+extern int relay_4_off_min_stp;
+extern int relay_1_red_stp;
+extern int relay_2_red_stp;
+extern int relay_3_red_stp;
+extern int relay_4_red_stp;
+
+extern int relay_red[4]; //1 - Fan1, 2 - Fan2, 3 - light, 4 - Rega, 5 - Umidificador
 
 //Service 02
 extern float eco2_ext;
@@ -406,7 +429,7 @@ void save_on_flash_serv1(){
     uint32_t addr;
     uint32_t data = 0;
     eraseSector(var_grow_1[0].eprom_address);
-    for (int i = 0; i <= 35; i++){
+    for (int i = 0; i <= 48; i++){
         addr = var_grow_1[i].eprom_address;
         data = *var_grow_1[i].var_int; 
         Serial.print("Eprom 1 ");
@@ -549,7 +572,7 @@ void com_ser01_0x18(int command){
 
 void com_ser01_0x19(int command){
     Serial.println("serv 01 - 19");
-   
+    fan3_inf_pwm_stp = command;
 }
 
 void com_ser01_0x1A(int command){
@@ -564,7 +587,7 @@ void com_ser01_0x1B(int command){
 
 void com_ser01_0x1C(int command){
     Serial.println("serv 01 - 1C");
-   
+    fan3_inf_pwm_light_stp = command;
 }
 
 void com_ser01_0x1D(int command){
@@ -579,114 +602,108 @@ void com_ser01_0x1E(int command){
 
 void com_ser01_0x1F(int command){
     Serial.println("serv 01 - 1F");
-    
+    relay_1_on_hr_stp = command;
 }
 
 void com_ser01_0x20(int command){
     Serial.println("serv 01 - 20");
-    
+    relay_1_on_min_stp = command;
 }
 
 void com_ser01_0x21(int command){
     Serial.println("serv 01 - 21");
-    
+    relay_1_off_hr_stp = command;
 }
 
 void com_ser01_0x22(int command){
     Serial.println("serv 01 - 22");
-    
+    relay_1_off_min_stp = command;
 }
 
 void com_ser01_0x23(int command){
     Serial.println("serv 01 - 23");
-    
+    relay_2_on_hr_stp = command;
 }
 
 void com_ser01_0x24(int command){
     Serial.println("serv 01 - 24");
-    
+    relay_2_on_min_stp = command;
 }
 
 void com_ser01_0x25(int command){
     Serial.println("serv 01 - 25");
-    
+    relay_2_off_hr_stp = command;    
 }
 
 void com_ser01_0x26(int command){
     Serial.println("serv 01 - 26");
-    
+    relay_2_off_min_stp = command;
 }
 
 void com_ser01_0x27(int command){
     Serial.println("serv 01 - 27");
-    
+    relay_3_on_hr_stp = command;
 }
 
 void com_ser01_0x28(int command){
     Serial.println("serv 01 - 28");
-    
+    relay_3_on_min_stp = command;
 }
 
 void com_ser01_0x29(int command){
     Serial.println("serv 01 - 29");
-    
+    relay_3_off_hr_stp = command;
 }
 
 void com_ser01_0x2A(int command){
     Serial.println("serv 01 - 2A");
-    
+    relay_3_off_min_stp = command;
 }
 
 void com_ser01_0x2B(int command){
     Serial.println("serv 01 - 2B");
-    
+    relay_4_on_hr_stp = command;
 }
 
 void com_ser01_0x2C(int command){
     Serial.println("serv 01 - 2C");
-    
+    relay_4_on_min_stp = command;
 }
 
 void com_ser01_0x2D(int command){
     Serial.println("serv 01 - 2D");
-    
+    relay_4_off_hr_stp = command;
 }
 
 void com_ser01_0x2E(int command){
     Serial.println("serv 01 - 2E");
-    
+    relay_4_on_min_stp = command;
 }
 
+//1 - Fan1, 2 - Fan2, 3 - light, 4 - Rega, 5 - Umidificador
 void com_ser01_0x2F(int command){
     Serial.println("serv 01 - 2F");
-    
+    relay_1_red_stp = command;
+    relay_red[0] = command;
 }
-
+//1 - Fan1, 2 - Fan2, 3 - light, 4 - Rega, 5 - Umidificador
 void com_ser01_0x30(int command){
     Serial.println("serv 01 - 30");
-    
+    relay_2_red_stp = command;
+    relay_red[1] = command;
 }
-
+//1 - Fan1, 2 - Fan2, 3 - light, 4 - Rega, 5 - Umidificador
 void com_ser01_0x31(int command){
     Serial.println("serv 01 - 31");
-    
+    relay_3_red_stp = command;
+    relay_red[2] = command;
 }
-
+//1 - Fan1, 2 - Fan2, 3 - light, 4 - Rega, 5 - Umidificador
 void com_ser01_0x32(int command){
     Serial.println("serv 01 - 32");
-    
+    relay_4_red_stp = command;
+    relay_red[3] = command;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
